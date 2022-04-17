@@ -1,13 +1,19 @@
 #include "minishell.h"
 
-int	ft_cd(char *str)
+int	ft_cd(char *str, char *home)
 {
 	if (!str)
 		return (-1);
+	printf("str = %s\n", str);
 	if (!*str)
-		chdir("/");
-	else
-		chdir(str);
+	{
+		if (home)
+			chdir(home);
+		else
+			printf("$HOME NOT SET\n");
+	}
+	else if (chdir(str) == -1)
+		return (-1);
 	return (0);
 }
 

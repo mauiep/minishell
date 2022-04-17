@@ -40,7 +40,7 @@ int	ft_len_bef_col(char *paths)
 
 char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 {
-	char *bin_path;
+	char	*bin_path;
 	int		i;
 
 	i = 0;
@@ -55,6 +55,7 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
 			printf("EXECUTING\n");
+			argv[0] = bin;
 			execve(bin_path, argv, envp);
 			break;
 		}

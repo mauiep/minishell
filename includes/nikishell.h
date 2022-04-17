@@ -11,7 +11,7 @@ int	ft_export(t_dynarray *darr, char *str);
 int	ft_envcmp(char *str, char *str2);
 int	ft_unset(t_dynarray *darr, char *str);
 bool	ft_has_eq(char *str);
-int	ft_cd(char *str);
+int	ft_cd(char *str, char *home);
 int	ft_readline(t_dynarray *darr);
 char	*ft_check_bin_path(char *bin, char *paths);
 char	*ft_getenvval(char *str, char **envp, uint64_t len);

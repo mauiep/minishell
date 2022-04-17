@@ -69,10 +69,10 @@ char	*ft_getenvval(char *str, char **envp, uint64_t len)
 
 	i = 0;
 	index = ft_getenv_index(envp, len, str, 0);
-	printf("index = %d\n", index);
+	//printf("index = %d\n", index);
 	if (index == -1)
 		return (NULL);
-	printf("envp[%d] = %s\n", index, envp[index]);
+	//printf("envp[%d] = %s\n", index, envp[index]);
 	while (envp[index][i] && envp[index][i] != '=')
 		i++;
 	return (&envp[index][i + 1]);

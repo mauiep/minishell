@@ -45,7 +45,7 @@ int	ft_readline(t_dynarray *darr)
 	while (1)
 	{
 		line = readline(prompt);
-		ft_cd(line);
+		ft_cd(line, ft_getenvval("HOME", darr->list, darr->nb_cells));
 		ft_dyn_env(darr);
 		prompt = ft_make_prompt(ft_get_dir(getcwd(pwd, 1000)));
 		if (!prompt)
@@ -61,20 +61,32 @@ int	ft_readline(t_dynarray *darr)
 int	main(int ac, char **argv, char **envp)
 {
 	t_dynarray	darr;
-	int			pid;
-	int			pipefd[2];
+	char		*line;
+	char		pwd[1000];
+//	int			pid;
+//	int			pipefd[2];
+	int			ret;
 
 	(void)ac;
 	(void)argv;
 
 	//printf("pwd = %s\n", getcwd(pwd, 100));
-	init_dyn_env(envp, &darr);
-	ft_export(&darr, "NIKI=BOSS");
-	pipe(pipefd);
-	pid = fork();
-	if (pid == 0)
+	ft_make_prompt(ft_get_dir(getcwd(pwd, 1000)));
+	if (init_dyn_env(envp, &darr))
+		return (-1);
+	while (1)
 	{
-		ft_find_bin("ls", ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
+		line = readline(ft_make_prompt(ft_get_dir(getcwd(pwd, 1000))));
+		ret = ft_cd(line, ft_getenvval("HOME", darr.list, darr.nb_cells));
+		if (ret == -1)
+			printf("incorrect path\n");
+//		pipe(pipefd);
+//		pid = fork();
+//		if (pid == 0)
+//		{
+//			//ft_find_bin("ls", ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
+//		}
+		free(line);
 	}
 	return (0);
 }
