@@ -1,7 +1,5 @@
 #ifndef GUIGUISHELL_H
 
-# include "nikishell.h"
-
 typedef struct s_doublequote
 {
 	int		id_dq;

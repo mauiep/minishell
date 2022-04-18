@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:19:38 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/04/11 21:23:35 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/04/18 03:00:11 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_dynarray
 {

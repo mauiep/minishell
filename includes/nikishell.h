@@ -2,6 +2,11 @@
 
 # include "dynarray.h"
 
+typedef struct s_safe
+{
+	t_dynarray	*darr;
+}	t_safe;
+
 char	*ft_get_dir(char *path);
 char	*ft_make_prompt(char *dir);
 int	init_dyn_env(char **envp, t_dynarray *darr);
@@ -17,5 +22,7 @@ char	*ft_check_bin_path(char *bin, char *paths);
 char	*ft_getenvval(char *str, char **envp, uint64_t len);
 char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp);
 int	ft_len_bef_col(char *paths);
+void	sigintHandler(int sig);
+void	ft_signal();
 
 #endif

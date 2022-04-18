@@ -1,6 +1,14 @@
 #include "minishell.h"
 #include <signal.h>
 
+t_safe	safe;
+
+void	sigintHandler(int sig)
+{
+	(void)sig;
+	ft_readline(safe.darr);
+}
+
 char	*ft_make_prompt(char *dir)
 {
 	char	*str;
@@ -23,7 +31,7 @@ char	*ft_get_dir(char *path)
 	i--;
 	if (path[i] == '/' && path[i + 1] == '\0')
 		return ("/");
-	while (i > 0)
+	while (i >= 0)
 	{
 		if (path[i] == '/')
 			return (path + i + 1);
@@ -45,8 +53,9 @@ int	ft_readline(t_dynarray *darr)
 	while (1)
 	{
 		line = readline(prompt);
+		if (ft_strcmp(line, "end") == 0)
+			return (0);
 		ft_cd(line, ft_getenvval("HOME", darr->list, darr->nb_cells));
-		ft_dyn_env(darr);
 		prompt = ft_make_prompt(ft_get_dir(getcwd(pwd, 1000)));
 		if (!prompt)
 			return (printf("getcwd fail\n"), -1);
@@ -61,32 +70,28 @@ int	ft_readline(t_dynarray *darr)
 int	main(int ac, char **argv, char **envp)
 {
 	t_dynarray	darr;
-	char		*line;
-	char		pwd[1000];
-//	int			pid;
-//	int			pipefd[2];
-	int			ret;
+	int			pid;
+	int			fd;
+	int			pipefd[2];
 
 	(void)ac;
 	(void)argv;
 
 	//printf("pwd = %s\n", getcwd(pwd, 100));
-	ft_make_prompt(ft_get_dir(getcwd(pwd, 1000)));
 	if (init_dyn_env(envp, &darr))
 		return (-1);
-	while (1)
+	safe.darr = &darr;
+	signal(SIGINT, sigintHandler);
+	ft_readline(&darr);
+	fd = dup(STDIN_FILENO);
+	pipe(pipefd);
+	pid = fork();
+	if (pid == 0)
 	{
-		line = readline(ft_make_prompt(ft_get_dir(getcwd(pwd, 1000))));
-		ret = ft_cd(line, ft_getenvval("HOME", darr.list, darr.nb_cells));
-		if (ret == -1)
-			printf("incorrect path\n");
-//		pipe(pipefd);
-//		pid = fork();
-//		if (pid == 0)
-//		{
-//			//ft_find_bin("ls", ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
-//		}
-		free(line);
+		printf("fd = %d\n", fd);
+		dprintf(fd, "dwqdwqwdq");
+		//ft_find_bin("ls", ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
 	}
+	free_dynarray(&darr);
 	return (0);
 }
