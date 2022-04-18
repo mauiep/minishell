@@ -6,7 +6,10 @@ t_safe	safe;
 void	sigintHandler(int sig)
 {
 	(void)sig;
-	ft_readline(safe.darr);
+	write(STDIN_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 char	*ft_make_prompt(char *dir)
@@ -47,18 +50,18 @@ int	ft_readline(t_dynarray *darr)
 	char		pwd[1000];
 
 	(void)darr;
-	prompt = ft_make_prompt(ft_get_dir(getcwd(pwd, 1000)));
-	if (!prompt)
-		return (printf("getcwd fail\n"), -1);
 	while (1)
 	{
-		line = readline(prompt);
-		if (ft_strcmp(line, "end") == 0)
-			return (0);
-		ft_cd(line, ft_getenvval("HOME", darr->list, darr->nb_cells));
 		prompt = ft_make_prompt(ft_get_dir(getcwd(pwd, 1000)));
 		if (!prompt)
 			return (printf("getcwd fail\n"), -1);
+		line = readline(prompt);
+		free(prompt);
+		if (line == NULL)
+			return (0);
+		if (ft_strcmp(line, "end") == 0)
+			return (0);
+		ft_cd(line, ft_getenvval("HOME", darr->list, darr->nb_cells));
 		if (line && *line)
 			add_history(line);
 		else
@@ -82,16 +85,18 @@ int	main(int ac, char **argv, char **envp)
 		return (-1);
 	safe.darr = &darr;
 	signal(SIGINT, sigintHandler);
+	signal(SIGQUIT, SIG_IGN);
 	ft_readline(&darr);
 	fd = dup(STDIN_FILENO);
 	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		printf("fd = %d\n", fd);
-		dprintf(fd, "dwqdwqwdq");
-		//ft_find_bin("ls", ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
+		execve(ft_find_bin(argv[1], ft_getenvval("PATH", darr.list, darr.nb_cells), argv + 1, envp), darr.list, envp);
 	}
-	free_dynarray(&darr);
+	ft_free_all(&darr);
 	return (0);
 }

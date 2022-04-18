@@ -48,8 +48,6 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	while (*paths)
 	{
 		bin_path = ft_check_bin_path(bin, paths);
-		printf("bin_path = %s\n", bin_path);
-		printf("paths = %s\n", paths);
 		if (bin_path == (char *)3)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
