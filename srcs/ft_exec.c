@@ -3,6 +3,7 @@
 char	*ft_check_bin_path(char *bin, char *paths)
 {
 	char	*bin_path;
+	char	*init_path;
 
 	if (paths[0] != '/')
 		bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 5);
@@ -10,6 +11,7 @@ char	*ft_check_bin_path(char *bin, char *paths)
 		bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 4);
 	if (bin_path == NULL)
 		return ((char *)3);
+	init_path = bin_path;
 	if (paths[0] != '/')
 	{
 		bin_path[0] = '~';
@@ -21,7 +23,7 @@ char	*ft_check_bin_path(char *bin, char *paths)
 	ft_strcpy(bin, bin_path + 2 + ft_len_bef_col(paths));
 	if (paths[0] != '/')
 		bin_path -= 1;
-	return (bin_path);
+	return (init_path);
 }
 
 int	ft_len_bef_col(char *paths)
@@ -52,15 +54,40 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			printf("EXECUTING\n");
-			argv[0] = bin;
-			execve(bin_path, argv, envp);
-			break;
+			execve(bin_path, argv + 1, envp);
+			return (bin_path);
 		}
+		else
+			free(bin_path);
 		paths += ft_len_bef_col(paths) + 1;
 		if (*paths)
 			paths += 1;
 		i++;
 	}
-	return (paths);
+	return (NULL);
+}
+
+char	*ft_pipes(int ac, char **argv, t_dynarray *darr)
+{
+	int			pipefd[2];
+	int			i;
+	int			fd;
+
+	i = 0;
+	argv += 1;
+	ac -= 1;
+	fd = dup(STDIN_FILENO);
+	pipe(pipefd);
+	while (i < ac)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			dup2(pipefd[1], STDOUT_FILENO);
+			ft_find_bin(argv[1], ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
+		}
+		i++;
+	}
 }

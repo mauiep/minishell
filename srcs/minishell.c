@@ -74,8 +74,6 @@ int	main(int ac, char **argv, char **envp)
 {
 	t_dynarray	darr;
 	int			pid;
-	int			fd;
-	int			pipefd[2];
 
 	(void)ac;
 	(void)argv;
@@ -87,16 +85,6 @@ int	main(int ac, char **argv, char **envp)
 	signal(SIGINT, sigintHandler);
 	signal(SIGQUIT, SIG_IGN);
 	ft_readline(&darr);
-	fd = dup(STDIN_FILENO);
-	pipe(pipefd);
-	pid = fork();
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		printf("fd = %d\n", fd);
-		execve(ft_find_bin(argv[1], ft_getenvval("PATH", darr.list, darr.nb_cells), argv + 1, envp), darr.list, envp);
-	}
 	ft_free_all(&darr);
 	return (0);
 }
