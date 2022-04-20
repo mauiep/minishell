@@ -59,7 +59,7 @@ int	ft_readline(t_dynarray *darr)
 		free(prompt);
 		if (line == NULL)
 			return (0);
-		if (ft_strcmp(line, "end") == 0)
+		if (ft_strcmp(line, "exit") == 0)
 			return (0);
 		ft_cd(line, ft_getenvval("HOME", darr->list, darr->nb_cells));
 		if (line && *line)
@@ -73,7 +73,6 @@ int	ft_readline(t_dynarray *darr)
 int	main(int ac, char **argv, char **envp)
 {
 	t_dynarray	darr;
-	int			pid;
 
 	(void)ac;
 	(void)argv;
@@ -84,7 +83,8 @@ int	main(int ac, char **argv, char **envp)
 	safe.darr = &darr;
 	signal(SIGINT, sigintHandler);
 	signal(SIGQUIT, SIG_IGN);
-	ft_readline(&darr);
+	ft_pipes(ac - 1, argv + 1, &darr);
+	//ft_readline(&darr);
 	ft_free_all(&darr);
 	return (0);
 }

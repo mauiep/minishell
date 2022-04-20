@@ -54,7 +54,9 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			execve(bin_path, argv + 1, envp);
+			dprintf(2, "BEFORE EXEC:\n      bin_path = %s, argv[0] = %s, envp[0] = %s\n",
+					bin_path, argv[0], envp[0]);
+			execve(bin_path, argv, envp);
 			return (bin_path);
 		}
 		else
@@ -71,23 +73,52 @@ char	*ft_pipes(int ac, char **argv, t_dynarray *darr)
 {
 	int			pipefd[2];
 	int			i;
-	int			fd;
+	int			fd_in;
+	pid_t		list[2];
+	pid_t		main_pid;
+	char		*nul;
 
+	(void)ac;
+	nul = NULL;
+	main_pid = fork();
+	if (main_pid != 0)
+		return NULL;
+	fd_in = dup(STDIN_FILENO);
+	argv[2] = NULL;
+	argv[5] = NULL;
 	i = 0;
-	argv += 1;
-	ac -= 1;
-	fd = dup(STDIN_FILENO);
-	pipe(pipefd);
-	while (i < ac)
+	while (i < 2)
 	{
-		pid = fork();
-		if (pid == 0)
+		pipe(pipefd);
+		main_pid = fork();
+		printf("main_pid = %d\n", main_pid);
+		list[i] = main_pid;
+		printf("after for = %d\n", main_pid);
+		if (main_pid == 0)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			dup2(pipefd[1], STDOUT_FILENO);
-			ft_find_bin(argv[1], ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
+			if (i != 0)
+				dup2(fd_in, STDIN_FILENO);
+			if ((i + 1) != 2)
+				dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd[0]);
+			close(pipefd[1]);
+			push_dynarray(darr, &nul, 1, 0);
+			ft_find_bin(argv[i * 3], ft_getenvval("PATH", darr->list, darr->nb_cells), &argv[i * 3], darr->list);
+		}
+		else
+		{
+			dup2(pipefd[0], fd_in);
+			//close(pipefd[0]);
+			//close(pipefd[1]);
 		}
 		i++;
 	}
+	i = 0;
+	int status = 0;
+	while (i < 2)
+	{
+		waitpid(list[i], &status, 0);
+		i++;
+	}
+	return (NULL);
 }

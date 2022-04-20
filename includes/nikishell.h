@@ -25,5 +25,6 @@ int	ft_len_bef_col(char *paths);
 void	sigintHandler(int sig);
 void	ft_signal();
 void	ft_free_all(t_dynarray *darr);
+char	*ft_pipes(int ac, char **argv, t_dynarray *darr);
 
 #endif
