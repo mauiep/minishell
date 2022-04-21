@@ -74,9 +74,6 @@ int	main(int ac, char **argv, char **envp)
 {
 	t_dynarray	darr;
 
-	(void)ac;
-	(void)argv;
-
 	//printf("pwd = %s\n", getcwd(pwd, 100));
 	if (init_dyn_env(envp, &darr))
 		return (-1);
