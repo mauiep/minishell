@@ -80,6 +80,9 @@ int	main(int ac, char **argv, char **envp)
 	safe.darr = &darr;
 	signal(SIGINT, sigintHandler);
 	signal(SIGQUIT, SIG_IGN);
+	argv[3] = NULL;
+	argv[6] = NULL;
+	argv[9] = NULL;
 	ft_pipes(ac - 1, argv + 1, &darr);
 	//ft_readline(&darr);
 	ft_free_all(&darr);
