@@ -6,7 +6,7 @@
 /*   By: gfritsch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:15:54 by gfritsch          #+#    #+#             */
-/*   Updated: 2022/04/16 16:30:45 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/06/11 15:56:48 by niki             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av)
 		line_buffer = readline("$>");
 		if (line_buffer == NULL)
 			return (0);
-		parse(line_buffer);
+		//parse(line_buffer);
 		free(line_buffer);
 	}
 	printf("arg[%d] = %s\n", 0, av[0]);
