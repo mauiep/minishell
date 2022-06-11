@@ -32,8 +32,8 @@ char *ft_pipes(int ac, char **argv, t_dynarray *darr)
 				return (NULL);
 		}
 	}
-	ft_wait_procs(ac, list);
 	ft_close_pipes(ac, (int **)pipefd);
+	ft_wait_procs(ac, list);
 	return NULL;
 }
 
