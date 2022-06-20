@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include <signal.h>
 
 t_safe	safe;
 
@@ -61,8 +60,7 @@ int	ft_readline(t_dynarray *darr)
 			return (0);
 		if (ft_strcmp(line, "exit") == 0)
 			return (0);
-		ft_cd(line, ft_getenvval("HOME", darr->list, darr->nb_cells));
-		if (line && *line)
+		if (*line)
 			add_history(line);
 		else
 			break;
@@ -73,6 +71,7 @@ int	ft_readline(t_dynarray *darr)
 int	main(int ac, char **argv, char **envp)
 {
 	t_dynarray	darr;
+	int			nb_pipes;
 
 	//printf("pwd = %s\n", getcwd(pwd, 100));
 	if (init_dyn_env(envp, &darr))
@@ -83,7 +82,8 @@ int	main(int ac, char **argv, char **envp)
 	argv[3] = NULL;
 	argv[6] = NULL;
 	argv[9] = NULL;
-	ft_pipes(ac - 1, argv + 1, &darr);
+	nb_pipes = (ac - 1) / 3 -1;
+	ft_pipes(nb_pipes, argv + 1, &darr);
 	//ft_readline(&darr);
 	ft_free_all(&darr);
 	return (0);

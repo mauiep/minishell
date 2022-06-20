@@ -19,7 +19,7 @@ void	ft_dyn_env(t_dynarray *darr)
 	i = 0;
 	while (i < darr->nb_cells)
 	{
-		printf("list[%lu] = %s\n", i, ((char**)darr->list)[i]);
+		printf("list[%llu] = %s\n", i, ((char**)darr->list)[i]);
 		i++;
 	}
 }

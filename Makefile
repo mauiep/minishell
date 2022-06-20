@@ -2,7 +2,7 @@ CC = gcc
 
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRC_N	=	dynarray.c ft_env.c ft_fd.c ft_pipes.c ft_sig.c \
 			dynarray2.c ft_builtins.c ft_exec.c ft_mems.c ft_print.c \
@@ -23,7 +23,7 @@ $(NAME): ${INC_H} ${SRC_C}
 	${CC} ${CFLAGS} ${SRC_C} srcs/co_main.c -I${INC_D} -o ${NAME} -lreadline
 
 niki: ${INC_H} ${SRC_C}
-	${CC} ${CFLAGS} ${SRC_C} srcs/minishell.c -I${INC_D} -o ${NAME} -lreadline
+	${CC} ${LDFLAGS} ${CPPFLAGS} ${CFLAGS} ${SRC_C} srcs/minishell.c -I${INC_D} -o ${NAME} -lreadline
 adrien: ${INC_H} ${SRC_C}
 	${CC} ${CFLAGS} ${SRC_C} srcs/co-main.c -I${INC_D} -o ${NAME} -lreadline
 
