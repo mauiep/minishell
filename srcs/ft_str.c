@@ -14,7 +14,7 @@ int	ft_strcpy(char *str, char *str2)
 	return (0);
 }
 
-int	ft_strcmp(char *str, char *str2)
+int	ft_strcmp(char const *str, char const *str2)
 {
 	int	i;
 

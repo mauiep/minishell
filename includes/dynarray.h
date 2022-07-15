@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:19:38 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/06/18 18:53:18 by nikotikch        ###   ########.fr       */
+/*   Updated: 2022/07/15 05:30:01 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	ft_memcpy(void *dest, void *src, size_t size);
 void	ft_memset(void *mem, int c, int size);
 int		ft_strlen(char *str);
 int		ft_strcpy(char *str, char *str2);
-int		ft_strcmp(char *str, char *str2);
 int		ft_strncpy(char *str, char *str2, int n);
 
 #endif

@@ -6,13 +6,14 @@ CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRC_N	= dynarray.c ft_env.c ft_fd.c ft_pipes.c ft_sig.c \
 			dynarray2.c ft_builtins.c ft_exec.c ft_mems.c ft_print.c \
-			ft_str.c minishell.c
+			ft_str.c ft_redirections.c minishell.c
 SRC_A	= *
 
 SRC_NN	= $(addprefix ${SRC_D}/, ${SRC_N})
-SRC_AA	= $(addprefix ${SRC_D}/, ${SRC_A})
+SRC_AA	= $(addprefix ${SRC_AD}/, ${SRC_A})
 SRC		= ${SRC_N} ${SRC_A}
 SRC_D	= srcs
+SRC_AD	= srcs_a
 SRC_C	= $(addprefix ${SRC_D}/, ${SRC})
 
 INC		= dynarray.h nikishell.h minishell.h
