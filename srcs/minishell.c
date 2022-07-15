@@ -84,7 +84,8 @@ int	main(int ac, char **argv, char **envp)
 	argv[9] = NULL;
 	nb_pipes = (ac - 1) / 3 -1;
 	ft_pipes(nb_pipes, argv + 1, &darr);
-	//ft_readline(&darr);
+	printf("getenvval = %s\n", ft_getenvval("NIKI", darr.list, darr.nb_cells));
+	ft_readline(&darr);
 	ft_free_all(&darr);
 	return (0);
 }

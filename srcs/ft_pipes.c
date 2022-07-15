@@ -6,27 +6,23 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:47:33 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/06/20 23:31:23 by nikotikch        ###   ########.fr       */
+/*   Updated: 2022/07/13 17:11:48 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_pipes(int ac, char **argv, t_dynarray *darr)
+char	*ft_pipes(int ac, char **argv, t_dynarray *darr)
 {
-	int		pipefd[ac][2];
+	int		**pipefd;
 	int		i;
 	pid_t	list[ac + 1];
 	char	*nul;
 
-	printf("ac = %d\n", ac);
 	nul = NULL;
-	i = -1;
-	while (++i < ac)
-	{
-		pipe(pipefd[i]);
-		printf("&pipefd[%d][0] = %p\n&pipefd[%d][1] = %p\n", i, &pipefd[i][0], i, &pipefd[i][1]);
-	}
+	pipefd = create_pipe_arr(ac);
+	if (!pipefd)
+		return (NULL);
 	i = -1;
 	while (++i < ac + 1)
 	{
@@ -39,42 +35,37 @@ char *ft_pipes(int ac, char **argv, t_dynarray *darr)
 				dup2(pipefd[i - 1][0], STDIN_FILENO);
 			if (i != ac)
 				dup2(pipefd[i][1], STDOUT_FILENO);
+			ft_close_pipes(ac, pipefd);
 			push_dynarray(darr, &nul, 1, 0);
 			if (ft_find_bin(argv[i * 3], ft_getenvval("PATH", darr->list, darr->nb_cells), &argv[i * 3], darr->list) == NULL)
 				return (dprintf(2, "BAD BAD\n"), NULL);
 		}
 	}
-	ft_close_pipes(ac, (void*)pipefd);
+	ft_close_pipes(ac, pipefd);
 	ft_wait_procs(ac, list);
+	free_pipe_array(pipefd, ac);
 	return (NULL);
 }
 
-int ft_close_pipes(int ac, void *pipef)
+int	ft_close_pipes(int ac, int **pipefd)
 {
-	int i;
-	int	**pipefd;
+	int	i;
 
 	i = 0;
-	pipefd = (int**)pipef;
-	dprintf(2, "pointer = %p\n", pipefd);
 	while (i < ac)
 	{
-		printf("&pipefd[%d][0] = %p\n&pipefd[%d][1] = %p\n", i, &pipefd[i][0], i, &pipefd[i][1]);
 		close(pipefd[i][0]);
 		close(pipefd[i][1]);
-		dprintf(2, "closed i = %d\n", i);
 		i++;
 	}
 	return (0);
 }
 
-int	ft_close_unused_fd(int nb_cmd, void *pipef, int i)
+int	ft_close_unused_fd(int nb_cmd, int **pipefd, int i)
 {
 	int	x;
 	int	y;
-	int	**pipefd;
 
-	pipefd = (int**)pipef;
 	x = 0;
 	while (x < nb_cmd)
 	{
@@ -97,7 +88,7 @@ int	ft_close_unused_fd(int nb_cmd, void *pipef, int i)
 	return (0);
 }
 
-int ft_wait_procs(int ac, pid_t *list)
+int	ft_wait_procs(int ac, pid_t *list)
 {
 	int i;
 	int status;

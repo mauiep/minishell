@@ -27,7 +27,9 @@ void	ft_signal();
 void	ft_free_all(t_dynarray *darr);
 char	*ft_pipes(int ac, char **argv, t_dynarray *darr);
 int	ft_wait_procs(int ac, pid_t *list);
-int ft_close_pipes(int ac, void *pipef);
-int	ft_close_unused_fd(int nb_cmd, void *pipef, int i);
+int	ft_close_pipes(int ac, int **pipefd);
+int	ft_close_unused_fd(int nb_cmd, int **pipefd, int i);
+int	**create_pipe_arr(int nb_pipes);
+void	free_pipe_array(int **pipefd, int	nb_pipes);
 
 #endif
