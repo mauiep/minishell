@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:11 by admaupie          #+#    #+#             */
-/*   Updated: 2022/06/16 19:46:40 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/07/19 17:03:12 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }

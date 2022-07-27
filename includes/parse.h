@@ -6,13 +6,14 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:44:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/07/14 20:35:44 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/07/25 20:05:32 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
+# include "dynarray.h"
 # define SIMPLE_QUOTE 39
 
 typedef struct s_lst
@@ -26,7 +27,7 @@ typedef struct s_lst
 //main.c
 int		get_word(char *buffer, t_lst *new);
 int		push_word(t_lst *lst, char *buffer);
-int		parse(char *line_buffer);
+int		parse(char *line_buffer, t_dynarray *darr);
 
 //ft_lst.c
 int		free_lst(t_lst *src);
@@ -49,9 +50,14 @@ int		is_sep(char c);
 int		push_word(t_lst *lst, char *buffer);
 int		push_sep(t_lst *lst, char *buffer);
 
+//ft_joindollar.c
+int		ft_strjoindollar(t_lst *l, char *var, int k, int dollar);
+int		ft_replacedollar(t_lst *l, int k, int c, t_dynarray *darr);
+
+//ft_verif.c
+int		ft_verif(t_lst *lst);
+int		last_redirect(t_lst *lst); // lui donner le maillon > pour savoir si il ya encore des > ou >> apres
 // n'existent pas
-int		dollar_exist(t_lst *l, char *dollar);
-int		dollar_value(t_lst *l, char *dollar);
 int		has_pipe(t_lst *l);
 int		has_redirect(t_lst *l);
 

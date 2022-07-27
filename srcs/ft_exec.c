@@ -46,6 +46,7 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	int		i;
 
 	i = 0;
+	dprintf(1, "BIN = %s\n", bin);
 	while (*paths)
 	{
 //		printf("STDIN = %d\n", STDIN_FILENO);

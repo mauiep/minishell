@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_pipes.c                                         :+:      :+:    :+:   */
@@ -6,44 +6,76 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:47:33 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/07/13 17:11:48 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/07/25 17:59:39 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_pipes(int ac, char **argv, t_dynarray *darr)
+int	ft_pipes_left(t_lst *lst)
+{
+	int	pipes;
+
+	pipes = 0;
+	if (lst == 0)
+		return (-1);
+	while (lst->next)
+	{
+		if (lst->next->token == 1)
+			pipes++;
+		lst = lst->next;
+	}
+	return (pipes);
+}
+
+char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 {
 	int		**pipefd;
 	int		i;
-	pid_t	list[ac + 1];
-	char	*nul;
-
-	nul = NULL;
-	pipefd = create_pipe_arr(ac);
+	pid_t	list[nb_pipes + 1];
+//
+//	lst->str = "ls -la fsdljgod"
+//	lst->token = 0 string
+//				= 1 pipe
+//				= 2 >
+//				= 3 <
+//				= 4 >>
+//				= 5 <<
+//	argv = splitargs(lst->str)
+//
+	pipefd = create_pipe_arr(nb_pipes);
 	if (!pipefd)
 		return (NULL);
-	i = -1;
-	while (++i < ac + 1)
+	i = 0;
+	printf("nb_pipes = %d\n", nb_pipes);
+	while (lst)
 	{
-		list[i] = fork();
-		if (list[i] == 0)
+		if (lst->token == 0 && lst->str != NULL)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			if (i != 0)
-				dup2(pipefd[i - 1][0], STDIN_FILENO);
-			if (i != ac)
-				dup2(pipefd[i][1], STDOUT_FILENO);
-			ft_close_pipes(ac, pipefd);
-			push_dynarray(darr, &nul, 1, 0);
-			if (ft_find_bin(argv[i * 3], ft_getenvval("PATH", darr->list, darr->nb_cells), &argv[i * 3], darr->list) == NULL)
-				return (dprintf(2, "BAD BAD\n"), NULL);
+			dprintf(1, "i = %d\n TOKEN = %s\n", i, lst->str);
+			list[i] = fork();
+			if (list[i] == 0)
+			{
+				signal(SIGINT, SIG_DFL);
+				signal(SIGQUIT, SIG_DFL);
+				if (i != 0)
+					dup2(pipefd[i - 1][0], STDIN_FILENO);
+				if (i != nb_pipes)
+					dup2(pipefd[i][1], STDOUT_FILENO);
+				ft_close_pipes(nb_pipes, pipefd);
+				printf("DARR darr->list = %p\nDARR darr->nb_cells = %ld\n", darr->list, darr->nb_cells);
+				if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr->list,
+					darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
+					return (dprintf(2, "BAD BAD\n"), NULL);
+			}
+			printf("darr->LIST = %p\n", darr->list);
+			i++;
 		}
+		lst = lst->next;
 	}
-	ft_close_pipes(ac, pipefd);
-	ft_wait_procs(ac, list);
-	free_pipe_array(pipefd, ac);
+	ft_close_pipes(nb_pipes, pipefd);
+	ft_wait_procs(nb_pipes, list);
+	free_pipe_array(pipefd, nb_pipes);
 	return (NULL);
 }
 

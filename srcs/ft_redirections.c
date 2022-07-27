@@ -1,12 +1,16 @@
 #include "minishell.h"
 
-char	*ft_open_file(char *filename)
+int	ft_open_file(char *filename)
 {
-	int	i;
+	int	fd;
 
-	i = 0;
-	if (open(filename) == -1)
-		if (open(filename, O_CREAT) == -1)
+	fd = open(filename, 0);
+	if (fd == -1)
+	{
+		fd = open(filename, O_CREAT);
+		if (fd == -1)
 			return (-1);
+	}
+	return (fd);
 }
 

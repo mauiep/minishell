@@ -11,12 +11,12 @@ SRC_A	= *
 
 SRC_NN	= $(addprefix ${SRC_D}/, ${SRC_N})
 SRC_AA	= $(addprefix ${SRC_AD}/, ${SRC_A})
-SRC		= ${SRC_N} ${SRC_A}
+SRC		= ${SRC_NN} ${SRC_AA}
 SRC_D	= srcs
 SRC_AD	= srcs_a
 SRC_C	= $(addprefix ${SRC_D}/, ${SRC})
 
-INC		= dynarray.h nikishell.h minishell.h
+INC		= minishell.h
 INC_D	= includes
 INC_H	= $(addprefix ${INC_D}/, ${INC})
 
@@ -26,10 +26,10 @@ $(NAME): ${INC_H} #${SRC_C}
 	${CC} ${CFLAGS} ${SRC} -I${INC_D} -o ${NAME} -lreadline
 
 niki: ${INC_H} #${SRC_C}
-	${CC} ${LDFLAGS} ${CPPFLAGS} ${CFLAGS} ${SRC_NN} -I${INC_D} -o ${NAME} -lreadline
+	${CC} ${CFLAGS} ${SRC} niki_main.c -I${INC_D} -o ${NAME} -lreadline
 
 adrien: ${INC_H} #${SRC_C}
-	${CC} ${CFLAGS} ${SRC_AA} -I${INC_D} -o ${NAME} -lreadline
+	${CC} ${CFLAGS} ${SRC} ad_main.c -I${INC_D} -o ${NAME} -lreadline
 
 clean:
 	rm -f $(OBJS)

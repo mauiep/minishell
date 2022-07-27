@@ -37,7 +37,7 @@ int	ft_getenv_index(char **envp, uint64_t len, char *str, bool un_exp)
 			if (un_exp == 0)
 				return (i);
 			else
-				return (-2);
+				return (-1);
 		}
 		else
 			return (i);
@@ -57,22 +57,21 @@ int	ft_envcmp(char *str, char *str2)
 		i++;
 	}
 	if (str[i] == '=' && str2[i] == '=')
-		return (0);
-	else
 		return (-2);
+	else if (str2[i] == '\0' && str[i] == '=')
+		return (0);
+	return (-1);
 }
 
-char	*ft_getenvval(char *str, char **envp, uint64_t len)
+char	*ft_getenvval(char *str, char **envp, uint64_t len, bool un_or_exp)
 {
 	int	i;
 	int	index;
 
 	i = 0;
-	index = ft_getenv_index(envp, len, str, 0);
-	//printf("index = %d\n", index);
+	index = ft_getenv_index(envp, len, str, un_or_exp);
 	if (index == -1)
 		return (NULL);
-	//printf("envp[%d] = %s\n", index, envp[index]);
 	while (envp[index][i] && envp[index][i] != '=')
 		i++;
 	return (&envp[index][i + 1]);

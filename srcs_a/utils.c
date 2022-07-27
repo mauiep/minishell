@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:03:31 by admaupie          #+#    #+#             */
-/*   Updated: 2022/06/16 19:45:31 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:24:44 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	print_err(int err)
 		write(2, "Missing quotes\n", 15);
 	else if (err == -3)
 		write(2, "Syntax error\n", 13);
+	else if (err == -4)
+		write(2, "Parse error\n", 12);
 	return (err);
 }
 

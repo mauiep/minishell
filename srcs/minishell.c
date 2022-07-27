@@ -67,25 +67,3 @@ int	ft_readline(t_dynarray *darr)
 	}
 	return (0);
 }
-
-int	main(int ac, char **argv, char **envp)
-{
-	t_dynarray	darr;
-	int			nb_pipes;
-
-	//printf("pwd = %s\n", getcwd(pwd, 100));
-	if (init_dyn_env(envp, &darr))
-		return (-1);
-	safe.darr = &darr;
-	signal(SIGINT, sigintHandler);
-	signal(SIGQUIT, SIG_IGN);
-	argv[3] = NULL;
-	argv[6] = NULL;
-	argv[9] = NULL;
-	nb_pipes = (ac - 1) / 3 -1;
-	ft_pipes(nb_pipes, argv + 1, &darr);
-	printf("getenvval = %s\n", ft_getenvval("NIKI", darr.list, darr.nb_cells));
-	ft_readline(&darr);
-	ft_free_all(&darr);
-	return (0);
-}
