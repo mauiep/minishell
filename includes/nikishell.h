@@ -10,6 +10,7 @@ typedef struct s_safe
 	int			nb_pipes;
 }	t_safe;
 
+extern t_safe	g_vrac;
 char	*ft_get_dir(char *path);
 char	*ft_make_prompt(char *dir);
 int		init_dyn_env(char **envp, t_dynarray *darr);
@@ -26,7 +27,7 @@ char	*ft_getenvval(char *str, char **envp, uint64_t len, bool un_or_exp);
 char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp);
 int		ft_len_bef_col(char *paths);
 void	ft_free_all(t_dynarray *darr);
-void	sig1_handler(int i);
+void	sigd_handler(int i);
 char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr);
 int		ft_wait_procs(int ac, pid_t *list);
 int		ft_close_pipes(int ac, int **pipefd);

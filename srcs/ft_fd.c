@@ -43,8 +43,14 @@ void	free_pipe_array(int **pipefd, int	nb_pipes)
 {
 	int	i;
 
+	if (!pipefd)
+		return ;
 	i = -1;
 	while (++i < nb_pipes)
+	{
+		if (!pipefd[i])
+			return ;
 		free(pipefd[i]);
+	}
 	free(pipefd);
 }

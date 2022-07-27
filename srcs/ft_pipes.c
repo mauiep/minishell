@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:47:33 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/07/27 15:17:58 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/07/27 16:07:16 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 			list[i] = fork();
 			if (list[i] == 0)
 			{
-				signal(SIGINT, SIG_DFL);
-				signal(SIGQUIT, SIG_DFL);
 				if (i != 0)
 					dup2(pipefd[i - 1][0], STDIN_FILENO);
 				if (i != nb_pipes)

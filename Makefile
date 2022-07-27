@@ -26,10 +26,10 @@ $(NAME): ${INC_H} #${SRC_C}
 	${CC} ${CFLAGS} ${SRC} -I${INC_D} -o ${NAME} -lreadline
 
 niki: ${INC_H} #${SRC_C}
-	${CC} ${CFLAGS} ${SRC} niki_main.c -I${INC_D} -o ${NAME} -lreadline
+	${CC} ${CFLAGS} niki_main.c ${SRC} -I${INC_D} -o ${NAME} -lreadline
 
 adrien: ${INC_H} #${SRC_C}
-	${CC} ${CFLAGS} ${SRC} ad_main.c -I${INC_D} -o ${NAME} -lreadline
+	${CC} ${CFLAGS} ad_main.c ${SRC} -I${INC_D} -o ${NAME} -lreadline
 
 clean:
 	rm -f $(OBJS)
