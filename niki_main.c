@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+t_safe	g_safe;
+
 int	main(int ac, char **av, char **envp)
 {
 	char		*line_buffer;
@@ -10,6 +12,7 @@ int	main(int ac, char **av, char **envp)
 		return (-1);
 	if (init_dyn_env(envp, &darr))
 		return (-1);
+	g_safe.darr = darr;
 	while (1)
 	{
 		line_buffer = readline("$admaupie>");

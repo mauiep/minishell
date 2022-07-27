@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:47:33 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/07/25 17:59:39 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/07/27 15:17:58 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,10 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 				if (i != nb_pipes)
 					dup2(pipefd[i][1], STDOUT_FILENO);
 				ft_close_pipes(nb_pipes, pipefd);
-				printf("DARR darr->list = %p\nDARR darr->nb_cells = %ld\n", darr->list, darr->nb_cells);
 				if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr->list,
 					darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
 					return (dprintf(2, "BAD BAD\n"), NULL);
 			}
-			printf("darr->LIST = %p\n", darr->list);
 			i++;
 		}
 		lst = lst->next;
