@@ -15,5 +15,5 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, sigd_handler);
 	if (!ft_readline(&darr))
-		return (free_dynarray(&darr), printf("RETURN MAIN\n"), 0);
+		return (ft_free_all(&darr), printf("RETURN MAIN\n"), 0);
 }
