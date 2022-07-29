@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:54:56 by admaupie          #+#    #+#             */
-/*   Updated: 2022/07/27 14:29:27 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/07/27 19:09:44 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	parse(char *line_buffer, t_dynarray *darr)
 	if (!lst)
 		return (print_err(-1));
 	i = 0;
-	while (line_buffer[i])
+	while (line_buffer && line_buffer[i])
 	{
 		len = 1;
 		if (!is_sep(line_buffer[i]) && line_buffer[i] != ' ')

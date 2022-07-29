@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:47:33 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/07/27 16:07:16 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/07/29 20:37:53 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_pipes_left(t_lst *lst)
 	int	pipes;
 
 	pipes = 0;
-	if (lst == 0)
+	if (!lst)
 		return (-1);
 	while (lst->next)
 	{
@@ -70,8 +70,8 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		lst = lst->next;
 	}
 	ft_close_pipes(nb_pipes, pipefd);
-	ft_wait_procs(nb_pipes, list);
 	free_pipe_array(pipefd, nb_pipes);
+	ft_wait_procs(nb_pipes, list);
 	return (NULL);
 }
 

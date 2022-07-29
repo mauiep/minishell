@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-t_safe	safe;
-
 void	sigintHandler(int sig)
 {
 	(void)sig;
@@ -56,14 +54,14 @@ int	ft_readline(t_dynarray *darr)
 			return (printf("getcwd fail\n"), -1);
 		line = readline(prompt);
 		free(prompt);
-		if (line == NULL)
-			return (0);
-		if (ft_strcmp(line, "exit") == 0)
+		if (line == NULL || ft_strcmp(line, "exit") == 0)
 			return (0);
 		if (*line)
 			add_history(line);
 		else
 			break;
+		parse(line, darr);
+		free(line);
 	}
 	return (0);
 }
