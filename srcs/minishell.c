@@ -46,7 +46,6 @@ int	ft_readline(t_dynarray *darr)
 	char		*prompt;
 	char		pwd[1000];
 
-	(void)darr;
 	while (1)
 	{
 		prompt = ft_make_prompt(ft_get_dir(getcwd(pwd, 1000)));

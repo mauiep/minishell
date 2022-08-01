@@ -10,7 +10,7 @@ int	ft_cd(char *str, char *home)
 		if (home)
 			chdir(home);
 		else
-			printf("$HOME NOT SET\n");
+			printf("HOME NOT SET\n");
 	}
 	else if (chdir(str) == -1)
 		return (printf("%s does not exist\n", str), -1);

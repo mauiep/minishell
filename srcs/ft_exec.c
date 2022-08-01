@@ -46,11 +46,11 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	int		i;
 
 	i = 0;
-	dprintf(1, "BIN = %s\n", bin);
+	if (!paths)
+		if (access(bin, F_OK & X_OK) == 0)
+			execve(bin, argv, envp);
 	while (*paths)
 	{
-//		printf("STDIN = %d\n", STDIN_FILENO);
-//		printf("STDOUT = %d\n", STDOUT_FILENO);
 		bin_path = ft_check_bin_path(bin, paths);
 		if (bin_path == (char *)3)
 			return (NULL);

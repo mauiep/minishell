@@ -63,16 +63,18 @@ int	ft_envcmp(char *str, char *str2)
 	return (-1);
 }
 
-char	*ft_getenvval(char *str, char **envp, uint64_t len, bool un_or_exp)
+char	*ft_getenvval(char *str, t_dynarray *darr, bool val_or_all, bool un_or_exp)
 {
-	int	i;
-	int	index;
+	int		i;
+	int		index;
+	char	**envp;
 
 	i = 0;
-	index = ft_getenv_index(envp, len, str, un_or_exp);
+	envp = darr->list;
+	index = ft_getenv_index(envp, darr->nb_cells, str, un_or_exp);
 	if (index == -1)
 		return (NULL);
-	while (envp[index][i] && envp[index][i] != '=')
+	while (val_or_all == 0 && envp[index][i] && envp[index][i] != '=')
 		i++;
-	return (&envp[index][i + 1]);
+	return (&envp[index][i + 1 - val_or_all]);
 }

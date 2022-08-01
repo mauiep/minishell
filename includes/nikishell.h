@@ -11,6 +11,7 @@ typedef struct s_safe
 }	t_safe;
 
 extern t_safe	g_vrac;
+
 char	*ft_get_dir(char *path);
 char	*ft_make_prompt(char *dir);
 int		init_dyn_env(char **envp, t_dynarray *darr);
@@ -23,7 +24,7 @@ bool	ft_has_eq(char *str);
 int		ft_cd(char *str, char *home);
 int		ft_readline(t_dynarray *darr);
 char	*ft_check_bin_path(char *bin, char *paths);
-char	*ft_getenvval(char *str, char **envp, uint64_t len, bool un_or_exp);
+char	*ft_getenvval(char *str, t_dynarray *darr, bool val_or_all, bool un_or_exp);
 char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp);
 int		ft_len_bef_col(char *paths);
 void	ft_free_all(t_dynarray *darr);
@@ -34,8 +35,10 @@ int		ft_close_pipes(int ac, int **pipefd);
 int		ft_close_unused_fd(int nb_cmd, int **pipefd, int i);
 int		**create_pipe_arr(int nb_pipes);
 void	free_pipe_array(int **pipefd, int	nb_pipes);
-int		ft_open_file(char *filename);
 int		ft_pipes_left(t_lst *lst);
 int		close_pipe_array(int **pipefd, int	nb_pipes);
+int		ft_open_create(char *filename);
+char	*ft_strjoin(char *str, char *str2);
+int		ft_check_env(t_dynarray *darr);
 
 #endif

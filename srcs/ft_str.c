@@ -55,3 +55,16 @@ int	ft_strncpy(char *str, char *str2, int n)
 	str2[i] = '\0';
 	return (0);
 }
+
+char	*ft_strjoin(char *str, char *str2)
+{
+	char	*str3;
+
+	str3 = malloc(ft_strlen(str) + ft_strlen(str2) + 1);
+	if (str3 == NULL)
+		return (NULL);
+	ft_strcpy(str, str3);
+	ft_strcpy(str2, str3 + ft_strlen(str));
+	str3[ft_strlen(str) + ft_strlen(str2)] = '\0';
+	return (str3);
+}
