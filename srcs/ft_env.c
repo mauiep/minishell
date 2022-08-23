@@ -28,7 +28,8 @@ int	ft_getenv_index(char **envp, uint64_t len, char *str, bool un_exp)
 	i = 0;
 	while (i < len)
 	{
-		//printf("envp[%ld] = %s, str = %s\n", i, envp[i], str);
+		printf("index: envp = %p\n", envp);
+		printf("index: g_vrac.darr.list = %p\n", g_vrac.darr->list);
 		cmp = ft_envcmp(envp[i], str);
 		if (cmp == -1)
 			i++;
@@ -71,6 +72,8 @@ char	*ft_getenvval(char *str, t_dynarray *darr, bool val_or_all, bool un_or_exp)
 
 	i = 0;
 	envp = darr->list;
+	printf("getenvval envp = %p\n", envp);
+	ft_dyn_env(darr);
 	index = ft_getenv_index(envp, darr->nb_cells, str, un_or_exp);
 	if (index == -1)
 		return (NULL);

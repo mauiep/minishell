@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:54:56 by admaupie          #+#    #+#             */
-/*   Updated: 2022/07/24 06:01:15 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/08/12 04:40:39 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	parse(char *line_buffer, t_dynarray *darr)
 		return (print_err(-4));
 	ft_printlst(lst);
 	expand(lst, darr);
-	ft_printlst(lst);
-	ft_pipes(lst, ft_pipes_left(lst), darr);
+	if (!ft_pipes(lst->next, ft_pipes_left(lst), darr))
+		return (printf("PIPES BAD RETURN\n"), -1);
 	free_lst(lst);
 	return (1);
 }

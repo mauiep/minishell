@@ -56,10 +56,10 @@ int	ft_readline(t_dynarray *darr)
 		if (line == NULL || ft_strcmp(line, "exit") == 0)
 			return (0);
 		if (*line)
+		{
 			add_history(line);
-		else
-			break;
-		parse(line, darr);
+			parse(line, darr);
+		}
 		free(line);
 	}
 	return (0);

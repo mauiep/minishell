@@ -31,14 +31,14 @@ void	ft_free_all(t_dynarray *darr);
 void	sigd_handler(int i);
 char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr);
 int		ft_wait_procs(int ac, pid_t *list);
-int		ft_close_pipes(int ac, int **pipefd);
-int		ft_close_unused_fd(int nb_cmd, int **pipefd, int i);
+int		ft_close_pipes(int **pipefd, int nb_pipes);
 int		**create_pipe_arr(int nb_pipes);
 void	free_pipe_array(int **pipefd, int	nb_pipes);
 int		ft_pipes_left(t_lst *lst);
-int		close_pipe_array(int **pipefd, int	nb_pipes);
-int		ft_open_create(char *filename);
 char	*ft_strjoin(char *str, char *str2);
 int		ft_check_env(t_dynarray *darr);
+int		ft_open_create(char *filename, bool apnd_or_not);
+t_lst	*ft_next_pipe(t_lst *lst);
+int		ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in);
 
 #endif
