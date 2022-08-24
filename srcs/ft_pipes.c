@@ -23,17 +23,6 @@ int	ft_pipes_left(t_lst *lst)
 	return (pipes);
 }
 
-//
-//	lst->str = "ls -la fsdljgod"
-//	lst->token = 0 string
-//				= 1 pipe
-//				= 2 >
-//				= 3 <
-//				= 4 >>
-//				= 5 <<
-//	argv = splitargs(lst->str)
-//
-
 char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 {
 	int		**pipefd;
@@ -45,18 +34,22 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 	t_lst	*start_lst;
 
 	printf("NB_PIPES = %d\n", nb_pipes);
-	start_lst = lst;
 	pipes_left = nb_pipes;
 	pipefd = create_pipe_arr(nb_pipes);
 	if (!pipefd)
 		return (printf("FD_ERR\n"), NULL);
-	while (lst->str)
+	ft_print_pipes(pipefd, nb_pipes);
+	while (lst && lst->str)
 	{
 		start_lst = lst;
-		dprintf(2, "lst->str = %s\n", lst->str);
 		if (pipes_left > 0)
 		{
+			dprintf(2, "STDOUT_FILENO = %d\n", STDOUT_FILENO);
+			dprintf(2, "STDIN_FILENO = %d\n", STDIN_FILENO);
+			dprintf(2, "DUPPING\n");
 			fd_out = ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
+			dprintf(2, "STDOUT_FILENO = %d\n", STDOUT_FILENO);
+			dprintf(2, "STDIN_FILENO = %d\n", STDIN_FILENO);
 			if (fd_out == -1) //BIEN FERMER LES FD EN CAS DERREUR (A FINIR)
 				return (NULL);
 			if (fd_in == -1)
@@ -65,8 +58,7 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 			close(fd_out);
 			close(fd_in);
 		}
-		dprintf(2, "lst->str1 = %s\n", lst->str);
-		while (lst->str && lst->token != 1)
+		while (lst && lst->str && lst->token != 1)
 		{
 			if (lst->token == 2)
 			{
@@ -84,7 +76,6 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		}
 		ft_close_pipes(pipefd, nb_pipes);
 		lst = start_lst;
-		dprintf(2, "lst->str2BE = %s\n", lst->str);
 		i = 0;
 		while (lst && lst->token != 1)
 		{
@@ -103,16 +94,24 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 			}
 			lst = lst->next;
 		}
-		dprintf(2, "lst->str3 = %s\n", lst->str);
-		lst = ft_next_pipe(lst);
-		lst = lst->next;
-		dprintf(2, "lst->str4 = %s\n", lst->str);
+		lst = ft_next_pipe(start_lst);
+		lst = start_lst->next;
 	}
 	ft_close_pipes(pipefd, nb_pipes);
 	free_pipe_array(pipefd, nb_pipes);
 	ft_wait_procs(nb_pipes, list);
 	return (NULL);
 }
+
+//
+//	lst->str = "ls -la fsdljgod"
+//	lst->token = 0 string
+//				= 1 pipe
+//				= 2 >
+//				= 3 <
+//				= 4 >>
+//				= 5 <<
+//	argv = splitargs(lst->str)
 
 int	ft_wait_procs(int ac, pid_t *list)
 {

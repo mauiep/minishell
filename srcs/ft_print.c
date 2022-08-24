@@ -23,3 +23,18 @@ void	ft_dyn_env(t_dynarray *darr)
 		i++;
 	}
 }
+
+void	ft_print_pipes(int **pipefd, int nb_pipes)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_pipes)
+	{
+		printf("-----------------------------\n");
+		printf("pipefd[%d][0] = %d\n", i, pipefd[i][0]);
+		printf("pipefd[%d][1] = %d\n", i, pipefd[i][1]);
+		printf("-----------------------------\n");
+		i++;
+	}
+}

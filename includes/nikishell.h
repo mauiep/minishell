@@ -40,5 +40,6 @@ int		ft_check_env(t_dynarray *darr);
 int		ft_open_create(char *filename, bool apnd_or_not);
 t_lst	*ft_next_pipe(t_lst *lst);
 int		ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in);
+void	ft_print_pipes(int **pipefd, int nb_pipes);
 
 #endif
