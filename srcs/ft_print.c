@@ -38,3 +38,25 @@ void	ft_print_pipes(int **pipefd, int nb_pipes)
 		i++;
 	}
 }
+
+void	ft_print_token(t_lst token)
+{
+	dprintf(2, "PRINTING TOKEN:\n");
+	dprintf(2, "token->str = %s\n", token.str);
+	if (token.next != NULL)
+	{
+		dprintf(2, "token->next = %s\n", token.next->str);
+		dprintf(2, "token->prev = %s\n", token.prev->str);
+	}
+}
+
+void	ft_print_list(t_lst *token)
+{
+	while (token != NULL)
+	{
+		ft_print_token(*token);
+		token = token->next;
+	}
+	if (token == NULL)
+		dprintf(2, "PRINTING TOKEN:\n NULL\n");
+}

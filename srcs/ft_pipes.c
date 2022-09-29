@@ -29,53 +29,45 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 	int		i;
 	pid_t	list[nb_pipes + 1];
 	int		pipes_left;
-	int		fd_out;
 	int		fd_in;
 	t_lst	*start_lst;
 
+	ft_print_list(lst);
+	return (NULL);
 	printf("NB_PIPES = %d\n", nb_pipes);
 	pipes_left = nb_pipes;
 	pipefd = create_pipe_arr(nb_pipes);
 	if (!pipefd)
 		return (printf("FD_ERR\n"), NULL);
 	ft_print_pipes(pipefd, nb_pipes);
+	start_lst = lst;
 	while (lst && lst->str)
 	{
-		start_lst = lst;
+		lst = start_lst;
 		if (pipes_left > 0)
 		{
-			dprintf(2, "STDOUT_FILENO = %d\n", STDOUT_FILENO);
-			dprintf(2, "STDIN_FILENO = %d\n", STDIN_FILENO);
-			dprintf(2, "DUPPING\n");
-			fd_out = ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
-			dprintf(2, "STDOUT_FILENO = %d\n", STDOUT_FILENO);
-			dprintf(2, "STDIN_FILENO = %d\n", STDIN_FILENO);
-			if (fd_out == -1) //BIEN FERMER LES FD EN CAS DERREUR (A FINIR)
-				return (NULL);
-			if (fd_in == -1)
-				return(close(fd_out), NULL);
+			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
 			pipes_left--;
-			close(fd_out);
-			close(fd_in);
 		}
 		while (lst && lst->str && lst->token != 1)
 		{
 			if (lst->token == 2)
 			{
-				fd_out = dup2(ft_open_create(lst->next->str, 0), STDOUT_FILENO); //A SECURISER
+				dup2(ft_open_create(lst->next->str, 0), STDOUT_FILENO); //A SECURISER
 				lst = lst->next;
 			}
 			if (lst->token == 3)
-				fd_out = dup2(ft_open_create(lst->prev->str, 0), STDOUT_FILENO);
+				dup2(ft_open_create(lst->prev->str, 0), STDOUT_FILENO);
 			if (lst->token == 4)
 			{
-				fd_out = dup2(ft_open_create(lst->prev->str, 1), STDOUT_FILENO);
+				dup2(ft_open_create(lst->prev->str, 1), STDOUT_FILENO);
 				lst = lst->next;
 			}
 			lst = lst->next;
 		}
 		ft_close_pipes(pipefd, nb_pipes);
 		lst = start_lst;
+		ft_print_token(*lst);
 		i = 0;
 		while (lst && lst->token != 1)
 		{
@@ -95,11 +87,11 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 			lst = lst->next;
 		}
 		lst = ft_next_pipe(start_lst);
-		lst = start_lst->next;
+		start_lst = lst->next;
 	}
 	ft_close_pipes(pipefd, nb_pipes);
 	free_pipe_array(pipefd, nb_pipes);
-	ft_wait_procs(nb_pipes, list);
+	ft_wait_procs(i, list);
 	return (NULL);
 }
 

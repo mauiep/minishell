@@ -1,6 +1,6 @@
 #ifndef NIKISHELL_H
 
-# include "parse.h"
+//# include "parse.h"
 # include "dynarray.h"
 
 typedef struct s_safe
@@ -41,5 +41,7 @@ int		ft_open_create(char *filename, bool apnd_or_not);
 t_lst	*ft_next_pipe(t_lst *lst);
 int		ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in);
 void	ft_print_pipes(int **pipefd, int nb_pipes);
+void	ft_print_token(t_lst token);
+void	ft_print_list(t_lst *token);
 
 #endif
