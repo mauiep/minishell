@@ -69,3 +69,28 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	}
 	return (NULL);
 }
+
+int	ft_handle_exec(t_lst *lst, t_dynarray *darr, pid_t *list)
+{
+	int	i;
+
+	i = 0;
+	while (lst && lst->token != 1)
+	{
+		if (lst->token == 0 && lst->str != NULL)
+		{
+			dprintf(2, "i = %d\n", i);
+			list[i] = fork();
+			if (list[i] == 0)
+			{
+				dprintf(2, "EXECUTE STR  = %s\n", lst->str);
+				if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr,
+					darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
+					return (dprintf(2, "BAD BAD\n"), -1);
+			}
+			i++;
+		}
+		lst = lst->next;
+	}
+	return (i);
+}

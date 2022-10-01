@@ -33,7 +33,6 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 	t_lst	*start_lst;
 
 	ft_print_list(lst);
-	return (NULL);
 	printf("NB_PIPES = %d\n", nb_pipes);
 	pipes_left = nb_pipes;
 	pipefd = create_pipe_arr(nb_pipes);
@@ -49,45 +48,15 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
 			pipes_left--;
 		}
-		while (lst && lst->str && lst->token != 1)
-		{
-			if (lst->token == 2)
-			{
-				dup2(ft_open_create(lst->next->str, 0), STDOUT_FILENO); //A SECURISER
-				lst = lst->next;
-			}
-			if (lst->token == 3)
-				dup2(ft_open_create(lst->prev->str, 0), STDOUT_FILENO);
-			if (lst->token == 4)
-			{
-				dup2(ft_open_create(lst->prev->str, 1), STDOUT_FILENO);
-				lst = lst->next;
-			}
-			lst = lst->next;
-		}
+		ft_redirections(lst);
 		ft_close_pipes(pipefd, nb_pipes);
 		lst = start_lst;
-		ft_print_token(*lst);
-		i = 0;
-		while (lst && lst->token != 1)
-		{
-			if (lst->token == 0 && lst->str != NULL)
-			{
-				dprintf(2, "i = %d\n", i);
-				list[i] = fork();
-				if (list[i] == 0)
-				{
-					dprintf(2, "EXECUTE STR  = %s\n", lst->str);
-					if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr,
-						darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
-						return (dprintf(2, "BAD BAD\n"), NULL);
-				}
-				i++;
-			}
-			lst = lst->next;
-		}
+		i = ft_handle_exec(lst, darr, list);
 		lst = ft_next_pipe(start_lst);
-		start_lst = lst->next;
+		dprintf(2, "printing before SEGV\n");
+		ft_print_token(*lst);
+		if (start_lst != NULL)
+			start_lst = lst->next;
 	}
 	ft_close_pipes(pipefd, nb_pipes);
 	free_pipe_array(pipefd, nb_pipes);
@@ -95,7 +64,6 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 	return (NULL);
 }
 
-//
 //	lst->str = "ls -la fsdljgod"
 //	lst->token = 0 string
 //				= 1 pipe
