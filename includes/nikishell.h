@@ -43,7 +43,7 @@ int		ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in);
 void	ft_print_pipes(int **pipefd, int nb_pipes);
 void	ft_print_token(t_lst token);
 void	ft_print_list(t_lst *token);
-int		ft_redirections(t_lst *lst);
+int		ft_handle_redirections(t_lst *lst);
 int		ft_handle_exec(t_lst *lst, t_dynarray *darr, pid_t *list);
 
 #endif

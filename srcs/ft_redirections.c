@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_redirections(t_lst *lst)
+int	ft_handle_redirections(t_lst *lst)
 {
 	while (lst && lst->str && lst->token != 1)
 	{

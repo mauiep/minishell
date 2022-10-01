@@ -48,13 +48,13 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
 			pipes_left--;
 		}
-		ft_redirections(lst);
+		ft_handle_redirections(lst);
 		ft_close_pipes(pipefd, nb_pipes);
 		lst = start_lst;
 		i = ft_handle_exec(lst, darr, list);
 		lst = ft_next_pipe(start_lst);
 		dprintf(2, "printing before SEGV\n");
-		ft_print_token(*lst);
+		dprintf(2, "start_lst = %s\n", start_lst->str);
 		if (start_lst != NULL)
 			start_lst = lst->next;
 	}
