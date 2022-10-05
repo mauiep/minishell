@@ -79,14 +79,12 @@ int	ft_handle_exec(t_lst *lst, t_dynarray *darr, pid_t *list)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
-			dprintf(2, "i = %d\n", i);
 			list[i] = fork();
 			if (list[i] == 0)
 			{
-				dprintf(2, "EXECUTE STR  = %s\n", lst->str);
 				if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr,
 					darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
-					return (dprintf(2, "BAD BAD\n"), -1);
+					return (dprintf(2, "BAD EXEC BAD\n"), -1);
 			}
 			i++;
 		}
