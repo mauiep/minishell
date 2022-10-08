@@ -36,20 +36,31 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 	ft_print_list(lst);
 	pipes_left = nb_pipes;
 	pipefd = create_pipe_arr(nb_pipes);
+	i = 0;
 	if (!pipefd)
 		return (printf("FD_ERR\n"), NULL);
 	start_lst = lst;
 	while (lst && lst->str)
 	{
 		lst = start_lst;
-		ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
+		if (lst)
+			dprintf(2, "XUXlst->str = %s\n", start_lst->str);
+		list[i] = fork();
+		if (list[i] == 0)
+		{
+			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
+			ft_handle_redirections(lst);
+			lst = start_lst;
+			ft_close_pipes(pipefd, nb_pipes);
+			ft_handle_exec(lst, darr);
+		}
+		i++;
 		pipes_left--;
-		ft_handle_redirections(lst);
-		lst = start_lst;
-		i = ft_handle_exec(lst, darr, list, pipefd, nb_pipes);
 		lst = ft_next_pipe(start_lst);
 		if (lst)
 			start_lst = lst->next;
+		if (start_lst)
+			dprintf(2, "XUX3lst->str = %s\n", start_lst->str);
 	}
 	ft_close_pipes(pipefd, nb_pipes);
 	free_pipe_array(pipefd, nb_pipes);
@@ -64,8 +75,9 @@ int	ft_wait_procs(int ac, pid_t *list)
 	pid_t w;
 
 	i = 0;
-	while (i < ac + 1)
+	while (i < ac)
 	{
+		dprintf(2, "WAITPID i = %d\n", i);
 		w = waitpid(list[i], &status, 0);
 		printf("status = %d\n", status);
 		if (w == -1)

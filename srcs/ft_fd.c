@@ -49,7 +49,7 @@ int	ft_close_pipes(int **pipefd, int nb_pipes)
 	i = 0;
 	while (i < nb_pipes)
 	{
-		dprintf(2, "GI = %d\n", i);
+		//dprintf(2, "GI = %d\n", i);
 		close(pipefd[i][0]);
 		close(pipefd[i][1]);
 		i++;
