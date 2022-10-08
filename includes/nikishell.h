@@ -44,6 +44,6 @@ void	ft_print_pipes(int **pipefd, int nb_pipes);
 void	ft_print_token(t_lst token);
 void	ft_print_list(t_lst *token);
 int		ft_handle_redirections(t_lst *lst);
-int		ft_handle_exec(t_lst *lst, t_dynarray *darr, pid_t *list);
+int		ft_handle_exec(t_lst *lst, t_dynarray *darr, pid_t *list, int **pipefd, int nb_pipes);
 
 #endif

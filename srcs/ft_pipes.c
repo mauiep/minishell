@@ -46,7 +46,7 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		pipes_left--;
 		ft_handle_redirections(lst);
 		lst = start_lst;
-		i = ft_handle_exec(lst, darr, list);
+		i = ft_handle_exec(lst, darr, list, pipefd, nb_pipes);
 		lst = ft_next_pipe(start_lst);
 		if (lst)
 			start_lst = lst->next;
@@ -56,15 +56,6 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 	ft_wait_procs(i, list);
 	return (NULL);
 }
-
-//	lst->str = "ls -la fsdljgod"
-//	lst->token = 0 string
-//				= 1 pipe
-//				= 2 >
-//				= 3 <
-//				= 4 >>
-//				= 5 <<
-//	argv = splitargs(lst->str)
 
 int	ft_wait_procs(int ac, pid_t *list)
 {

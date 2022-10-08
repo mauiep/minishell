@@ -25,3 +25,13 @@ int	ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in)
 	}
 	return (fd_out);
 }
+//	lst->str = "ls -la fsdljgod"
+//	lst->token = 0 string
+//				= 1 pipe
+//				= 2 >
+//				= 3 <
+//				= 4 >>
+//				= 5 <<
+//	argv = splitargs(lst->str)
+
+

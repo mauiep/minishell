@@ -70,11 +70,13 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	return (NULL);
 }
 
-int	ft_handle_exec(t_lst *lst, t_dynarray *darr, pid_t *list)
+int	ft_handle_exec(t_lst *lst, t_dynarray *darr, pid_t *list, int **pipefd, int nb_pipes)
 {
 	int	i;
 
 	i = 0;
+	(void)pipefd;
+	(void)nb_pipes;
 	while (lst && lst->token != 1)
 	{
 		if (lst->token == 0 && lst->str != NULL)

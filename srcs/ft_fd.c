@@ -47,7 +47,6 @@ int	ft_close_pipes(int **pipefd, int nb_pipes)
 	int	i;
 
 	i = 0;
-	dprintf(2, "GNB_PIPES = %d\n", nb_pipes);
 	while (i < nb_pipes)
 	{
 		dprintf(2, "GI = %d\n", i);
