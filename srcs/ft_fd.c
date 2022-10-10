@@ -26,7 +26,7 @@ int	**create_pipe_arr(int nb_pipes)
 	return (pipefd);
 }
 
-void	free_pipe_array(int **pipefd, int	nb_pipes)
+void	free_pipe_array(int **pipefd, int nb_pipes)
 {
 	int	i;
 

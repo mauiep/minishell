@@ -5,6 +5,8 @@ int	ft_strcpy(char *str, char *str2)
 	int	i;
 
 	i = 0;
+	if (!str || !str2)
+		return (1);
 	while (str[i])
 	{
 		str2[i] = str[i];
@@ -60,6 +62,8 @@ char	*ft_strjoin(char *str, char *str2)
 {
 	char	*str3;
 
+	if (!str || !str2)
+		return (NULL);
 	str3 = malloc(ft_strlen(str) + ft_strlen(str2) + 1);
 	if (str3 == NULL)
 		return (NULL);

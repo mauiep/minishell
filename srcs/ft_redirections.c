@@ -2,7 +2,7 @@
 
 int	ft_handle_redirections(t_lst *lst)
 {
-	while (lst && lst->str && lst->token != 1)
+	while (lst && lst->token != 1)
 	{
 		if (lst->token == 2)
 		{

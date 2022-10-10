@@ -49,7 +49,7 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		if (list[i] == 0)
 		{
 			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
-			ft_handle_redirections(lst);
+			ft_handle_redirections(start_lst);
 			lst = start_lst;
 			ft_close_pipes(pipefd, nb_pipes);
 			ft_handle_exec(lst, darr);
