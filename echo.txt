@@ -1,0 +1,7 @@
+on sort de count
+word = echo
+word = 123
+on sort de count
+word = echo
+word = 123
+123

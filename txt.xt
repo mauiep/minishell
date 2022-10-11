@@ -1,0 +1,15 @@
+on sort de count
+word = ls
+on sort de count
+word = ls
+ad_main.c
+includes
+liberror
+Makefile
+minishell
+niki_main.c
+shell
+srcs
+srcs_a
+txt.txt
+txt.xt
