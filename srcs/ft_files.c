@@ -15,7 +15,7 @@ int	ft_open_create(char *filename, bool apnd_or_not)
 	{
 		fd = open(pathname2, O_RDWR | O_CREAT | O_APPEND * apnd_or_not, S_IRWXU);
 		if (fd == -1)
-			return (-1);
+			return (free(pathname2), -1);
 	}
-	return (fd);
+	return (free(pathname2), fd);
 }

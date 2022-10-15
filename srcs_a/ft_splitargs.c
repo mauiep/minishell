@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitargs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ngenadie <ngenadie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:34:36 by admaupie          #+#    #+#             */
-/*   Updated: 2022/07/14 20:42:38 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:03:42 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	spe_count_words(char *str)
 			i++;
 		}
 	}
-	printf("on sort de count\n");
 	return (w);
 }
 
@@ -85,7 +84,7 @@ char	*spe_get_word(char *str, int n)
 	new = ft_strndup(str + i, j);
 	if (!new)
 		return (NULL);
-	printf("word = %s\n", new);
+	//printf("word = %s\n", new);
 	return (new);
 }
 

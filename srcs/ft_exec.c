@@ -46,7 +46,7 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	int		i;
 
 	i = 0;
-	if (!paths)
+	if (!paths) //DANGEROUS??
 		if (access(bin, F_OK & X_OK) == 0)
 			execve(bin, argv, envp);
 	while (*paths)
@@ -76,9 +76,12 @@ int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
-				if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr,
-					darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
-					return (dprintf(2, "BAD EXEC BAD\n"), -1);
+			dprintf(2, "PRINT BEFORE EXEC: ");
+			ft_print_token(*lst);
+			dprintf(2, "ft_splitargs : \n%s\n%s\n", ft_splitargs(lst)[0], ft_splitargs(lst)[1]);
+			if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr,
+				darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
+				return (dprintf(2, "BAD EXEC BAD\n"), -1);
 		}
 		lst = lst->next;
 	}

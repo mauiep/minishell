@@ -16,6 +16,7 @@ int	ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in)
 /*separation*/
 	if (pipes_left != 0)
 	{
+		dprintf(2, "DUP 2 TOKEN = 1\n");
 		fd_out = dup2(pipefd[nb_pipes - pipes_left][1], STDOUT_FILENO);
 		if (fd_out == -1)
 			return (dprintf(2, "FD_ERR\n"), ft_close_pipes(pipefd, nb_pipes),
