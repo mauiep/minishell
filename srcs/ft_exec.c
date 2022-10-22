@@ -72,15 +72,16 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 
 int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
 {
+	char	**args;
+
+	args = ft_splitargs(lst);
 	while (lst && lst->token != 1)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
 			dprintf(2, "PRINT BEFORE EXEC: ");
-			ft_print_token(*lst);
-			dprintf(2, "ft_splitargs : \n%s\n%s\n", ft_splitargs(lst)[0], ft_splitargs(lst)[1]);
-			if (ft_find_bin(ft_splitargs(lst)[0], ft_getenvval("PATH", darr,
-				darr->nb_cells, 1), ft_splitargs(lst), darr->list) == NULL) //A FINIR APRES
+			if (ft_find_bin(args[0], ft_getenvval("PATH", darr,
+				darr->nb_cells, 1), args, darr->list) == NULL) //A FINIR APRES
 				return (dprintf(2, "BAD EXEC BAD\n"), -1);
 		}
 		lst = lst->next;
