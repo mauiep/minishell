@@ -74,6 +74,7 @@ int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
 {
 	char	**args;
 
+	dprintf(2, "BEFORE SPLITARGS\nlst->str = %s\n", lst->str);
 	args = ft_splitargs(lst);
 	while (lst && lst->token != 1)
 	{

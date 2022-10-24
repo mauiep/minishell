@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:44:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/07/25 20:05:32 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:37:57 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_printlst(t_lst *a);
 void	push_lst(t_lst *new, t_lst *lst);
 t_lst	*ft_lstnew(void);
 int		lst_len(t_lst *lst);
+int		push_first_lst(t_lst *new, t_lst *lst);
 
 //ft_libft.c
 int		ft_strlen(char *str);
@@ -56,11 +57,15 @@ int		ft_replacedollar(t_lst *l, int k, int c, t_dynarray *darr);
 
 //ft_verif.c
 int		ft_verif(t_lst *lst);
+int		recover_args(t_lst *last, char *buffer);
 int		last_redirect(t_lst *lst); // lui donner le maillon > pour savoir si il ya encore des > ou >> apres
 // n'existent pas
 int		has_pipe(t_lst *l);
 int		has_redirect(t_lst *l);
 
+//ft_splitargs.c
 char	**ft_splitargs(t_lst *lst);
+int		spe_lenword(char *str);
+int		remove_quotes(char **tab);
 
 #endif

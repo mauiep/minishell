@@ -6,13 +6,79 @@
 /*   By: ngenadie <ngenadie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:34:36 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/15 20:03:42 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:20:47 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+char	*without_quotes(char *src, int i, int j)
+{
+	char	*str1;
+	char	*str2;
+	char	*str3;
+	char	*new;
+
+	str1 = ft_strndup(src, i);
+	if (!str1)
+		return (NULL);
+	str2 = ft_strndup(src + i + 1, j - i - 1);
+	if (!str2)
+		return (NULL);
+	str3 = ft_strndup(src + j + 1, ft_strlen(src + j + 1));
+	if (!str3)
+		return (NULL);
+	new = ft_strjoin(str1, str2);
+	if (!new)
+		return (NULL);
+	free(str1);
+	free(str2);
+	str1 = new;
+	new = ft_strjoin(new, str3);
+	if (!new)
+		return (NULL);
+	free(str1);
+	free(str3);
+	return (new);
+}
+
+int remove_quotes(char **tab)
+{
+	int		i;
+	int		j;
+	char	c;
+	char	**tmp;
+	char	*to_free;
+
+	i = 0;
+	tmp = tab;
+	while (*tmp)
+	{
+		dprintf(2, "tmp = %s\n", *tmp);
+		while ((*tmp)[i])
+		{
+			to_free = *tmp;
+			while ((*tmp)[i] && (*tmp)[i] != SIMPLE_QUOTE && (*tmp)[i] != 34)
+				i++;
+			c = (*tmp)[i];
+			if (c != '\0')
+			{
+				j = 1;
+				while ((*tmp)[i + j] && (*tmp)[i + j] != c)
+					j++;
+				*tmp = without_quotes(*tmp, i, i + j);
+				if (!(*tmp))
+					return (-1);
+				free(to_free);
+				i = i + j - 1;
+			}
+		}
+		tmp++;
+	}
+	return (0);
+}
 
 int	spe_count_words(char *str)
 {
@@ -25,7 +91,6 @@ int	spe_count_words(char *str)
 	i = 0;
 	while (str[i])
 	{
-//		printf("on est dans la boucle de count i= %d str + i = %s\n", i, str + i);
 		while (str[i] && str[i] == c && c == ' ')
 			i++;
 		if (str[i])
@@ -107,5 +172,7 @@ char	**ft_splitargs(t_lst *lst)
 		j++;
 	}
 	new[j] = NULL;
-	return (new);
+	if (remove_quotes(new) != -1)
+		return (new);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:11:19 by admaupie          #+#    #+#             */
-/*   Updated: 2022/07/14 20:44:59 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/10/20 23:12:26 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+int	push_first_lst(t_lst *new, t_lst *lst)
+{
+	t_lst	*tmp;
+	t_lst	*first;
+
+	first = lst;
+	while (first->prev != NULL)
+		first = first->prev;
+	tmp = first->next;
+	new->prev = first;
+	first->next = new;
+	tmp->prev = new;
+	new->next = tmp;
+	return (1);
+}
 
 int	free_lst(t_lst *src)
 {
@@ -59,8 +75,12 @@ void	ft_printlst(t_lst *a)
 
 	i = 0;
 	tmp = a;
+	while (tmp->prev != NULL)
+		tmp = tmp->prev;
 	while (tmp)
 	{
+		if (tmp->str == NULL)
+			printf("maillon nul\n");
 		if (tmp->str)
 			printf("- %s\n", tmp->str);
 		tmp = tmp->next;
@@ -75,6 +95,8 @@ int	lst_len(t_lst *lst)
 	t_lst	*ptr;
 
 	ptr = lst;
+	while (ptr->prev != NULL)
+		ptr = ptr->prev;
 	i = 0;
 	while (ptr && ptr->next && ++i)
 		ptr = ptr->next;

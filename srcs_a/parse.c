@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:54:56 by admaupie          #+#    #+#             */
-/*   Updated: 2022/08/12 04:40:39 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:10:00 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	parse(char *line_buffer, t_dynarray *darr)
 		len = 1;
 		if (!is_sep(line_buffer[i]) && line_buffer[i] != ' ')
 			len = push_word(lst, line_buffer + i);
-		else if (line_buffer[i] != ' ')
-			len = push_sep(lst, line_buffer + i);
+		else if (line_buffer[i] != ' '){
+			len = push_sep(lst, line_buffer + i);printf("SEP");}
 		if (len < 0)
 			return (print_err(len) + free_lst(lst));
 		i = i + len;
@@ -92,6 +92,17 @@ int	parse(char *line_buffer, t_dynarray *darr)
 		return (print_err(-4));
 	ft_printlst(lst);
 	expand(lst, darr);
+	char **tab;
+	tab = ft_splitargs(lst->next);
+	printf("tab=%p\n", tab);
+	if (remove_quotes(tab) < 0)
+		return (-1);
+	while (*tab)
+	{
+		printf("@@@@@@tab[]=%s\n", *tab);
+		tab++;
+	}
+	printf("tab=%p\n", tab);
 	if (!ft_pipes(lst->next, ft_pipes_left(lst), darr))
 		return (printf("PIPES BAD RETURN\n"), -1);
 	free_lst(lst);
