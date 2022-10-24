@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:02:30 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/24 15:48:43 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:00:46 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_lst	*pick_the_lst(t_lst *last)
 	while (tmp->str != NULL && tmp->prev->str != NULL && tmp->prev->token % 2 == 0)
 		tmp = tmp->prev->prev;
 	if (tmp->str != NULL)
-		return (tmp);//il faut checker quoi prendre ds le buffer
+		return (tmp);
 	else
 		return (NULL);
 }

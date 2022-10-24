@@ -6,7 +6,7 @@
 /*   By: ngenadie <ngenadie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:34:36 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/24 19:20:47 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:00:06 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ int remove_quotes(char **tab)
 
 	i = 0;
 	tmp = tab;
-	while (*tmp)
+	while ((*tmp) != NULL)
 	{
-		dprintf(2, "tmp = %s\n", *tmp);
-		while ((*tmp)[i])
+		while ((int)(*tmp)[i] != 0)
 		{
 			to_free = *tmp;
 			while ((*tmp)[i] && (*tmp)[i] != SIMPLE_QUOTE && (*tmp)[i] != 34)
@@ -75,6 +74,7 @@ int remove_quotes(char **tab)
 				i = i + j - 1;
 			}
 		}
+		i = 0;
 		tmp++;
 	}
 	return (0);
