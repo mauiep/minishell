@@ -22,14 +22,8 @@ INC_H	= $(addprefix ${INC_D}/, ${INC})
 
 all: $(NAME)
 
-$(NAME): ${INC_H} #${SRC_C}
-	${CC} ${CFLAGS} ${SRC} -I${INC_D} -o ${NAME} -lreadline
-
-niki: ${INC_H} #${SRC_C}
+$(NAME): ${INC_H} ${SRC}
 	${CC} ${CFLAGS} niki_main.c ${SRC} -I${INC_D} -o ${NAME} -lreadline
-
-adrien: ${INC_H} #${SRC_C}
-	${CC} ${CFLAGS} ad_main.c ${SRC} -I${INC_D} -o ${NAME} -lreadline
 
 clean:
 	rm -f $(OBJS)
