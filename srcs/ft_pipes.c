@@ -32,7 +32,6 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 	int		fd_in;
 	t_lst	*start_lst;
 
-	//ft_print_list(lst);
 	pipes_left = nb_pipes;
 	pipefd = create_pipe_arr(nb_pipes);
 	i = 0;
@@ -46,9 +45,9 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		if (list[i] == 0)
 		{
 			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
+			ft_close_pipes(pipefd, nb_pipes);
 			ft_handle_redirections(start_lst);
 			lst = start_lst;
-			ft_close_pipes(pipefd, nb_pipes);
 			ft_handle_exec(lst, darr);
 		}
 		i++;

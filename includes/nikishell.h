@@ -45,5 +45,6 @@ void	ft_print_token(t_lst token);
 void	ft_print_list(t_lst *token);
 int		ft_handle_redirections(t_lst *lst);
 int		ft_handle_exec(t_lst *lst, t_dynarray *darr);
+int		ft_open_dup(t_lst *lst, int token);
 
 #endif
