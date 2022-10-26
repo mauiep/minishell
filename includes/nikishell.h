@@ -37,7 +37,7 @@ void	free_pipe_array(int **pipefd, int	nb_pipes);
 int		ft_pipes_left(t_lst *lst);
 char	*ft_strjoin(char *str, char *str2);
 int		ft_check_env(t_dynarray *darr);
-int		ft_open_create(char *filename, bool apnd_or_not);
+int		ft_open_create(char *filename, bool apnd_or_not, int token);
 t_lst	*ft_next_pipe(t_lst *lst);
 int		ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in);
 void	ft_print_pipes(int **pipefd, int nb_pipes);

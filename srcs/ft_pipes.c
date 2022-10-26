@@ -46,7 +46,8 @@ char	*ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		{
 			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
 			ft_close_pipes(pipefd, nb_pipes);
-			ft_handle_redirections(start_lst);
+			if (ft_handle_redirections(start_lst) == -1)
+				return (NULL);
 			lst = start_lst;
 			ft_handle_exec(lst, darr);
 		}
