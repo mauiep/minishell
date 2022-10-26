@@ -24,26 +24,23 @@ int	ft_open_dup(t_lst *lst, int token)
 	{
 		dprintf(2, "DUP2 token 2\n");
 		fd = ft_open_create(lst->next->str, 0, 2);
-		if (fd != -1)
-			if (dup2(fd, STDOUT_FILENO) == -1)
-				return (close(fd), dprintf(2, "dup 2 error\n"), -1);
+		if (fd != -1 && dup2(fd, STDOUT_FILENO) == -1)
+			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
 		close(fd);
 	}
 	else if (token == 3)
 	{
 		dprintf(2, "DUP2 token 3\n");
 		fd = ft_open_create(lst->next->str, 0, 3);
-		if (fd != -1)
-			if (dup2(fd, STDIN_FILENO) == -1)
-				return (close(fd), dprintf(2, "dup 2 error\n"), -1);
+		if (fd != -1 && dup2(fd, STDIN_FILENO) == -1)
+			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
 	}
 	else
 	{
 		dprintf(2, "DUP2 token 4\n");
 		fd = ft_open_create(lst->next->str, 1, 4);
-		if ( fd != -1)
-			if (dup2(fd, STDOUT_FILENO) == -1)
-				return (close(fd), dprintf(2, "dup 2 error\n"), -1);
+		if (fd != -1 && dup2(fd, STDOUT_FILENO) == -1)
+			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
 	}
 	if (fd != -1)
 		close(fd);
