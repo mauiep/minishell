@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:21:18 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/25 23:20:28 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:31:20 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	ft_replacedollar(t_lst *l, int k, int c, t_dynarray *darr)
 	var = NULL;
 	dollar = 0;
 	k++;
-	while (l->str[k + dollar] && l->str[k + dollar] != '\t' 
-			&& l->str[k + dollar]!= SIMPLE_QUOTE && l->str[k + dollar] != ' ' 
-			&& l->str[k + dollar] != 34)
+	while (l->str[k + dollar] && l->str[k + dollar] != '\t'
+		&& l->str[k + dollar] != 39 && l->str[k + dollar] != ' '
+		&& l->str[k + dollar] != 34)
 		dollar++;
 	if (dollar && dollar++)
 		var = ft_getenvval(l->str + k, darr->list, darr->nb_cells, 0);

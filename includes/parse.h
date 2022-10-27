@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:44:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/24 16:37:57 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:48:43 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	ft_printlst(t_lst *a);
 void	push_lst(t_lst *new, t_lst *lst);
 t_lst	*ft_lstnew(void);
 int		lst_len(t_lst *lst);
+//ft_lst_spe.c
 int		push_first_lst(t_lst *new, t_lst *lst);
+t_lst	*pick_the_lst(t_lst *last);
+t_lst	*first_lst(t_lst *lst);
 
 //ft_libft.c
 int		ft_strlen(char *str);

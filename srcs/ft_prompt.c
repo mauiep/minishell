@@ -54,7 +54,7 @@ int	ft_readline(t_dynarray *darr)
 		line = readline(prompt);
 		free(prompt);
 		if (line == NULL || ft_strcmp(line, "exit") == 0)
-			return (0);
+			return (printf("exit\n"), 0);
 		if (*line)
 		{
 			add_history(line);
