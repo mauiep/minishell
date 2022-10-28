@@ -48,13 +48,12 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 			ft_close_pipes(pipefd, nb_pipes);
 			if (ft_handle_redirections(start_lst) == -1)
 				return (0);
-			lst = start_lst;
-			ft_handle_exec(lst, darr);
+			ft_handle_exec(start_lst, darr);
 		}
 		i++;
 		pipes_left--;
 		lst = ft_next_pipe(start_lst);
-		if (lst)
+		if (lst && printf("lst str=%s\n", lst->str))
 			start_lst = lst->next;
 	}
 	ft_close_pipes(pipefd, nb_pipes);

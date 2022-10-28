@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:44:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/26 18:48:43 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/10/28 19:26:02 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		push_word(t_lst *lst, char *buffer);
 int		push_sep(t_lst *lst, char *buffer);
 
 //ft_joindollar.c
+int		ft_joindollar(t_lst *ptr, int i, t_dynarray *darr);
 int		ft_strjoindollar(t_lst *l, char *var, int k, int dollar);
 int		ft_replacedollar(t_lst *l, int k, int c, t_dynarray *darr);
 

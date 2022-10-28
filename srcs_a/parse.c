@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:54:56 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/27 19:54:31 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/10/28 20:40:56 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ int	get_word(char *buffer, t_lst *new)
 		return (-2);
 	new->str = ft_strndup(buffer, i);
 	if (!new->str)
-		return (-1);
+		return (-42);
 	return (1);
 }
 
-void	expand(t_lst *lst, t_dynarray *darr)
+int	expand(t_lst *lst, t_dynarray *darr)
 {
 	t_lst	*ptr;
 	int		i;
+	int		j;
 	int		c;
 
 	ptr = lst->next;
@@ -53,18 +54,22 @@ void	expand(t_lst *lst, t_dynarray *darr)
 			c = 0;
 			while (ptr->str && ptr->str[i])
 			{
+				j = 0;
 				if (c == 0 && (ptr->str[i] == 39 || ptr->str[i] == 34))
 					c = ptr->str[i];
 				else if (c != 0 && ptr->str[i] == c)
 					c = 0;
-				else if (ptr->str[i] == '$' && c != SIMPLE_QUOTE
-						&& ptr->str[i + 1] && ptr->str[i + 1] != ' ')
-					i = i + ft_replacedollar(ptr, i, c, darr);
-				i++;
+				else if (ptr->str[i] == '$' && c != 39
+						&& ptr->str[i + 1] && ptr->str[i + 1] != ' ' && printf("on va rentrer ds join\n"))
+					j = ft_joindollar(ptr, i, darr);
+				if (j == -42)
+					return (-1);
+				i = i + j + 1;
 			}
 		}
 		ptr = ptr->next;
 	}
+	return (1);
 }
 
 int	parse(char *line_buffer, t_dynarray *darr)
@@ -91,7 +96,8 @@ int	parse(char *line_buffer, t_dynarray *darr)
 	if (!ft_verif(lst))
 		return (print_err(-4));
 	ft_printlst(lst);
-	expand(lst, darr);
+	if (expand(lst, darr) == -1)
+		return (printf("BUG EXPAND\n"));
 	if (!ft_pipes(lst->next, ft_pipes_left(lst), darr))
 		return (printf("PIPES BAD RETURN\n"), -1);
 	free_lst(lst);
