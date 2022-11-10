@@ -10,7 +10,7 @@ char	*ft_check_bin_path(char *bin, char *paths)
 	else
 		bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 4);
 	if (bin_path == NULL)
-		return (dprintf(2, "ret null?\n"), (char *)NULL);
+		return ((char *)NULL);
 	init_path = bin_path;
 	if (paths[0] != '/')
 	{
@@ -47,7 +47,6 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	int		i;
 
 	i = 0;
-	printf("find bin paths=%s\n", paths);
 	if (!paths) //DANGEROUS??
 		return (NULL);
 	//	if (access(bin, F_OK & X_OK) == 0)
@@ -59,9 +58,9 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			dprintf(2, "\n      bin_path = %s, argv[0] = %s, argv[1] = %s, envp[0] = %s\n",
-					bin_path, argv[0], argv[1], envp[0]);
-			printf("EXECVE:%d\n", execve(bin_path, argv, envp));
+			dprintf(2, "argv[0] = %s, argv[1] = %s, envp[0] = %s\n",
+					argv[0], argv[1], envp[0]);
+			execve(bin_path, argv, NULL);
 			perror("execve");
 			free(bin_path);
 			return ((char *)1);

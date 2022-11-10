@@ -53,7 +53,7 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		i++;
 		pipes_left--;
 		lst = ft_next_pipe(start_lst);
-		if (lst && printf("lst str=%s\n", lst->str))
+		if (lst)
 			start_lst = lst->next;
 	}
 	ft_close_pipes(pipefd, nb_pipes);
