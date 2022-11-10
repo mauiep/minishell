@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:44:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/28 19:26:02 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:37:07 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ int		has_redirect(t_lst *l);
 //ft_splitargs.c
 char	**ft_splitargs(t_lst *lst);
 int		spe_lenword(char *str);
+
+//utils2.c
+char	*ft_strjoinneg(char *str, char *str2);
+int		ft_negtopos(char **tab);
+
+//ft_quotes.c
 int		remove_quotes(char **tab);
+char	*ft_strpos(char *src);
+int		lst_remove_quotes(t_lst *l);
+
+int		ft_cleanfile(t_lst *lst);
 
 #endif

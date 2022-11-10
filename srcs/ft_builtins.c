@@ -80,7 +80,7 @@ void	ft_echo(char **args)
 	flag = 0;
 	if (args && args[0])
 	{
-		if (ft_strcmp(args[0], "-n"))
+		if (ft_strcmp(args[0], "-n"))//faire un meilleur cmp car -nnnn doit marcher
 		{
 				flag = 1;
 				i++;

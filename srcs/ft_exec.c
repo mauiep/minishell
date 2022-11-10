@@ -10,7 +10,7 @@ char	*ft_check_bin_path(char *bin, char *paths)
 	else
 		bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 4);
 	if (bin_path == NULL)
-		return ((char *)3);
+		return (dprintf(2, "ret null?\n"), (char *)NULL);
 	init_path = bin_path;
 	if (paths[0] != '/')
 	{
@@ -23,6 +23,7 @@ char	*ft_check_bin_path(char *bin, char *paths)
 	ft_strcpy(bin, bin_path + 2 + ft_len_bef_col(paths));
 	if (paths[0] != '/')
 		bin_path -= 1;
+	//printf("init path = %s addr=%p\n", init_path, init_path);
 	return (init_path);
 }
 
@@ -46,9 +47,11 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	int		i;
 
 	i = 0;
+	printf("find bin paths=%s\n", paths);
 	if (!paths) //DANGEROUS??
-		if (access(bin, F_OK & X_OK) == 0)
-			execve(bin, argv, envp);
+		return (NULL);
+	//	if (access(bin, F_OK & X_OK) == 0)
+	//		execve(bin, argv, envp);
 	while (*paths)
 	{
 		bin_path = ft_check_bin_path(bin, paths);
@@ -56,9 +59,12 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			dprintf(2, "BEFORE EXEC:\n      bin_path = %s, argv[0] = %s, argv[1] = %s, envp[0] = %s\n",
+			dprintf(2, "\n      bin_path = %s, argv[0] = %s, argv[1] = %s, envp[0] = %s\n",
 					bin_path, argv[0], argv[1], envp[0]);
-			execve(bin_path, argv, envp);
+			printf("EXECVE:%d\n", execve(bin_path, argv, envp));
+			perror("execve");
+			free(bin_path);
+			return ((char *)1);
 		}
 		else
 			free(bin_path);
@@ -67,23 +73,25 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			paths += 1;
 		i++;
 	}
-	return (NULL);
+	return ((char *)0);
 }
 
 int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
 {
 	char	**args;
+	char	*tmp;
 
 	dprintf(2, "BEFORE SPLITARGS\nlst->str = %s\n", lst->str);
 	args = ft_splitargs(lst);
-	while (lst && lst->token != 1)
+	while (args && lst && lst->token != 1)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
-			dprintf(2, "PRINT BEFORE EXEC: ");
-			if (ft_find_bin(args[0], ft_getenvval("PATH", darr,
-				darr->nb_cells, 1), args, darr->list) == NULL) //A FINIR APRES
-				return (dprintf(2, "BAD EXEC BAD\n"), -1);
+			//ici faire un strcmp de la str avec les builtins et si > 0 lancer le builtin associe
+			tmp = ft_find_bin(args[0], ft_getenvval("PATH", darr,
+				darr->nb_cells, 1), args, darr->list);
+			if (!tmp)
+				return (dprintf(2, "ft bin return 0\n"), -1);
 		}
 		lst = lst->next;
 	}

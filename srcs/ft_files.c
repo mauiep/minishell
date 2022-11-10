@@ -13,7 +13,7 @@ int	ft_open_create(char *filename, bool apnd_or_not, int token)
 	if (access(pathname2, F_OK)) /*no file found*/
 	{
 		if (token == 3)
-			return (free(pathname2), dprintf(2, "File not found\n"), -1);
+			return (free(pathname2), dprintf(2, "File not found\nPATHNAME=%s ET PATHNAME2=%s\n", pathname, pathname2), -1);
 		fd = open(pathname2, O_RDWR | O_CREAT | O_APPEND * apnd_or_not, S_IRWXU);
 		if (fd == -1)
 			return (free(pathname2), dprintf(2, "Cannot create file\n"), -1);

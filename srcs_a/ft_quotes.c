@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:25:52 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/28 20:40:39 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:45:09 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,86 @@ char	*without_quotes(char *src, int i, int j)
 	free(str1);
 	free(str3);
 	return (new);
+}
+
+char	*ft_strpos(char *src)
+{
+	char	*new;
+	int		i;
+
+	i = 0;
+	new = malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!new)
+		return (NULL);
+	while (src[i] != '\0')
+	{
+		if (src[i] > 0)
+			new[i] = src[i];
+		else
+			new[i] = - src[i];
+		i++;
+	}
+	new[i] = 0;
+	return (new);
+}
+
+int	ft_negtopos(char **tab)
+{
+	char	**tmp;
+	char	*to_free;
+	int		i;
+
+	i = 0;
+	tmp = tab;
+	while ((*tmp) != NULL)
+	{
+		i = 0;
+		while ((*tmp) && (*tmp)[i])
+		{
+			to_free = *tmp;
+			if ((*tmp)[i] < 0)
+			{
+				*tmp = ft_strpos(*tmp);
+				if (!(*tmp))
+					return (-1);
+				free(to_free);
+				i = - 1;
+			}
+			i++;
+		}
+		tmp++;
+	}
+	return (0);
+}
+
+int	lst_remove_quotes(t_lst *l)
+{
+	char	*to_free;
+	int		i;
+	int		j;
+	char	c;
+
+	i = 0;
+	to_free = l->str;
+	while (l->str[i] != 0)
+	{
+		to_free = l->str;
+		while (l->str[i] && l->str[i] != 39 && l->str[i] != 34)
+			i++;
+		c = l->str[i];
+		if (c != '\0')
+		{
+			j = 1;
+			while (l->str[i + j] && l->str[i + j] != c)
+				j++;
+			l->str = without_quotes(l->str, i, i + j);
+			if (!l->str)
+				return (-1);
+			free(to_free);
+			i = i + j - 1;
+		}
+	}
+	return (1);
 }
 
 int remove_quotes(char **tab)

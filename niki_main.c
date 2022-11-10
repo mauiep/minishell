@@ -9,7 +9,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (-1);
-	if (init_dyn_env(envp, &darr))
+	if (init_dyn_env(envp, &darr) == -1)
 		return (-1);
 	g_vrac.darr = &darr;
 	signal(SIGINT, SIG_DFL);

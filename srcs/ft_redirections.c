@@ -23,6 +23,8 @@ int	ft_open_dup(t_lst *lst, int token)
 	if (token == 2)
 	{
 		dprintf(2, "DUP2 token 2\n");
+		if (!ft_cleanfile(lst->next))
+			return (-1);
 		fd = ft_open_create(lst->next->str, 0, 2);
 		if (fd != -1 && dup2(fd, STDOUT_FILENO) == -1)
 			return (close(fd), dprintf(2, "dup 2 error\n"), -1);

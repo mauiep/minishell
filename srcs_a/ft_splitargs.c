@@ -6,7 +6,7 @@
 /*   By: ngenadie <ngenadie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:34:36 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/26 18:28:38 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:36:08 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,9 @@ char	**ft_splitargs(t_lst *lst)
 		j++;
 	}
 	new[j] = NULL;
-	if (remove_quotes(new) != -1)
+	if (remove_quotes(new) == -1)
+		return (NULL);
+	if (ft_negtopos(new) != -1)
 		return (new);
 	return (NULL);
 }

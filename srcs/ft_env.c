@@ -8,11 +8,15 @@ int	init_dyn_env(char **envp, t_dynarray *darr)
 	i = 0;
 	while (envp[i])
 		i++;
-	init_dynarray(darr, i, sizeof(char*)); // A SECURE
+	init_dynarray(darr, i, sizeof(char *)); // A SECURE
+	if (!darr)
+		return (-1);
 	i = 0;
 	while (envp[i])
 	{
 		str = malloc(ft_strlen(envp[i]) + 1);
+		if (!str)
+			return (-1);
 		ft_strcpy(envp[i], str);
 		push_dynarray(darr, &str, 1, 0);
 		i++;

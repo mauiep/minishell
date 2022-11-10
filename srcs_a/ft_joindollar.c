@@ -6,7 +6,7 @@
 /*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:21:18 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/28 21:53:58 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:51:28 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_joindollar(t_lst *ptr, int i, t_dynarray *darr)
 	if (!envval)
 		envval = "";
 	ret = ft_strlen(envval);
-	new = ft_strjoin(to_free, envval);
+	new = ft_strjoinneg(to_free, envval);//ft_strjoinneg // mettre envval en neg dans new
 	if (!new)
 		return (-42);
 	free(to_free);
@@ -53,10 +53,10 @@ int	ft_joindollar(t_lst *ptr, int i, t_dynarray *darr)
 	free(dollar);
 	free(envval);
 	ptr->str = new;
+	printf("apres join ptr->str=%s\n", ptr->str);
 	free(tmp);
 	return (ret - 1);
 }
-
 
 int	ft_strjoindollar(t_lst *l, char *var, int k, int dollar)
 {
