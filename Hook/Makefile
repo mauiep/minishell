@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/11/11 15:22:32 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/11/12 01:19:46 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ SRCS	=	main.c\
 			Adrien/parse.c\
 			Adrien/utils.c\
 			Adrien/utils2.c\
+			Built-in/pwd/ft_pwd.c\
+			Built-in/ft_is_built_in.c\
 			Env/ft_change_env.c\
 			Env/ft_create_env.c\
 			Env/ft_create_temp_env.c\

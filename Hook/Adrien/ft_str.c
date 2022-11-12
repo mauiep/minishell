@@ -72,3 +72,21 @@ char	*ft_strjoin2(char *str, char *str2)
 	str3[ft_strlen(str) + ft_strlen(str2)] = '\0';
 	return (str3);
 }
+
+char	*ft_strndup2(const char *src, int n)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = malloc(sizeof(char) * (n + 1));
+	if (!str)
+		return (NULL);
+	while (i < n)
+	{
+		str[i] = src[i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 10:02:34 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/11 15:19:38 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/12 01:16:46 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,9 +196,10 @@ int	parse(char *line_buffer, t_mini *data);
 // Utils
 //==========
 
-int	is_sep(char c);
-int	print_err(int err);
-int	which_redirect(char *str);
+int		is_sep(char c);
+int		print_err(int err);
+int		which_redirect(char *str);
+char	*ft_strndup2(const char *src, int n);
 
 // Utils2
 //==========
@@ -210,7 +211,7 @@ char	*ft_strjoinneg(char *str, char *str2);
 //										Built-in
 //------------------------------------------------------------------------------------
 
-int		ft_is_built_in(t_mini *data);
+int		ft_is_built_in(t_lst *lst);
 //	cd
 //========
 

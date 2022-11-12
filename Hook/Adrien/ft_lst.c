@@ -6,14 +6,11 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:11:19 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/11 14:41:58 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/12 00:35:37 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 int	free_lst(t_lst *src)
 {
@@ -65,6 +62,7 @@ void	ft_printlst(t_lst *a)
 	{
 		if (tmp->str)
 			printf("- %s\n", tmp->str);
+		usleep(200000);
 		tmp = tmp->next;
 		i++;
 	}

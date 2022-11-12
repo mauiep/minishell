@@ -87,6 +87,8 @@ int	ft_handle_exec(t_lst *lst, t_mini *data)
 		if (lst->token == 0 && lst->str != NULL)
 		{
 			//ici faire un strcmp de la str avec les builtins et si > 0 lancer le builtin associe
+			if (ft_is_built_in(lst))
+				continue ;
 			tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data), args, data->env_tab);
 			if (!tmp)
 				return (dprintf(2, "ft bin return 0\n"), -1);

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:54:56 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/11 14:08:56 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/12 01:02:06 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_word(char *buffer, t_lst *new)
 	c = ' ';
 	while (buffer[i] && (c != ' ' || !is_sep(buffer[i])))
 	{
-		if (c == ' ' && (buffer[i] == SIMPLE_QUOTE || buffer[i] == 34))
+		if (c == ' ' && (buffer[i] == '\'' || buffer[i] == '\"'))
 			c = buffer[i];
 		else if (c != ' ' && buffer[i] == c)
 			c = ' ';
@@ -32,7 +32,7 @@ int	get_word(char *buffer, t_lst *new)
 	}
 	if (c != ' ')
 		return (-2);
-	new->str = ft_strndup(buffer, i);
+	new->str = ft_strndup2(buffer, i);
 	if (!new->str)
 		return (-42);
 	return (1);
@@ -79,6 +79,7 @@ int	parse(char *line_buffer, t_mini *data)
 	t_lst	*lst;
 
 	lst = ft_lstnew();
+	ft_printlst(lst);
 	if (!lst)
 		return (print_err(-1));
 	i = 0;
@@ -86,12 +87,23 @@ int	parse(char *line_buffer, t_mini *data)
 	{
 		len = 1;
 		if (!is_sep(line_buffer[i]) && line_buffer[i] != ' ')
+		{
 			len = push_word(lst, line_buffer + i);
+			//fprintf(stdout, "je passe dans le premier if\n");
+		}
 		else if (line_buffer[i] != ' ')
+		{
 			len = push_sep(lst, line_buffer + i);
+			//fprintf(stdout, "je passe dans le deuxieme if\n");
+		}
 		if (len < 0)
+		{
+			//fprintf(stdout, "je passe dans le troisieme if\n");
 			return (print_err(len) + free_lst(lst));
+		}
+		//fprintf(stdout, "len vaut -> %i et i vaut -> %i\n", len, i);
 		i = i + len;
+		//usleep(2000000);
 	}
 	if (!ft_verif(lst))
 		return (print_err(-4));
