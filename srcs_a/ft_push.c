@@ -25,7 +25,7 @@ int	get_next_word(char *buffer, t_lst *new)
 		tmp++;
 	while (tmp[i] && (c != ' ' || (!is_sep(tmp[i]) && tmp[i] != ' ')))
 	{
-		if (c == ' ' && (tmp[i] == SIMPLE_QUOTE || tmp[i] == 34))
+		if (c == ' ' && (tmp[i] == 39 || tmp[i] == 34))
 			c = tmp[i];
 		else if (c != ' ' && tmp[i] == c)
 			c = ' ';

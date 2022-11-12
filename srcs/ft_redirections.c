@@ -20,11 +20,11 @@ int	ft_open_dup(t_lst *lst, int token)
 	int	fd;
 
 	fd = -1;
+	if (ft_cleanfile(lst->next) < 0)				//retirer les quotes et le null du fichier
+		return (-1);
 	if (token == 2)
 	{
-		dprintf(2, "DUP2 token 2\n");
-		if (!ft_cleanfile(lst->next))
-			return (-1);
+		//dprintf(2, "DUP2 token 2\n");				REDIREC >
 		fd = ft_open_create(lst->next->str, 0, 2);
 		if (fd != -1 && dup2(fd, STDOUT_FILENO) == -1)
 			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
@@ -32,14 +32,14 @@ int	ft_open_dup(t_lst *lst, int token)
 	}
 	else if (token == 3)
 	{
-		dprintf(2, "DUP2 token 3\n");
+		//dprintf(2, "DUP2 token 3\n");				REDIREC <
 		fd = ft_open_create(lst->next->str, 0, 3);
 		if (fd != -1 && dup2(fd, STDIN_FILENO) == -1)
 			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
 	}
 	else
 	{
-		dprintf(2, "DUP2 token 4\n");
+		//dprintf(2, "DUP2 token 4\n");				REDIREC >> 
 		fd = ft_open_create(lst->next->str, 1, 4);
 		if (fd != -1 && dup2(fd, STDOUT_FILENO) == -1)
 			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
@@ -48,3 +48,9 @@ int	ft_open_dup(t_lst *lst, int token)
 		close(fd);
 	return (fd);
 }
+//lst->token = 0 string
+//				= 1 pipe
+//				= 2 >
+//				= 3 <
+//				= 4 >>
+//				= 5 <<

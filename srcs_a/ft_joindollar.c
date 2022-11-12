@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+/*
+
+	ft_joindollar sert a remplacer dans la string ptr->str un $ARG par
+	sa valeur recuperee dans l'env, ou une string vide si la variable
+	n'est pas dans l'env
+
+	Args : 	ptr, le maillon de la liste a traiter
+			i, index du $ dans la string
+			darr, la copie de l'environnement
+	Return : la taille de la string de l'env - 1 ou -42 si malloc error
+
+*/
 
 int	ft_joindollar(t_lst *ptr, int i, t_dynarray *darr)
 {
@@ -38,7 +50,7 @@ int	ft_joindollar(t_lst *ptr, int i, t_dynarray *darr)
 	if (!envval)
 		envval = "";
 	ret = ft_strlen(envval);
-	new = ft_strjoinneg(to_free, envval);//ft_strjoinneg // mettre envval en neg dans new
+	new = ft_strjoinneg(to_free, envval);
 	if (!new)
 		return (-42);
 	free(to_free);
@@ -53,64 +65,6 @@ int	ft_joindollar(t_lst *ptr, int i, t_dynarray *darr)
 	free(dollar);
 	free(envval);
 	ptr->str = new;
-	printf("apres join ptr->str=%s\n", ptr->str);
 	free(tmp);
 	return (ret - 1);
-}
-
-int	ft_strjoindollar(t_lst *l, char *var, int k, int dollar)
-{
-	int		i;
-	char	*tmp;
-	char	*new;
-
-	i = ft_strlen(var);
-	tmp = l->str;
-	printf("strjoining $ :\n* tmp/l->str = %s\n* var = %s\n* i=%d\n* dollar=%d\n**************\n", tmp, var, i, dollar);
-	new = malloc(sizeof(char) * (ft_strlen(tmp) + i + 1 - dollar));
-	if (!new)
-		return(-1);
-	i = -1;
-	while (++i >= 0 && tmp[i] && i < k)
-		new[i] = tmp[i];
-	i--;
-	while (++i && var[i - k])
-		new[i] = var[i - k];
-	i--;
-	k--;
-	while (++i && ++k && tmp[k + dollar] != '\0')
-		new[i] = tmp[k + dollar];
-	new[i] = '\0';
-	free(tmp);
-	tmp = NULL;
-	l->str = new;
-	return (1);
-}
-
-int	ft_replacedollar(t_lst *l, int k, int c, t_dynarray *darr)
-{
-	int		i;
-	int		dollar;
-	char	*var;
-
-	(void)c;
-	var = NULL;
-	dollar = 0;
-	k++;
-	while (l->str[k + dollar] && l->str[k + dollar] != '\t'
-		&& l->str[k + dollar] != 39 && l->str[k + dollar] != ' '
-		&& l->str[k + dollar] != 34)
-		dollar++;
-	if (dollar && dollar++)
-		var = ft_getenvval(l->str + k, darr, 0, 0);
-	else if (l->str[k] == 34 || l->str[k] == SIMPLE_QUOTE)
-	{
-		var = "$";
-		dollar++;
-	}
-	i = ft_strlen(var);
-	if (!i)
-		var = "";
-	ft_strjoindollar(l, var, k - 1, dollar);
-	return (i - 1);
 }

@@ -58,9 +58,9 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			dprintf(2, "argv[0] = %s, argv[1] = %s, envp[0] = %s\n",
-					argv[0], argv[1], envp[0]);
-			execve(bin_path, argv, NULL);
+			//dprintf(2, "argv[0] = %s, argv[1] = %s, envp[0] = %s\n",
+			//		argv[0], argv[1], envp[0]);
+			execve(bin_path, argv, envp);
 			perror("execve");
 			free(bin_path);
 			return ((char *)1);
@@ -80,7 +80,7 @@ int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
 	char	**args;
 	char	*tmp;
 
-	dprintf(2, "BEFORE SPLITARGS\nlst->str = %s\n", lst->str);
+	//dprintf(2, "BEFORE SPLITARGS\nlst->str = %s\n", lst->str);
 	args = ft_splitargs(lst);
 	while (args && lst && lst->token != 1)
 	{

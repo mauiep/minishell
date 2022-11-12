@@ -60,7 +60,7 @@ int	expand(t_lst *lst, t_dynarray *darr)
 				else if (c != 0 && ptr->str[i] == c)
 					c = 0;
 				else if (ptr->str[i] == '$' && c != 39
-						&& ptr->str[i + 1] && ptr->str[i + 1] != ' ' && printf("on va rentrer ds join\n"))
+						&& ptr->str[i + 1] && ptr->str[i + 1] != ' ')
 					j = ft_joindollar(ptr, i, darr);
 				if (j == -42)
 					return (-1);
@@ -95,7 +95,7 @@ int	parse(char *line_buffer, t_dynarray *darr)
 	}
 	if (!ft_verif(lst))
 		return (print_err(-4));
-	ft_printlst(lst);
+	//ft_printlst(lst);
 	if (expand(lst, darr) == -1)
 		return (printf("BUG EXPAND\n"));
 	if (!ft_pipes(lst->next, ft_pipes_left(lst), darr))

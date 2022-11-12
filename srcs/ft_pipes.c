@@ -72,7 +72,7 @@ int	ft_wait_procs(int ac, pid_t *list)
 	while (i < ac)
 	{
 		w = waitpid(list[i], &status, 0);
-		printf("status = %d\n", status);
+		//printf("status = %d\n", status); Recuperer le status dans $? ???
 		if (w == -1)
 		{
 			perror("waitpid");
@@ -80,19 +80,19 @@ int	ft_wait_procs(int ac, pid_t *list)
 		}
 		if (WIFEXITED(status))
 		{
-			printf("terminé, code=%d\n", WEXITSTATUS(status));
+			//printf("terminé, code=%d\n", WEXITSTATUS(status));
 		}
 		else if (WIFSIGNALED(status))
 		{
-			printf("tué par le signal %d\n", WTERMSIG(status));
+			//printf("tué par le signal %d\n", WTERMSIG(status));
 		}
 		else if (WIFSTOPPED(status))
 		{
-			printf("arrêté par le signal %d\n", WSTOPSIG(status));
+			//printf("arrêté par le signal %d\n", WSTOPSIG(status));
 		}
 		else if (WIFCONTINUED(status))
 		{
-			printf("relancé\n");
+			//printf("relancé\n");
 		}
 		i++;
 	}
