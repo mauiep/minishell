@@ -25,7 +25,7 @@ int	ft_verif(t_lst *lst)
 		{
 			if (tmp->token == 1 && tmp->next && tmp->next->token != 1)
 				i++;
-			else if (tmp->token > 1 && tmp->next && tmp->next->token == 0)
+			else if (tmp->token > 1 && tmp->next && tmp->next->token =	= 0)
 				i++;
 			else
 				return (0);
@@ -80,21 +80,4 @@ int	recover_args(t_lst *last, char *buffer)
 	}
 	else
 		return (edit_maillon(buffer, i, tmp));
-}
-
-int	last_redirect(t_lst *lst)
-{
-	(void)lst;
-//	t_lst	*tmp;
-//
-//	tmp = lst;
-//	if (lst_len(tmp > 2))
-//	{
-//		if (tmp->next->next->token != 2 && tmp->next->next->token != 4)
-//			return (1);
-//		else
-//			return (0);
-//	}
-//	else
-		return (1);
 }

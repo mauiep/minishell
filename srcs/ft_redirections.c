@@ -1,12 +1,12 @@
 #include "minishell.h"
 
-int	ft_handle_redirections(t_lst *lst)
+int	ft_handle_redirections(t_lst *lst, t_dynarray *darr)
 {
 	while (lst && lst->token != 1)
 	{
-		if (lst->token == 2 || lst->token == 3 || lst->token == 4)
+		if (lst->token == 2 || lst->token == 3 || lst->token == 4 || lst->token == 5)
 		{
-			if (ft_open_dup(lst, lst->token) == -1)
+			if (ft_open_dup(lst, lst->token, darr) == -1)
 				return (-1);
 			lst = lst->next;
 		}
@@ -15,42 +15,61 @@ int	ft_handle_redirections(t_lst *lst)
 	return (0);
 }
 
-int	ft_open_dup(t_lst *lst, int token)
+/*
+
+	Dans cette fonction, lst pointe sur le maillon contenant la redirection,
+	lst->token varie selon le type de redirection.
+	
+	Le fichier se trouvant dans lst->next->str est ouvert et
+	on dup2 le fd sur STDIN ou STDOUT selon la redirection
+
+*/
+
+int	ft_open_dup(t_lst *lst, int token, t_dynarray *darr)
 {
 	int	fd;
 
 	fd = -1;
-	if (ft_cleanfile(lst->next) < 0)				//retirer les quotes et le null du fichier
+	if (ft_cleanfile(lst->next) < 0)// Retirer les quotes et les espaces du nom de fichier
 		return (-1);
-	if (token == 2)
+	if (token == 2)// REDIREC '>'
 	{
-		//dprintf(2, "DUP2 token 2\n");				REDIREC >
 		fd = ft_open_create(lst->next->str, 0, 2);
-		if (fd != -1 && dup2(fd, STDOUT_FILENO) == -1)
-			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
-		close(fd);
+		if (fd == -1)
+			return (-1);
+		if (dup2(fd, STDOUT_FILENO) == -1)
+			return (printf("error : dup2\n"), close(fd), -1);
 	}
-	else if (token == 3)
+	else if (token == 3)// REDIREC '<'
 	{
-		//dprintf(2, "DUP2 token 3\n");				REDIREC <
 		fd = ft_open_create(lst->next->str, 0, 3);
-		if (fd != -1 && dup2(fd, STDIN_FILENO) == -1)
-			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
+		if (fd == -1)
+			return (-1);
+		printf("fd avant redir : %d\n", fd);
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (printf("error : dup2\n"), close(fd), -1);
 	}
-	else
+	else if (token == 4)// REDIREC '>>'
 	{
-		//dprintf(2, "DUP2 token 4\n");				REDIREC >> 
 		fd = ft_open_create(lst->next->str, 1, 4);
-		if (fd != -1 && dup2(fd, STDOUT_FILENO) == -1)
-			return (close(fd), dprintf(2, "dup 2 error\n"), -1);
+		if (fd == -1)
+			return (-1);
+		if (dup2(fd, STDOUT_FILENO) < 0)
+			return (printf("error : dup2\n"), close(fd), -1);
 	}
-	if (fd != -1)
+	else if (token == 5)// REDIREC '<<'
+	{
+		fd = ft_heredoc(lst->next->str, darr);
+		if (fd == -1)
+			return (printf("no fd heredoc\n"), -1);
 		close(fd);
+		fd = open("temp", O_RDONLY);
+		if (fd == -1)
+			return (printf("no fd heredoc\n"), -1);
+		unlink("temp");// Unlink permet que le file soit delete une fois le fd close
+		if (dup2(fd, STDIN_FILENO) < 0)
+			return (printf("error : dup2\n"), close(fd), -1);
+	}
+	close(fd);
 	return (fd);
 }
-//lst->token = 0 string
-//				= 1 pipe
-//				= 2 >
-//				= 3 <
-//				= 4 >>
-//				= 5 <<

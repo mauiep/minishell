@@ -24,6 +24,8 @@ int	get_word(char *buffer, t_lst *new)
 	c = ' ';
 	while (buffer[i] && (c != ' ' || !is_sep(buffer[i])))
 	{
+		if (buffer[i] == '\\' && ft_echap(buffer, i) == 0)
+			return (-3);
 		if (c == ' ' && (buffer[i] == SIMPLE_QUOTE || buffer[i] == 34))
 			c = buffer[i];
 		else if (c != ' ' && buffer[i] == c)
@@ -98,8 +100,7 @@ int	parse(char *line_buffer, t_dynarray *darr)
 	//ft_printlst(lst);
 	if (expand(lst, darr) == -1)
 		return (printf("BUG EXPAND\n"));
-	if (!ft_pipes(lst->next, ft_pipes_left(lst), darr))
-		return (printf("PIPES BAD RETURN\n"), -1);
+	ft_pipes(lst->next, ft_pipes_left(lst), darr);
 	free_lst(lst);
 	return (1);
 }

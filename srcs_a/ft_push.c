@@ -12,6 +12,22 @@
 
 #include "parse.h"
 
+/*
+
+	get_next_word va malloc une chaine de caracteres dans new->str et y inserer
+	le prochain "mot", pouvant contenir des espaces a l'interieur de quotes
+	
+	Args : 	char *buffer, contenant le retour de readline;
+			t_lst *new, le nouveau maillon a ajouter a la liste
+	
+	Return :	 1 si reussi
+				-1 malloc error
+				-2 missing quotes
+				-3 syntax error
+				-4 parse error
+*/
+
+
 int	get_next_word(char *buffer, t_lst *new)
 {
 	int		i;
@@ -25,6 +41,8 @@ int	get_next_word(char *buffer, t_lst *new)
 		tmp++;
 	while (tmp[i] && (c != ' ' || (!is_sep(tmp[i]) && tmp[i] != ' ')))
 	{
+		if (tmp[i] == '\\' && ft_echap(tmp, i) == 0)
+			return (-3);
 		if (c == ' ' && (tmp[i] == 39 || tmp[i] == 34))
 			c = tmp[i];
 		else if (c != ' ' && tmp[i] == c)

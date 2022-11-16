@@ -81,5 +81,13 @@ char	*ft_strpos(char *src);
 int		lst_remove_quotes(t_lst *l);
 
 int		ft_cleanfile(t_lst *lst);
+int		ft_echap(char *str, int i);
+void	ft_quadrafree(void *s1, void *s2, void *s3, void *s4);
+int		end_dollar(char c);
+int		mini_expand(t_lst *tmp, t_dynarray *darr);
+int		ft_heredoc(char	*end, t_dynarray *darr);
+
+
+
 
 #endif

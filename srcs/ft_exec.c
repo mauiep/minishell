@@ -23,7 +23,6 @@ char	*ft_check_bin_path(char *bin, char *paths)
 	ft_strcpy(bin, bin_path + 2 + ft_len_bef_col(paths));
 	if (paths[0] != '/')
 		bin_path -= 1;
-	//printf("init path = %s addr=%p\n", init_path, init_path);
 	return (init_path);
 }
 
@@ -47,6 +46,7 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	int		i;
 
 	i = 0;
+	(void)envp;
 	if (!paths) //DANGEROUS??
 		return (NULL);
 	//	if (access(bin, F_OK & X_OK) == 0)
@@ -54,13 +54,11 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	while (*paths)
 	{
 		bin_path = ft_check_bin_path(bin, paths);
-		if (bin_path == (char *)3)
+		if (bin_path == NULL)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			//dprintf(2, "argv[0] = %s, argv[1] = %s, envp[0] = %s\n",
-			//		argv[0], argv[1], envp[0]);
-			execve(bin_path, argv, envp);
+			execve(bin_path, argv, NULL);
 			perror("execve");
 			free(bin_path);
 			return ((char *)1);
@@ -80,17 +78,16 @@ int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
 	char	**args;
 	char	*tmp;
 
-	//dprintf(2, "BEFORE SPLITARGS\nlst->str = %s\n", lst->str);
 	args = ft_splitargs(lst);
 	while (args && lst && lst->token != 1)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
-			//ici faire un strcmp de la str avec les builtins et si > 0 lancer le builtin associe
+			//ici faire un strcmp de la str avec les builtins et si > 0 lancer le builtin associse
 			tmp = ft_find_bin(args[0], ft_getenvval("PATH", darr,
 				darr->nb_cells, 1), args, darr->list);
 			if (!tmp)
-				return (dprintf(2, "ft bin return 0\n"), -1);
+				return (printf("%s : command not found\n", args[0]), -1);
 		}
 		lst = lst->next;
 	}

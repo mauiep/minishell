@@ -45,18 +45,19 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		if (list[i] == 0)
 		{
 			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
-			ft_close_pipes(pipefd, nb_pipes);
-			if (ft_handle_redirections(start_lst) == -1)
-				return (0);
-			ft_handle_exec(start_lst, darr);
+			ft_close_pipes(pipefd, nb_pipes);// Cette fonction close tous les fd des pipes
+			if (ft_handle_redirections(start_lst, darr) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr
+				return (-1);
+			if (ft_handle_exec(start_lst, darr) == -1)// Dans cette fonction lance l'exec sur start_lst qui contient la commande
+				return (-1);
 		}
 		i++;
 		pipes_left--;
 		lst = ft_next_pipe(start_lst);
 		if (lst)
-			start_lst = lst->next;
+			start_lst = lst->next;// On met le pointeur start_lst sur la prochaine commande
 	}
-	ft_close_pipes(pipefd, nb_pipes);
+	ft_close_pipes(pipefd, nb_pipes);// A voir si on a vraiment besoin de close les fd 2 fois
 	free_pipe_array(pipefd, nb_pipes);
 	ft_wait_procs(i, list);
 	return (1);
@@ -71,8 +72,7 @@ int	ft_wait_procs(int ac, pid_t *list)
 	i = 0;
 	while (i < ac)
 	{
-		w = waitpid(list[i], &status, 0);
-		//printf("status = %d\n", status); Recuperer le status dans $? ???
+		w = waitpid(list[i], &status, 0);//	printf("status = %d\n", status); Recuperer le status dans $? ???
 		if (w == -1)
 		{
 			perror("waitpid");

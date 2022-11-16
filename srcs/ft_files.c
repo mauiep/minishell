@@ -10,7 +10,7 @@ int	ft_open_create(char *filename, bool apnd_or_not, int token)
 	pathname = ft_strjoin(getcwd(buffer, 10000), "/");
 	pathname2 = ft_strjoin(pathname, filename);
 	free(pathname);
-	if (access(pathname2, F_OK)) /*no file found*/
+	if (access(pathname2, F_OK))/*no file found*/
 	{
 		if (token == 3)
 			return (free(pathname2), dprintf(2, "File not found\nPATHNAME=%s ET PATHNAME2=%s\n", pathname, pathname2), -1);
