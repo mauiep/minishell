@@ -18,7 +18,7 @@ char	*ft_check_bin_path(char *bin, char *paths)
 		bin_path[1] = '/';
 		bin_path += 2;
 	}
-	ft_strncpy(paths, bin_path, ft_len_bef_col(paths) + 1);
+	ft_strncpy2(paths, bin_path, ft_len_bef_col(paths) + 1);
 	bin_path[ft_len_bef_col(paths) + 1] = '/';
 	ft_strcpy(bin, bin_path + 2 + ft_len_bef_col(paths));
 	if (paths[0] != '/')
@@ -58,7 +58,7 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			return (NULL);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			execve(bin_path, argv, NULL);
+			execve(bin_path, argv, envp);
 			perror("execve");
 			free(bin_path);
 			return ((char *)1);
@@ -73,7 +73,7 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	return ((char *)0);
 }
 
-int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
+int	ft_handle_exec(t_lst *lst, t_mini *data)
 {
 	char	**args;
 	char	*tmp;
@@ -84,8 +84,7 @@ int	ft_handle_exec(t_lst *lst, t_dynarray *darr)
 		if (lst->token == 0 && lst->str != NULL)
 		{
 			//ici faire un strcmp de la str avec les builtins et si > 0 lancer le builtin associse
-			tmp = ft_find_bin(args[0], ft_getenvval("PATH", darr,
-				darr->nb_cells, 1), args, darr->list);
+			tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data), args, data->env_tab);
 			if (!tmp)
 				return (printf("%s : command not found\n", args[0]), -1);
 		}

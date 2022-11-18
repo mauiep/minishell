@@ -1,12 +1,12 @@
 #include "minishell.h"
 
-int	ft_handle_redirections(t_lst *lst, t_dynarray *darr)
+int	ft_handle_redirections(t_lst *lst, t_mini *data)
 {
 	while (lst && lst->token != 1)
 	{
 		if (lst->token == 2 || lst->token == 3 || lst->token == 4 || lst->token == 5)
 		{
-			if (ft_open_dup(lst, lst->token, darr) == -1)
+			if (ft_open_dup(lst, lst->token, data) == -1)
 				return (-1);
 			lst = lst->next;
 		}
@@ -25,7 +25,7 @@ int	ft_handle_redirections(t_lst *lst, t_dynarray *darr)
 
 */
 
-int	ft_open_dup(t_lst *lst, int token, t_dynarray *darr)
+int	ft_open_dup(t_lst *lst, int token, t_mini *data)
 {
 	int	fd;
 
@@ -45,7 +45,6 @@ int	ft_open_dup(t_lst *lst, int token, t_dynarray *darr)
 		fd = ft_open_create(lst->next->str, 0, 3);
 		if (fd == -1)
 			return (-1);
-		printf("fd avant redir : %d\n", fd);
 		if (dup2(fd, STDIN_FILENO) == -1)
 			return (printf("error : dup2\n"), close(fd), -1);
 	}
@@ -59,7 +58,7 @@ int	ft_open_dup(t_lst *lst, int token, t_dynarray *darr)
 	}
 	else if (token == 5)// REDIREC '<<'
 	{
-		fd = ft_heredoc(lst->next->str, darr);
+		fd = ft_heredoc(lst->next->str, data);
 		if (fd == -1)
 			return (printf("no fd heredoc\n"), -1);
 		close(fd);

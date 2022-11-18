@@ -44,7 +44,7 @@ bool	ft_has_eq(char *str)
 	return (0);
 }
 
-int	ft_strncpy(char *str, char *str2, int n)
+int	ft_strncpy2(char *str, char *str2, int n)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ int	ft_strncpy(char *str, char *str2, int n)
 	return (0);
 }
 
-char	*ft_strjoin(char *str, char *str2)
+char	*ft_strjoin2(char *str, char *str2)
 {
 	char	*str3;
 

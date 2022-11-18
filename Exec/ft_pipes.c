@@ -23,7 +23,7 @@ int	ft_pipes_left(t_lst *lst)
 	return (pipes);
 }
 
-int	ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
+int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 {
 	int		**pipefd;
 	int		i;
@@ -46,9 +46,9 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_dynarray *darr)
 		{
 			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
 			ft_close_pipes(pipefd, nb_pipes);// Cette fonction close tous les fd des pipes
-			if (ft_handle_redirections(start_lst, darr) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr
+			if (ft_handle_redirections(start_lst, data) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr
 				return (-1);
-			if (ft_handle_exec(start_lst, darr) == -1)// Dans cette fonction lance l'exec sur start_lst qui contient la commande
+			if (ft_handle_exec(start_lst, data) == -1)// Dans cette fonction lance l'exec sur start_lst qui contient la commande
 				return (-1);
 		}
 		i++;

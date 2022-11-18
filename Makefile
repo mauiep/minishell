@@ -3,44 +3,86 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: admaupie <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/11/09 15:45:17 by admaupie          #+#    #+#              #
-#    Updated: 2022/11/09 15:45:21 by admaupie         ###   ########.fr        #
+#    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
+#    Updated: 2022/11/18 15:29:05 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+NAME	=	minishell
 
-NAME = minishell
+SRCS	=	main.c\
+			Env/ft_change_env.c\
+			Env/ft_create_env.c\
+			Env/ft_create_temp_env.c\
+			Env/ft_env_len.c\
+			Env/ft_find_env.c\
+			Env/ft_get_env_var.c\
+			Env/ft_replace_env.c\
+			Exec/ft_fd.c\
+			Exec/ft_handle_pipe.c\
+			Exec/ft_open_create.c\
+			Exec/ft_pipes.c\
+			Libft/ft_isalpha.c\
+			Libft/ft_isdigit.c\
+			Libft/ft_putchar_fd.c\
+			Libft/ft_putendl_fd.c\
+			Libft/ft_putstr_fd.c\
+			Libft/ft_split.c\
+			Libft/ft_strcmp.c\
+			Libft/ft_strdup.c\
+			Libft/ft_strjoin.c\
+			Libft/ft_strncmp.c\
+			Libft/ft_strndup.c\
+			Minishell/ft_prompt.c\
+			Minishell/minishell.c\
+			Parsing/expand.c\
+			Parsing/ft_cleanfile.c\
+			Parsing/ft_echap.c\
+			Parsing/ft_joindollar.c\
+			Parsing/ft_quotes_else.c\
+			Parsing/ft_quotes.c\
+			Parsing/ft_splitargs.c\
+			Parsing/parse.c\
+			Redirect/ft_heredoc.c\
+			Redirect/ft_redirections.c\
+			srcs/ft_exec.c\
+			Utils/ft_error.c\
+			Utils/ft_exit.c\
+			Utils/ft_free.c\
+			Utils/ft_if_malloc_issue.c\
+			Utils/ft_init.c\
+			Utils/ft_libft.c\
+			Utils/ft_lst_spe.c\
+			Utils/ft_lst.c\
+			Utils/ft_print_minishell.c\
+			Utils/ft_push.c\
+			Utils/ft_str.c\
+			Utils/ft_verif.c\
+			Utils/utils.c\
+			Utils/utils2.c
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -static-libasan
 
-SRC_N	= dynarray.c ft_env.c ft_fd.c ft_pipes.c ft_sig.c \
-			dynarray2.c ft_builtins.c ft_exec.c ft_mems.c ft_print.c \
-			ft_str.c ft_redirections.c ft_prompt.c ft_files.c ft_minishell.c
-SRC_A	= *
+OBJS= $(SRCS:.c=.o)
 
-SRC_NN	= $(addprefix ${SRC_D}/, ${SRC_N})
-SRC_AA	= $(addprefix ${SRC_AD}/, ${SRC_A})
-SRC		= ${SRC_NN} ${SRC_AA}
-SRC_D	= srcs
-SRC_AD	= srcs_a
-SRC_C	= $(addprefix ${SRC_D}/, ${SRC})
+CC		=	gcc
 
-INC		= minishell.h
-INC_D	= includes
-INC_H	= $(addprefix ${INC_D}/, ${INC})
+CFLAGS	= -g3 -Iincludes
+.c.o:
+		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-all: $(NAME)
+all : ${NAME}
 
-$(NAME): ${INC_H} ${SRC}
-	${CC} ${CFLAGS} niki_main.c ${SRC} -I${INC_D} -o ${NAME} -lreadline
+${NAME}:	${OBJS}
+			${CC} ${CFLAGS} -o ${NAME} ${OBJS} -lreadline
 
 clean:
-	rm -f $(OBJS)
+			rm -rf ${OBJS}
 
-fclean: clean
-	rm -f $(NAME)
+fclean:		clean
+			rm -rf ${NAME}
 
-re: fclean all
+re:			fclean all
+
+.PHONY:	all clean fclean re
