@@ -20,7 +20,9 @@ SRCS	=	main.c\
 			Env/ft_find_env.c\
 			Env/ft_get_env_var.c\
 			Env/ft_replace_env.c\
+			Exec/ft_exec.c\
 			Exec/ft_fd.c\
+			Exec/ft_find_bin.c\
 			Exec/ft_handle_pipe.c\
 			Exec/ft_open_create.c\
 			Exec/ft_pipes.c\
@@ -47,7 +49,6 @@ SRCS	=	main.c\
 			Parsing/parse.c\
 			Redirect/ft_heredoc.c\
 			Redirect/ft_redirections.c\
-			srcs/ft_exec.c\
 			Utils/ft_error.c\
 			Utils/ft_exit.c\
 			Utils/ft_free.c\

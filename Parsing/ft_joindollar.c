@@ -76,51 +76,72 @@ int	end_dollar(char c)
 	return (1);
 }
 
+char	*dollarval(char *tmp, int i, int j, t_mini *data)
+{
+	char	*dollar;
+	char	*envval;
+
+	dollar = ft_strndup2(tmp + i + 1, j - 1);//		dollar  est un strdup contenant la string suivant le '$' exemple: PWD 
+	if (!dollar)
+		return (NULL);
+	envval = ft_get_env_var(dollar, data);//	envval est la valeur correspondant a dollar dans le envp 
+	if (!envval)
+		envval = "";
+	free(dollar);
+	return (envval);
+}
+
+int	return_dollar(char *str, char *tmp, char *envval, t_lst *ptr)
+{
+	int		ret;
+	char	*to_free;
+
+	to_free = ptr->str;
+	ptr->str = ft_strjoin2(ptr->str, str);//	new est un join entre le new (debut + dollarval) et envval (apres le $)
+	if (!ptr->str)
+		return (-42);
+	ret = ft_strlen(envval) - 1;
+	ft_quadrafree(str, envval, tmp, to_free);
+	return (ret);
+}
+
 int	ft_joindollar(t_lst *ptr, int i, t_mini *data)
 {
 	char	*tmp;
 	char	*to_free;
 	char	*envval;
-	char	*dollar;
-	char	*new;
 	int		j;
-	int		ret;
 
 	j = 1;
 	tmp = ptr->str;//					tmp est le pointeur vers le premier ptr->str
-	to_free = ft_strndup2(tmp, i);//			to free est un strndup de tmp jusqu'au dollar
-	if (!to_free)
+	ptr->str = ft_strndup2(tmp, i);//			la on a un strndup de tmp jusqu'au dollar
+	if (!ptr->str)
 		return (-42);
+	to_free = ptr->str;//						TO_FREE = 'echo '
 	while (end_dollar(tmp[i + j]) == 0)
 		j++;
-	dollar = ft_strndup2(tmp + i + 1, j - 1);//		dollar  est un strdup de la fin de tmp 
-	if (!dollar)
-		return (-42);
-	envval = ft_get_env_var(dollar, data);//	envval est la valeur correspondant a dollar dans le envp
+	envval = dollarval(tmp, i, j, data);
 	if (!envval)
-		envval = "";
-	ret = ft_strlen(envval);
-	new = ft_strjoinneg(to_free, envval);//			new est un join du to_free et du envval
-	if (!new)
+		return (-42);
+	ptr->str = ft_strjoinneg(to_free, envval);//			new est un join du to_free et du envval
+	if (!ptr->str)
 		return (-42);
 	free(to_free);//						free la valeur du debut
-	to_free = new;//							on pointe to_free sur new
-	envval = ft_strndup2(tmp + i + j, ft_strlen(tmp + i + j));
-	if (!envval)
+	to_free = ft_strndup2(tmp + i + j, ft_strlen(tmp + i + j));//	ici on dup la fin de la chaine (apres le $)
+	if (!ptr->str)
 		return (-42);
-	new = ft_strjoin2(new, envval);//	new est un join 
-	if (!new)
-		return (-42);
-	ptr->str = new;
-	ft_quadrafree(tmp, dollar, envval, NULL);
-	return (ret - 1);
+		return (return_dollar(to_free, tmp, envval, ptr));
 }
 
 void	ft_quadrafree(void *s1, void *s2, void *s3, void *s4)
 {
-	free(s1);
-	free(s2);
-	free(s3);
-	free(s4);
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
+	if (s3)
+		free(s3);
+	if (s4)
+		free(s4);
 }
 
