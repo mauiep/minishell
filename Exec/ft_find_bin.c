@@ -65,6 +65,7 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 		bin_path = ft_check_bin_path(bin, paths);
 		if (bin_path == NULL)
 			return (NULL);
+		//dprintf(2, "on va tenter access,\nbin_path=%s\nargv[0]=%s\nbin=%s\n", bin_path, argv[0], bin);
 		if (access(bin_path, F_OK & X_OK) == 0)
 		{
 			execve(bin_path, argv, envp);

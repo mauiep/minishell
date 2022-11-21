@@ -49,7 +49,6 @@ int	ft_heredoc(char	*end, t_mini *data)
 			return (free(buff), free(tmp), close(fd), -1);
 		write(fd, tmp->str, ft_strlen(tmp->str));
 		write(fd, "\n", 1);
-		// ft putstr_fd_endl    
 		ft_quadrafree(tmp->str, NULL, tmp, NULL);
 	}
 	return (fd);

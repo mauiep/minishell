@@ -22,11 +22,13 @@ int	ft_handle_exec(t_lst *lst, t_mini *data)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
-			//ici faire un strcmp de la str avec les builtins
 			tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data),
 					args, data->env_tab);
 			if (!tmp)
-				return (printf("%s : command not found\n", args[0]), -1);
+			{
+				fprintf(stderr, "%s : command not found\n", args[0]);
+				exit(-1);
+			}
 		}
 		lst = lst->next;
 	}

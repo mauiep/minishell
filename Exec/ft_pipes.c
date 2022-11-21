@@ -47,7 +47,6 @@ static int	ft_init_pipe_var(t_mini *data, int nb_pipes, t_lst *lst)
 	data->list = malloc(sizeof(pid_t) * (nb_pipes + 1));
 	if (!data->list)
 		return (-1);
-	
 }
 
 int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
@@ -65,7 +64,7 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 		data->list[data->i] = fork();
 		if (data->list[data->i] == 0)
 		{
-			ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
+			 ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
 			ft_close_pipes(data->pipefd, nb_pipes);// Cette fonction close tous les fd des pipes
 			if (ft_handle_redirections(data->start_lst, data) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr
 				return (-1);
@@ -99,22 +98,22 @@ int	ft_wait_procs(int ac, pid_t *list)
 			perror("waitpid");
 			exit(EXIT_FAILURE);
 		}
-		if (WIFEXITED(status))
+		/*if (WIFEXITED(status))
 		{
-			//printf("terminé, code=%d\n", WEXITSTATUS(status));
+			printf("terminé, code=%d\n", WEXITSTATUS(status));
 		}
 		else if (WIFSIGNALED(status))
 		{
-			//printf("tué par le signal %d\n", WTERMSIG(status));
+			printf("tué par le signal %d\n", WTERMSIG(status));
 		}
 		else if (WIFSTOPPED(status))
 		{
-			//printf("arrêté par le signal %d\n", WSTOPSIG(status));
+			printf("arrêté par le signal %d\n", WSTOPSIG(status));
 		}
 		else if (WIFCONTINUED(status))
 		{
-			//printf("relancé\n");
-		}
+			printf("relancé\n");
+		}*/
 		i++;
 	}
 	return (0);

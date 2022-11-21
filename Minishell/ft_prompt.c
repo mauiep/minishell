@@ -26,8 +26,8 @@ char	*ft_prompt(t_mini *data)
 	char	*buffer;
 
 	ft_check_free(data);
-	if (data->prompt_var > 0)
-		ft_putchar_fd('\n', 1);
+	//if (data->prompt_var > 0)
+	//	ft_putchar_fd('\n', 1);
 	buffer = getcwd(NULL, 0);
 	if (!buffer)
 		return (NULL);

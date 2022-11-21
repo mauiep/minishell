@@ -22,4 +22,5 @@ int main(int argc, char *argv[], char *envp[])
 	ft_init(&data, argc, argv, envp);
 	ft_create_env(&data);
 	minishell(&data);
+	return (0);
 }

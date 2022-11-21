@@ -101,6 +101,8 @@ int	return_dollar(char *str, char *tmp, char *envval, t_lst *ptr)
 	if (!ptr->str)
 		return (-42);
 	ret = ft_strlen(envval) - 1;
+	if (*envval == '\0')
+		envval = NULL;
 	ft_quadrafree(str, envval, tmp, to_free);
 	return (ret);
 }

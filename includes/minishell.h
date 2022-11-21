@@ -31,6 +31,18 @@
 # define RESET	"\033[0m"
 
 //------------------------------------------------------------------------------------
+//										Liste chainee
+//------------------------------------------------------------------------------------
+
+typedef struct s_lst
+{
+	char			*str;
+	int				token;
+	struct s_lst	*next;
+	struct s_lst	*prev;
+}					t_lst;
+
+//------------------------------------------------------------------------------------
 //										Structure
 //------------------------------------------------------------------------------------
 
@@ -51,7 +63,7 @@ typedef struct s_mini
 	pid_t	*list;
 	int		pipes_left;
 	int		fd_in;
-	t_lst	*start_lst;
+	struct s_lst	*start_lst;
 }			t_mini;
 
 typedef struct s_joindollard
@@ -64,19 +76,6 @@ typedef struct s_joindollard
 	int		j;
 	int		ret;	
 }			t_joindollard;
-
-//------------------------------------------------------------------------------------
-//										Liste chainee
-//------------------------------------------------------------------------------------
-
-typedef struct s_lst
-{
-	char			*str;
-	int				token;
-	struct s_lst	*next;
-	struct s_lst	*prev;
-}					t_lst;
-
 
 //------------------------------------------------------------------------------------
 //										Adrien
