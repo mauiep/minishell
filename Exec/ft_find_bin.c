@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_find_bin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 19:09:14 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:23:53 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_check_bin_path(char *bin, char *paths)
 	else
 		bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 4);
 	if (bin_path == NULL)
-		return ((char *)NULL);
+		return ((char *) NULL);
 	init_path = bin_path;
 	if (paths[0] != '/')
 	{
@@ -58,11 +58,8 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	int		i;
 
 	i = 0;
-	(void)envp;
 	if (!paths) //DANGEROUS??
-		return (NULL);
-	//	if (access(bin, F_OK & X_OK) == 0)
-	//		execve(bin, argv, envp);
+		return (NULL); //	if (access(bin, F_OK & X_OK) == 0) execve(bin, argv, envp);
 	while (*paths)
 	{
 		bin_path = ft_check_bin_path(bin, paths);

@@ -46,6 +46,12 @@ typedef struct s_mini
 	char	*prompt;
 	int		prompt_var;
 	char	*converted_path;
+	int		**pipefd;
+	int		i;
+	pid_t	*list;
+	int		pipes_left;
+	int		fd_in;
+	t_lst	*start_lst;
 }			t_mini;
 
 typedef struct s_joindollard

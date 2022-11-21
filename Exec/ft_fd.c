@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:39 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 19:17:40 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:21:13 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	**create_pipe_arr(int nb_pipes)
 	int	**pipefd;
 	int	ret;
 
-	pipefd = malloc(nb_pipes * sizeof(int*));
+	pipefd = malloc(nb_pipes * sizeof(int *));
 	if (pipefd == NULL)
 		return (NULL);
 	i = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:16:54 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 19:16:57 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:50:57 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,43 +35,52 @@ int	ft_pipes_left(t_lst *lst)
 	return (pipes);
 }
 
+static int	ft_init_pipe_var(t_mini *data, int nb_pipes, t_lst *lst)
+{
+	data->pipes_left = nb_pipes;
+	data->pipefd = create_pipe_arr(nb_pipes);
+	if (!data->pipefd)
+		return (0);
+	data->i = 0;
+	data->start_lst = lst;
+	data->fd_in = 0;
+	data->list = malloc(sizeof(pid_t) * (nb_pipes + 1));
+	if (!data->list)
+		return (-1);
+	
+}
+
 int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 {
-	int		**pipefd;
-	int		i;
-	pid_t	list[nb_pipes + 1];
-	int		pipes_left;
-	int		fd_in;
-	t_lst	*start_lst;
+	int	init;
 
-	pipes_left = nb_pipes;
-	pipefd = create_pipe_arr(nb_pipes);
-	i = 0;
-	if (!pipefd)
+	init = ft_init_pipe_var(data, nb_pipes, lst);
+	if (init == 0)
 		return (printf("FD_ERR\n"), 0);
-	start_lst = lst;
+	else if (init == -1)
+		return (-1);
 	while (lst && lst->str)
 	{
-		lst = start_lst;
-		list[i] = fork();
-		if (list[i] == 0)
+		lst = data->start_lst;
+		data->list[data->i] = fork();
+		if (data->list[data->i] == 0)
 		{
-			ft_handle_pipe(pipefd, pipes_left, nb_pipes, &fd_in);
-			ft_close_pipes(pipefd, nb_pipes);// Cette fonction close tous les fd des pipes
-			if (ft_handle_redirections(start_lst, data) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr
+			ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
+			ft_close_pipes(data->pipefd, nb_pipes);// Cette fonction close tous les fd des pipes
+			if (ft_handle_redirections(data->start_lst, data) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr
 				return (-1);
-			if (ft_handle_exec(start_lst, data) == -1)// Dans cette fonction lance l'exec sur start_lst qui contient la commande
+			if (ft_handle_exec(data->start_lst, data) == -1)// Dans cette fonction lance l'exec sur start_lst qui contient la commande
 				return (-1);
 		}
-		i++;
-		pipes_left--;
-		lst = ft_next_pipe(start_lst);
+		data->i++;
+		data->pipes_left--;
+		lst = ft_next_pipe(data->start_lst);
 		if (lst)
-			start_lst = lst->next;// On met le pointeur start_lst sur la prochaine commande
+			data->start_lst = lst->next;// On met le pointeur start_lst sur la prochaine commande
 	}
-	ft_close_pipes(pipefd, nb_pipes);// A voir si on a vraiment besoin de close les fd 2 fois
-	free_pipe_array(pipefd, nb_pipes);
-	ft_wait_procs(i, list);
+	ft_close_pipes(data->pipefd, nb_pipes);// A voir si on a vraiment besoin de close les fd 2 fois
+	free_pipe_array(data->pipefd, nb_pipes);
+	ft_wait_procs(data->i, data->list);
 	return (1);
 }
 
