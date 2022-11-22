@@ -225,14 +225,15 @@ int		ft_heredoc(char	*end, t_mini *data);
 //										Built-in
 //------------------------------------------------------------------------------------
 
-int		ft_is_built_in(t_lst *lst);
+int		ft_is_built_in(char **args, t_mini *data);
+
 //	cd
 //========
 
 int		ft_cd_error_manager(char *path, t_mini *data);
-int		ft_cd(t_mini *data);
+int		ft_cd(char **args, t_mini *data);
 int		ft_change_directory(char *path, t_mini *data);
-char	*ft_convert_arg_to_path(t_mini *data);
+char	*ft_convert_arg_to_path(char **args, t_mini *data);
 
 //	env
 //========

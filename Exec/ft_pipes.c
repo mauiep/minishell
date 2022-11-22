@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:16:54 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/21 09:50:57 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 12:28:59 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,21 @@ static int	ft_init_pipe_var(t_mini *data, int nb_pipes, t_lst *lst)
 int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 {
 	int	init;
-
+	char **args;
+	
 	init = ft_init_pipe_var(data, nb_pipes, lst);
 	if (init == 0)
 		return (printf("FD_ERR\n"), 0);
 	else if (init == -1)
 		return (-1);
+	args = ft_splitargs(lst);
 	while (lst && lst->str)
 	{
 		lst = data->start_lst;
+		if (nb_pipes == 0 && ft_is_built_in(args, data))
+		{
+			return (1);
+		}
 		data->list[data->i] = fork();
 		if (data->list[data->i] == 0)
 		{
@@ -98,7 +104,7 @@ int	ft_wait_procs(int ac, pid_t *list)
 			perror("waitpid");
 			exit(EXIT_FAILURE);
 		}
-		/*if (WIFEXITED(status))
+		if (WIFEXITED(status))
 		{
 			printf("terminé, code=%d\n", WEXITSTATUS(status));
 		}
@@ -113,7 +119,7 @@ int	ft_wait_procs(int ac, pid_t *list)
 		else if (WIFCONTINUED(status))
 		{
 			printf("relancé\n");
-		}*/
+		}
 		i++;
 	}
 	return (0);

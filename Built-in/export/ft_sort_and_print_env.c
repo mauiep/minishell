@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sort_and_print_env.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/04 13:45:53 by ceatgie           #+#    #+#             */
+/*   Updated: 2022/11/21 15:08:30 by ceatgie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static void	ft_swap(char **temp_env, int j)
+{
+	char *tmp;
+	
+	tmp = temp_env[j];
+	temp_env[j] = temp_env[j + 1];
+	temp_env[j + 1] = tmp;
+}
+
+static void	ft_print_env(char **temp_env)
+{
+	int	i;
+
+	i = 0;
+	while (temp_env[i])
+	{
+		ft_putstr_fd(temp_env[i], 1);
+		ft_putchar_fd('\n', 1);
+		i++;
+	}
+	ft_free(temp_env);
+}
+
+
+void	ft_sort_and_print_env(t_mini *data)
+{
+	char	**temp_env;
+	int		i;
+	int		j;
+	char	*tmp;
+
+	temp_env = ft_create_temp_env(data, ft_env_len(data));
+	if (!temp_env)
+	{
+		ft_free(temp_env);
+		return ;
+	}
+	i = 0;
+	j = 0;
+	while (temp_env[i])
+	{
+		while (temp_env[j + 1])
+		{
+			if (ft_strcmp(temp_env[j], temp_env[j + 1]) > 0)
+				ft_swap(temp_env, j);
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	ft_print_env(temp_env);
+}
