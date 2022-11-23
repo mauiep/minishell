@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:41:34 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/22 12:25:16 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 13:27:52 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 int	ft_is_built_in(char **args, t_mini *data)
 {
+	if (!args || !args[0])
+		return (-1);
 	if (!(ft_strcmp("pwd",args[0])))										// Si l'input utilisateur est pwd
 	{
 		ft_pwd();													  	  // On lance le built in pwd
@@ -34,16 +36,17 @@ int	ft_is_built_in(char **args, t_mini *data)
 		ft_env(data);											     // On lance le built in env
 		return (1);												    // On retourne 1 pour dire que ca ete bien utiliser
 	}
-	else if (!(ft_strcmp("cd", args[0])))
+	else if (!(ft_strcmp("cd", args[0])))						  // Si l'input utilisateur est env
 	{
-		ft_cd(args, data);
+		ft_cd(args, data);										// On lance le built in cd
+		return (1);											   // On retourne 1 pour dire que ca ete bien utiliser
+	}
+	else if (!(ft_strcmp("unset", args[0])))
+	{
+		ft_unset(args, data);
 		return (1);
 	}
-	/*else if (!(ft_strcmp("unset", data->cmd[0])))
-	{
-		ft_unset(data);
-		return (1);
-	}
+	/*
 	else if (!(ft_strcmp("export", data->cmd[0])))
 	{
 		ft_export(data);

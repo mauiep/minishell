@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:16:54 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/22 12:28:59 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 15:51:02 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 	else if (init == -1)
 		return (-1);
 	args = ft_splitargs(lst);
+	if (!args)
+		return (-1);
 	while (lst && lst->str)
 	{
 		lst = data->start_lst;
 		if (nb_pipes == 0 && ft_is_built_in(args, data))
-		{
 			return (1);
-		}
 		data->list[data->i] = fork();
 		if (data->list[data->i] == 0)
 		{
-			 ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
+			ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
 			ft_close_pipes(data->pipefd, nb_pipes);// Cette fonction close tous les fd des pipes
 			if (ft_handle_redirections(data->start_lst, data) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr
 				return (-1);
@@ -104,7 +104,7 @@ int	ft_wait_procs(int ac, pid_t *list)
 			perror("waitpid");
 			exit(EXIT_FAILURE);
 		}
-		if (WIFEXITED(status))
+		/*if (WIFEXITED(status))
 		{
 			printf("terminé, code=%d\n", WEXITSTATUS(status));
 		}
@@ -119,7 +119,7 @@ int	ft_wait_procs(int ac, pid_t *list)
 		else if (WIFCONTINUED(status))
 		{
 			printf("relancé\n");
-		}
+		}*/
 		i++;
 	}
 	return (0);

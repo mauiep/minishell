@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:44:05 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/22 11:38:48 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 14:35:20 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static int	ft_cd_else(char **args, t_mini *data)
 	pwd = NULL;															  				// On l'initialise a NULL
 	if (!ft_strcmp(args[1], "-"))									 			   // Si l'argument est "-"
 	{
-		pwd = ft_get_env_var("OLDPWD=", data);						   				 // On associe la variable d'environement OLDPWD a pwd
+		pwd = ft_get_env_var("OLDPWD", data);						   				 // On associe la variable d'environement OLDPWD a pwd
 		if (pwd)													  				// Si il n'y a pas eu d'erreur de malloc
 		{
 			ft_cd_error_manager(pwd, data);										  // On lance ft_error_manager() qui va s'occuper de changer de directory
 			free(pwd);											   				 // On free pwd pour eviter les fuites de memoires
 		}
-		pwd = ft_get_env_var("PWD=", data);						 			   // On associe la variable d'environement PWD a pwd
+		pwd = ft_get_env_var("PWD", data);						 			   // On associe la variable d'environement PWD a pwd
 		if (pwd)															  // Si il n'y a pas d'erreur de malloc
 		{
 			ft_putstr_fd(pwd, 1);							  				// On ecrit le path actuel sur la sortie standard

@@ -24,11 +24,15 @@
 //										Colors
 //------------------------------------------------------------------------------------
 
-# define RED	"\033[0;31m"
-# define YELLOW	"\033[0;33m"
-# define GREEN	"\033[1;32m"
-# define BLUE "\033[1;34m"
-# define RESET	"\033[0m"
+# define BLACK "\001\033[1;30m\002"
+# define RED "\001\033[1;31m\002"
+# define GREEN "\001\033[1;32m\002"
+# define YELLOW "\001\033[1;33m\002"
+# define BLUE "\001\033[1;34m\002"
+# define PURPLE "\001\033[1;35m\002"
+# define CYAN "\001\033[1;36m\002"
+# define WHITE "\001\033[1;37m\002"
+# define RESET "\001\033[0m\002"
 
 //------------------------------------------------------------------------------------
 //										Liste chainee
@@ -256,7 +260,7 @@ void	ft_pwd(void);
 //	unset
 //========
 
-int	ft_unset(t_mini *data);
+int	ft_unset(char **args, t_mini *data);
 
 //------------------------------------------------------------------------------------
 //										Env

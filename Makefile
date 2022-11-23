@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/11/21 15:32:14 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/11/22 13:29:16 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS	=	main.c\
 			Built-in/cd/ft_convert_arg_to_path.c\
 			Built-in/env/ft_env.c\
 			Built-in/pwd/ft_pwd.c\
+			Built-in/unset/ft_unset.c\
 			Built-in/ft_is_built_in.c\
 			Env/ft_change_env.c\
 			Env/ft_create_env.c\

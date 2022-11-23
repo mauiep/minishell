@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 23:35:57 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/21 15:08:30 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 16:08:12 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,7 @@ void	ft_add_env_var(t_mini *data, int arg)
 {
 	char	**env_temp;
 	int		size;
-	int		i;
-
-	i = 0;
-	size = (ft_env_len(data) + 1);
-	env_temp = ft_create_temp_env(data, size);
-	while (env_temp[i])
-	{
-		if (!env_temp[i])
-			break ;
-		i++;
-	}
+	int		i; free detected 
 	env_temp[i] = ft_strdup(data->cmd[arg]);
 	env_temp[i + 1] = NULL;
 	ft_fill_new_env(data, env_temp);

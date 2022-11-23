@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:25 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:03:10 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 15:39:38 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int	minishell(t_mini *data)
 	while (42)
 	{
 		buffer = ft_prompt(data);
-		if(!buffer)
+		if (!buffer)
+		{
 			return (ft_error("Error: fail getcwd", RED, -1));
+		}
 		data->line = readline(buffer);
 		add_history(data->line);
 		if (data->line[0] == '\0')

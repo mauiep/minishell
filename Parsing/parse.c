@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 12:23:26 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:39:36 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 15:49:45 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,21 @@ int	parse(char *line_buffer, t_mini *data)
 	{
 		i = parse_else(line_buffer, i, lst);
 		if (i < 0)
+		{
+			free_lst(lst);
 			return (i);
+		}
 	}
 	if (!ft_verif(lst))
+	{
+		free_lst(lst);
 		return (print_err(-4));
+	}
 	if (expand(lst, data) == -1)
+	{
+		free_lst(lst);
 		return (printf("BUG EXPAND\n"));
+	}
 	ft_pipes(lst->next, ft_pipes_left(lst), data);
 	free_lst(lst);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 02:56:29 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/21 15:08:30 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/22 13:23:42 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,18 @@ static	char	**ft_realloc_env(int index, t_mini *data)
 **
 */
 
-int	ft_unset(t_mini *data)
+int	ft_unset(char **args, t_mini *data)
 {
 	int	env_index;																					// On creer une variable env_index qui contiendra l'index de la string que l'on supprimer dans env
 	int	i;																						   // On creer une variable i qui servira a parcourir les arguments de unset()
 
-	if (!data->cmd[1])																			 // Si il n'y a pas d'arguments derriere unset()
+	if (!args[1])																			 	 // Si il n'y a pas d'arguments derriere unset()
 		return (1);																				// Alors on ne fait rien et on return (1)
 	env_index = 0;																			   // On initialise env_index a 0
 	i = 1;																					  // On initialise i a 1 car cmd[0] c'est unset
-	while (data->cmd[i])																	 // Tant que il existe des arguments
+	while (args[i])																	 		 // Tant que il existe des arguments
 	{
-		env_index = ft_find_env(data->cmd[i], data);									   // On recupere l'index de la string que l'on veut supprimer dans env
+		env_index = ft_find_env(args[i], data);									   		   // On recupere l'index de la string que l'on veut supprimer dans env
 		if (env_index != -1)															  // Si env_index vaut autre chose que -1 alors l'argument est une variable d'environement
 		{
 			if (data->env_tab[env_index])												// On verifie si la string existe dans env											
@@ -85,7 +85,7 @@ int	ft_unset(t_mini *data)
 		{
 			ft_putstr_fd(RED, 2);												   // On ecrit en rouge sur la sortie erreur
 			ft_putstr_fd("minishell: unset: `", 2);								  // minishell: unset: `
-			ft_putstr_fd(data->cmd[i], 2);										 // L'argument
+			ft_putstr_fd(args[i], 2);										 	 // L'argument
 			ft_putstr_fd("': not a valid identifier\n", 2);						// ': not a valid identifier
 			ft_putstr_fd(RESET, 2);											   // On reset la couleur sur la sortie erreur
 		}
