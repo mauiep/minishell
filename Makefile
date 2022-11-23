@@ -35,8 +35,7 @@ SRCS	=	main.c\
 			Exec/ft_fd.c\
 			Exec/ft_find_bin.c\
 			Exec/ft_handle_pipe.c\
-			Exec/ft_open_create.c\
-			Exec/ft_pipes.c\
+			Exec/ft_signals.c\
 			Libft/ft_isalpha.c\
 			Libft/ft_isdigit.c\
 			Libft/ft_putchar_fd.c\
@@ -59,6 +58,8 @@ SRCS	=	main.c\
 			Parsing/ft_splitargs.c\
 			Parsing/parse.c\
 			Redirect/ft_heredoc.c\
+			Redirect/ft_open_create.c\
+			Redirect/ft_pipes.c\
 			Redirect/ft_redirections.c\
 			Utils/ft_error.c\
 			Utils/ft_exit.c\

@@ -68,8 +68,12 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 		if (nb_pipes == 0 && ft_is_built_in(args, data))
 			return (1);
 		data->list[data->i] = fork();
+		signal(SIGINT, SIG_IGN);
 		if (data->list[data->i] == 0)
 		{
+			signal(SIGINT, sig_null);
+			signal(SIGINT, sig_handler);
+			//signal(SIGQUIT, SIG_IGN);
 			ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
 			ft_close_pipes(data->pipefd, nb_pipes);// Cette fonction close tous les fd des pipes
 			if (ft_handle_redirections(data->start_lst, data) == -1)// Dans cette fonction les stdin et stdout sont edit selon les redirr

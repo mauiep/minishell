@@ -21,6 +21,7 @@ int main(int argc, char *argv[], char *envp[])
 	ft_print_minishell();
 	ft_init(&data, argc, argv, envp);
 	ft_create_env(&data);
+	define_signals();
 	minishell(&data);
 	return (0);
 }

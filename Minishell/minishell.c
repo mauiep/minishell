@@ -18,6 +18,7 @@ int	minishell(t_mini *data)
 
 	while (42)
 	{
+		define_signals();
 		buffer = ft_prompt(data);
 		if (!buffer)
 		{

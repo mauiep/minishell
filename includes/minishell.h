@@ -224,6 +224,12 @@ void	ft_quadrafree(void *s1, void *s2, void *s3, void *s4);
 int		mini_expand(t_lst *tmp, t_mini *data);
 int		ft_heredoc(char	*end, t_mini *data);
 
+// ft_signals
+//===========
+
+void    define_signals(void);
+void    sig_handler(int signal);
+void    sig_null(int signal);
 
 //------------------------------------------------------------------------------------
 //										Built-in
