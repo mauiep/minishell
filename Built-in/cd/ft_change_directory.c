@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:13:17 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/21 15:39:35 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/23 12:25:36 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	ft_change_directory(char *path, t_mini *data)
 	char	*pwd;														// On creer une variable pwd qui va contenir le chemin actuel
 
 	pwd = getcwd(NULL, 0);											  // On associe pwd au chemin actuel
+	if (!pwd)
+		return (-1);
 	if (!chdir(path))												 // Si chdir renvoie 0 (si il reussis)
 	{
 		if (pwd)												   // Si il n'y a pas eu d'erreur de malloc
@@ -77,6 +79,8 @@ int	ft_change_directory(char *path, t_mini *data)
 			free(pwd);											// On free pwd pour eviter les fuites de memoires
 		}
 		pwd = getcwd(NULL, 0);								  // On associe pwd au chemin actuel
+		if (!pwd)
+			return (-1);
 		if (pwd)											 // Si il n'y a pas eu d'erreur de malloc
 		{
 			ft_change_env(pwd, "PWD", data);			   // On change la variable d'environement PWD par pwd qui est le path actuel

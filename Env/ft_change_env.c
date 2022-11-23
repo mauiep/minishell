@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:27:17 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/22 14:54:25 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/23 12:26:16 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,27 @@ void	ft_change_env(char *pwd, char *env_var, t_mini *data)
 			break;																		   // On quitte la boucle
 		i++;																			  // Sinon on passe a la variable suivante
 	}
-	backup_env = ft_strdup(data->env_tab[i]);											// On creer une backup de notre variable d'environement au cas ou strjoin ne fonctionne pas	
+	backup_env = ft_strdup(data->env_tab[i]);											// On creer une backup de notre variable d'environement au cas ou strjoin ne fonctionne pas
+	if (!backup_env)
+		return ;
 	free(data->env_tab[i]);														  	   // On free l'ancienne version de la variable d'environement
 	data->env_tab[i] = ft_strjoin(env_var, "=");									  // On ecris join env_var et = par exemple PWD=
+	if (!data->env_tab[i])
+		return ;
 	buffer = ft_strdup(data->env_tab[i]);											 // On contient la bakcup dans un buffer pour le prochain strjoin
+	if (!buffer)
+		return ;
 	free(data->env_tab[i]);															// On free pour contenir le prochain strjoin
 	data->env_tab[i] = ft_strjoin(buffer, pwd);									   // On strjoin le contenant de la variable
+	if (!data->env_tab[i])
+		return ;
 	free(buffer);																  // On free le buffer
 	if (!data->env_tab[i])														 // Si le strjoin ne marche pas
 	{
 		ft_free(data->env_tab);												   // On free tout le tableau
 		data->env_tab[i] = ft_strdup(backup_env);						      // On recupere l'ancienne version de la variable d'environement
+		if (!data->env_tab[i])
+			return ;
 		free(backup_env);													 // On free la backup
 		return ;															// On quitte la fonction
 	}

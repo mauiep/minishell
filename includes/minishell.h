@@ -247,9 +247,9 @@ void	ft_env(t_mini *data);
 //	export
 //========
 
-void	ft_add_env_var(t_mini *data, int arg);
+void	ft_add_env_var(char *arg, t_mini *data);
 int		ft_check_export_var(char *arg);
-int		ft_export(t_mini *data);
+int		ft_export(char **args, t_mini *data);
 void	ft_sort_and_print_env(t_mini *data);
 
 //	pwd

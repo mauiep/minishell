@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:41:34 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/22 13:27:52 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/23 12:38:09 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int	ft_is_built_in(char **args, t_mini *data)
 		ft_unset(args, data);
 		return (1);
 	}
-	/*
-	else if (!(ft_strcmp("export", data->cmd[0])))
+	
+	else if (!(ft_strcmp("export", args[0])))
 	{
-		ft_export(data);
+		ft_export(args, data);
 		return (1);
-	}*/
+	}
 	return (0);											 // Sinon on retourne 0 si l'input utilisateur n'est associer a aucun built in
 }

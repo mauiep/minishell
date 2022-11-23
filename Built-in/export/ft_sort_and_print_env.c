@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:45:53 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/21 15:08:30 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/23 16:07:48 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,22 @@ static void	ft_swap(char **temp_env, int j)
 static void	ft_print_env(char **temp_env)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	while (temp_env[i])
 	{
-		ft_putstr_fd(temp_env[i], 1);
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd("declare -x ", 1);
+		while (temp_env[i][j] && !(temp_env[i][j] == '='))
+		{
+			write(1, &temp_env[i][j], 1);
+			j++;
+		}
+		ft_putstr_fd("=\"", 1);
+		ft_putstr_fd(temp_env[i] + (j + 1), 1);
+		ft_putstr_fd("\"\n", 1);
+		j = 0;
 		i++;
 	}
 	ft_free(temp_env);

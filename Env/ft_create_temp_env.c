@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 23:40:16 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:02:37 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/23 14:12:03 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**ft_create_temp_env(t_mini *data, int size)
 	char	**temp_env;
 	int		i;
 
-	temp_env = malloc(sizeof(char *) * (size + 1));
+	temp_env = malloc(sizeof(char *) * (size + 2));
 	if (!temp_env)
 		return (NULL);
 	i = 0;
@@ -31,5 +31,7 @@ char	**ft_create_temp_env(t_mini *data, int size)
 		i++;
 	}
 	temp_env[i] = NULL;
+	temp_env[i + 1] = NULL;
+	ft_free(data->env_tab);
 	return (temp_env);
 }

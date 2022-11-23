@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/11/22 13:29:16 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/11/23 15:35:16 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,10 @@ SRCS	=	main.c\
 			Built-in/cd/ft_change_directory.c\
 			Built-in/cd/ft_convert_arg_to_path.c\
 			Built-in/env/ft_env.c\
+			Built-in/export/ft_add_env_var.c\
+			Built-in/export/ft_check_export_arg.c\
+			Built-in/export/ft_export.c\
+			Built-in/export/ft_sort_and_print_env.c\
 			Built-in/pwd/ft_pwd.c\
 			Built-in/unset/ft_unset.c\
 			Built-in/ft_is_built_in.c\
@@ -27,7 +31,6 @@ SRCS	=	main.c\
 			Env/ft_env_len.c\
 			Env/ft_find_env.c\
 			Env/ft_get_env_var.c\
-			Env/ft_replace_env.c\
 			Exec/ft_exec.c\
 			Exec/ft_fd.c\
 			Exec/ft_find_bin.c\
