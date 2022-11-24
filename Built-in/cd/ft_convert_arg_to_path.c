@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:56:42 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/21 15:29:03 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/24 15:46:22 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,71 +15,54 @@
 /*
 **	Cette fonction prend en parametre :
 **	
-**	- Le pointeur sur structure data
-**	
-**	========================================
-**	
-**	Cette fonction sert a convertir le path absolu si il commence
-**	Par ~/ en path comprehensible pour CD 
-*/
-
-
-static char * ft_add_home_path(char **args, t_mini *data)
-{
-	char 	*converted_path;														// On creer une variable converted_path qui contiendra le path converti
-	char	*buffer;															   // On creer une variable buffer qui contiendra la backup entre les deux strjoin
-	char 	*home;																  // On creer une variable home qui contiendra la variable d'environement home
-
-	converted_path = NULL;														// On initialise converted_path a NULL
-	buffer = NULL;															   // On initialise buffer a NULL
-	if (!ft_strncmp("~/", args[1], 2))									  // Si l'argument commence par ~/		
-	{
-		home = ft_get_env_var("HOME=", data);								// On associe la variable d'environement HOME a home
-		converted_path = ft_strjoin(home, "/");							   // On rajoute / a home par exemple /home/usr deviens /home/usr/
-		buffer = ft_strdup(converted_path);								  // On fait une backup dans le buffer
-		free (converted_path);											 // On free converted_path pour le preparer au second strjoin
-		converted_path = ft_strjoin(buffer,args[1] + 2);			// On rajoute l'argument sans le ~/ (d'ou le + 2)
-		free(buffer);												   // On free le buffer car on en a plus besoin
-		free(home);													  // On free home car on en a plus besoin
-		return (converted_path);									 // On return le path converti
-	}
-	return (NULL);												   // Si la string ne commence pas par ~/ on return (NULL)
-}
-
-/*
-**	Cette fonction prend en parametre :
-**	
+**	- Les arguments de cd
 **	- Le pointeur sur structure data
 **	
 **	========================================
 **	
 **	Cette fonction sert a convertir le dossier ou on veut aller en 
 **	Path qui va etre compris par CD
+**	Et fonctionne ainsi :
+**	
+**	- On verifie si l'argument commence par "~/" grace a ft_add_home_path()
+**	- On recupere le pwd actuel
+**	
+**	========================================
+**	
+**	- Si l'argument commence par "/" alors il sagit d'un path absolu
+**	- On return alors ce dernier
+**	
+**	========================================
+**	
+**	- Sinon on ajoute "/" au pwd recupere plus tot ce qui donne $PWD/
+**	- On rajoute ensuite l'argument ce qui donne
+**	 Par exemple pour cd Documents --> $PWD/Documents
+**	- On return le path converti
 */
 
 char	*ft_convert_arg_to_path(char **args, t_mini *data)
 {
-	char *converted_path;														// On creer une variable qui va contenir le path converti
-	char *buffer;															   // On creer un buffer qui contiendra une backup entre les deux strjoin pour eviter les leaks
-	char *pwd;																  // On creer une variable qui contiendra le path actuel
+	char	*converted_path;
+	char	*buffer;
+	char	*pwd;
 
-	converted_path = ft_add_home_path(args, data);							    // On initialise a NULL ou on met le path si l'arguement commence par ~/
-	if (converted_path)													   // Si le converted_path a ete rempli
-		return (converted_path);										  // Ca veut dire que l'argument commence par ~/ et a ete modifier par ft_add_home_path()
-	pwd = getcwd(NULL, 0);												 // On recupere le path actuel
-	buffer = NULL;														// On initialise a NULL
+	converted_path = ft_add_home_path(args, data);
+	if (converted_path)
+		return (converted_path);
+	pwd = getcwd(NULL, 0);
+	buffer = NULL;
 	if (args[1][0] == '/')
 	{
-		converted_path = ft_strdup(args[1]);					  // On fait une copie du path absolu dans la variable converted path
-		return (converted_path);									 // On return (converted_path)
+		converted_path = ft_strdup(args[1]);
+		return (converted_path);
 	}
-	converted_path = ft_strjoin(pwd, "/");					   	   // On rajoute au path actuel un / pour acceuillir derriere l'endroit ou on veut aller
-	free(pwd);													  // On free pwd car on en a plus besoin
-	buffer = ft_strdup(converted_path);							 // On copie le resultat dans le buffer
-	free(converted_path);										// On free le converted_path pour le preparer au second strjoin
-	converted_path = ft_strjoin(buffer, args[1]);		   // On rajoute derriere le / le nom de l'endroit ou on veut aller
-	if (!converted_path)									  // Si le malloc se passe mal
-		return (NULL);										 // On return (NULL);
-	free(buffer);											// On free le buffer car on en a plus besoin
-	return (converted_path);							   // On return le nouveau path converti
+	converted_path = ft_strjoin(pwd, "/");
+	free(pwd);
+	buffer = ft_strdup(converted_path);
+	free(converted_path);
+	converted_path = ft_strjoin(buffer, args[1]);
+	if (!converted_path)
+		return (NULL);
+	free(buffer);
+	return (converted_path);
 }

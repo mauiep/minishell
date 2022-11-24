@@ -6,51 +6,36 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:13:17 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/23 12:25:36 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/24 15:24:13 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le pointeur sur structure data
+**	
+**	========================================
+**	
+**	Cette fonction free les pointeurs utiliser
+**	Et les set a NULL pour la prochaine utilisation
+*/
 
-static int	ft_verif_if_there_is_pwd_env_var(t_mini *data)
+static void	ft_free_data_and_set_null(t_mini *data)
 {
-	char	*env_var;
-
-	env_var = NULL;
-	env_var = ft_get_env_var("OLDPWD=", data);
-	if (!env_var)
+	if (data->converted_path)
 	{
-		ft_putstr_fd(RED, 2);
-		ft_putstr_fd("minishell: cd: OLDPWD is not set", 2);
-		ft_putstr_fd(RESET, 2);
-		return (0);
+		free(data->converted_path);
+		data->converted_path = NULL;
 	}
-	if (env_var)
+	if (data->home)
 	{
-		free(env_var);
-		env_var = NULL;
+		free(data->home);
+		data->home = NULL;
 	}
-	env_var = ft_get_env_var("PWD=", data);
-	if (!env_var)
-	{
-		ft_putstr_fd(RED, 2);
-		ft_putstr_fd("minishell: cd: PWD is not set", 2);
-		ft_putstr_fd(RESET, 2);
-		return (0);
-	}
-	if (env_var)
-	{
-		free(env_var);
-		env_var = NULL;
-	}
-	return (1);
-	
 }
-
-
-
-
 
 /*
 **	Cette fonction prend en parametre :
@@ -60,44 +45,50 @@ static int	ft_verif_if_there_is_pwd_env_var(t_mini *data)
 **	
 **	========================================
 **	
-**	Cette fonction sert a faire fonctionner cd
-**	Elle s'occupe d'actualiser les variable d'environement OLDPWD et PWD
+**	Cette fonction sert a changer de directory et d'actualiser les variables
+**	D'environement OLDPWD et PWD
+**	Cette derniere fonctionne ainsi :
+**
+**	- Si chdir renvoie 0 alors le path est bon et la navigation
+**	 Dans le nouveau path a correctement fonctionne
+**	- On change la variable OLDPWD grace a ft_change_env()
+**	 En raison de l'ancien pwd contenu en memoire
+**	- On recupere le pwd apres avoir change de directory
+**	- On change la variable PWD grace a ft_change_env()
+**	 En raison du nouveau pwd contenu en memoire
+**	- On return (1) pour dire que ca s'est bien passe
+**	
+**	========================================
+**	
+**	- Dans le cas ou chdir renvoie autre chose que 0
+**	- On return (0);
 */
 
 int	ft_change_directory(char *path, t_mini *data)
 {
-	char	*pwd;														// On creer une variable pwd qui va contenir le chemin actuel
+	char	*pwd;
 
-	pwd = getcwd(NULL, 0);											  // On associe pwd au chemin actuel
+	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (-1);
-	if (!chdir(path))												 // Si chdir renvoie 0 (si il reussis)
+	if (!chdir(path))
 	{
-		if (pwd)												   // Si il n'y a pas eu d'erreur de malloc
+		if (pwd)
 		{
-			ft_change_env(pwd, "OLDPWD", data);				 // On change la variable d'environement OLDPWD par pwd qui deviens le path d'avant
-			free(pwd);											// On free pwd pour eviter les fuites de memoires
+			ft_change_env(pwd, "OLDPWD", data);
+			free(pwd);
 		}
-		pwd = getcwd(NULL, 0);								  // On associe pwd au chemin actuel
+		pwd = getcwd(NULL, 0);
 		if (!pwd)
 			return (-1);
-		if (pwd)											 // Si il n'y a pas eu d'erreur de malloc
+		if (pwd)
 		{
-			ft_change_env(pwd, "PWD", data);			   // On change la variable d'environement PWD par pwd qui est le path actuel
-			free(pwd);									  // On free pwd pour eviter les fuites de memoires
+			ft_change_env(pwd, "PWD", data);
+			free(pwd);
 		}
-		if (data->converted_path)
-		{
-			free(data->converted_path);
-			data->converted_path = NULL;
-		}
-		if (data->home)
-		{
-			free(data->home);
-			data->home = NULL;
-		}
-		return (1);									    // On return (1)
+		ft_free_data_and_set_null(data);
+		return (1);
 	}
-	free(pwd);										  // Si chdir n'a pas marcher on free pwd pour eviter les fuites de memoires
-	return (0);									     // On return (0)
+	free(pwd);
+	return (0);
 }

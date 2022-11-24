@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:22:02 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/22 11:40:20 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/24 15:47:52 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@
 **	
 **	========================================
 **	
-**	Cette fonction free les pointeurs utiliser
+**	Cette fonction free les pointeurs utilise
 **	Et les set a NULL pour la prochaine utilisation
 */
 
-static void	ft_free_and_set_null(t_mini *data)
+static void	ft_free_data_and_set_null(t_mini *data)
 {
-	ft_putstr_fd(RESET, 2);								 // On reset la couleur
-	if (data->converted_path)							// Si le pointeur converted_path existe
+	ft_putstr_fd(RESET, 2);
+	if (data->converted_path)
 	{
-		free(data->converted_path);					  // On le free
-		data->converted_path = NULL;				 // Puis on le set a NULL
+		free(data->converted_path);
+		data->converted_path = NULL;
 	}
-	if (data->home)								   // Si le pointeur home existe
+	if (data->home)
 	{
-		free(data->home);						 // On le free
-		data->home = NULL;						// On le set a NULL
+		free(data->home);
+		data->home = NULL;
 	}
 }
 
@@ -47,24 +47,29 @@ static void	ft_free_and_set_null(t_mini *data)
 **	========================================
 **	
 **	Cette fonction appelle la fonction pour changer de directory
-**	Et gere les differentes erreurs possible de cd
+**	Et gere les differentes erreurs possible de cd :
+**	
+**	- Si la fonction stat renvoie -1 alors il ne sagit pas d'un path valide
+**	- Si S_ISDIR renvoie 0 alors il ne sagit pas d'un dossier
+**	- Si st.st_mode & s_IXUSR renvoie 0 alors on a pas la permission
+**	 pour acceder a ce path
 */
 
 int	ft_cd_error_manager(char *path, t_mini *data)
 {
-	struct stat	st;																// On creer une variable st de type struct stat
+	struct stat	st;
 
-	if (ft_change_directory(path, data))									  // On appelle la fonction qui change de directory
-		return (1);															 // Si elle fonctionne on return (1)
-	ft_putstr_fd(RED, 2);													// Sinon on ecrit en rouge
-	ft_putstr_fd("minishell: cd: ", 2);									   // minishell: cd: 
-	ft_putstr_fd(path, 2);												  // Suivi du path ou on veut aller (qui n'existe pas pour le coup)
-	if (stat(path, &st) == -1)											 // Si la fonction stat() return (-1)
-		ft_putendl_fd(": No such file or directory", 2);					// On ecrit : No such file or directory
-	else if (!S_ISDIR(st.st_mode))									   // Si ce n'est pas un dossier
-		ft_putendl_fd(": Not a directory", 2);						  // On ecrit : Not a directory
-	else if (!(st.st_mode & S_IXUSR))								 // On verifie si le proprietaire a le droit d'exec		
-		ft_putendl_fd(": Permission denied", 2);					// Si non on ecrit : Permission denied
-	ft_free_and_set_null(data);									   // On appelle la fonction qui s'occupe de free home et converted_path
-	return (1);													  // On return (1)
+	if (ft_change_directory(path, data))
+		return (1);
+	ft_putstr_fd(RED, 2);
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(path, 2);
+	if (stat(path, &st) == -1)
+		ft_putendl_fd(": No such file or directory", 2);
+	else if (!S_ISDIR(st.st_mode))
+		ft_putendl_fd(": Not a directory", 2);
+	else if (!(st.st_mode & S_IXUSR))
+		ft_putendl_fd(": Permission denied", 2);
+	ft_free_data_and_set_null(data);
+	return (1);
 }
