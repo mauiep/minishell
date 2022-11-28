@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:16:54 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/22 15:51:02 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:09:24 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	ft_init_pipe_var(t_mini *data, int nb_pipes, t_lst *lst)
 	data->list = malloc(sizeof(pid_t) * (nb_pipes + 1));
 	if (!data->list)
 		return (-1);
+	return (1);
 }
 
 int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
@@ -56,16 +57,19 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 	
 	init = ft_init_pipe_var(data, nb_pipes, lst);
 	if (init == 0)
-		return (printf("FD_ERR\n"), 0);
+		return (fprintf(stderr, "FD_ERR\n"), 0);
 	else if (init == -1)
-		return (-1);
+		return (free_pipe_array(data->pipefd, nb_pipes) , -1);
 	args = ft_splitargs(lst);
 	if (!args)
+	{
+		free_pipe_array(data->pipefd, nb_pipes);
 		return (-1);
+	}
 	while (lst && lst->str)
 	{
 		lst = data->start_lst;
-		if (nb_pipes == 0 && ft_is_built_in(args, data))
+		if (nb_pipes == 0 && ft_is_built_in(args, data, lst))
 			return (1);
 		data->list[data->i] = fork();
 		signal(SIGINT, SIG_IGN);
@@ -87,6 +91,7 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 		if (lst)
 			data->start_lst = lst->next;// On met le pointeur start_lst sur la prochaine commande
 	}
+	ft_free(args);
 	ft_close_pipes(data->pipefd, nb_pipes);// A voir si on a vraiment besoin de close les fd 2 fois
 	free_pipe_array(data->pipefd, nb_pipes);
 	ft_wait_procs(data->i, data->list);
@@ -126,5 +131,6 @@ int	ft_wait_procs(int ac, pid_t *list)
 		}*/
 		i++;
 	}
+	free(list);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:01 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/25 14:42:25 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:14:35 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	program_exec(char **args, t_mini *data)
 static void	ft_block_built_in(char **args)
 {
 	if (!ft_strcmp(args[0], "env") || !ft_strcmp(args[0], "pwd")
-		|| !ft_strcmp(args[0], "unset") || !ft_strcmp(args[0], "echo"))
+		|| !ft_strcmp(args[0], "unset") || !ft_strcmp(args[0], "echo")
+		|| !ft_strcmp(args[0], "exit"))
 		exit (-1);
 }
 
@@ -93,6 +94,7 @@ static void	ft_handle_exec_error(char **args)
 {
 	ft_error(args[0], RED, 42);
 	ft_error(" : command not found\n", RED, 42);
+	ft_free(args);
 	exit(-1);
 }
 
@@ -119,7 +121,7 @@ int	ft_handle_exec(t_lst *lst, t_mini *data)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
-			if (ft_is_built_in(args, data))
+			if (ft_is_built_in(args, data, lst))
 				exit (-1);
 			ft_check_if_executable(args, data);
 			ft_block_built_in(args);

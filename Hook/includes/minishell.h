@@ -200,6 +200,9 @@ int	last_redirect(t_lst *lst);
 int	get_word(char *buffer, t_lst *new);
 int	expand(t_lst *lst, t_mini *data);
 int	parse(char *line_buffer, t_mini *data);
+int ft_check_redir(char *line);
+int	ft_wrong_syntax_newline_check(char *line);
+int	ft_wrong_syntax_redir_check(char *line, char character);
 
 // Utils
 //==========
@@ -235,7 +238,7 @@ void    sig_null(int signal);
 //										Built-in
 //------------------------------------------------------------------------------------
 
-int		ft_is_built_in(char **args, t_mini *data);
+int		ft_is_built_in(char **args, t_mini *data, t_lst *lst);
 
 //	cd
 //========
@@ -256,6 +259,11 @@ int	ft_echo(char **args);
 //========
 
 void	ft_env(t_mini *data);
+
+// exit
+//=======
+
+void	ft_exit(t_mini *data, t_lst *lst);
 
 //	export
 //========
@@ -327,12 +335,14 @@ int	ft_wrong_syntax(char *line, char character, int i);
 //										Utils
 //------------------------------------------------------------------------------------
 
+int		ft_is_inside_quote(char	*line, int i);
 int		ft_error(char *str, char *color, int error);
-void	ft_exit(t_mini *data);
 void	ft_free(char **tab);
 char	**ft_if_malloc_issue(char **tab, int i);
 void	ft_init(t_mini *data, int argc, char **argv, char **envp);
 void	ft_print_minishell(void);
+int		ft_error_msg(char *line, char character, int i);
+int		ft_error_token(char	*msg, char *line, char character, int i);
 
 
 #endif

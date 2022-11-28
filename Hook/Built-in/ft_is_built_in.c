@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:41:34 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 13:42:22 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 10:47:06 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 **	- Si oui on appelle la fonction du Built-in en question
 */
 
-int	ft_is_built_in(char **args, t_mini *data)
+int	ft_is_built_in(char **args, t_mini *data, t_lst *lst)
 {
 	if (!args || !args[0])
 		return (-1);
@@ -48,5 +48,7 @@ int	ft_is_built_in(char **args, t_mini *data)
 		return (ft_export(args, data), 1);
 	else if (!(ft_strcmp("echo", args[0])))
 		return (ft_echo(args), 1);
+	else if (!(ft_strcmp("exit", args[0])))
+		return (ft_exit(data, lst), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 12:23:26 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 16:17:48 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:09:10 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ static int	parse_else(char *line_buffer, int i, t_lst *lst)
 int	parse(char *line_buffer, t_mini *data)
 {
 	int		i;
+	int		ret;
 	int		len;
 	t_lst	*lst;
 
+	ret = ft_check_redir(line_buffer);
+	if (!ret)
+		return (-1);
 	lst = ft_lstnew();
 	if (!lst)
 		return (print_err(-1));
@@ -40,10 +44,7 @@ int	parse(char *line_buffer, t_mini *data)
 	{
 		i = parse_else(line_buffer, i, lst);
 		if (i < 0)
-		{
-			free_lst(lst);
 			return (i);
-		}
 	}
 	if (!ft_verif(lst))
 	{

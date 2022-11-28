@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/11/25 13:26:31 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/11/28 14:22:57 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS	=	main.c\
 			Built-in/cd/ft_convert_arg_to_path.c\
 			Built-in/echo/ft_echo.c\
 			Built-in/env/ft_env.c\
+			Built-in/exit/ft_exit.c\
 			Built-in/export/ft_add_env_var.c\
 			Built-in/export/ft_check_export_arg.c\
 			Built-in/export/ft_export.c\
@@ -55,22 +56,27 @@ SRCS	=	main.c\
 			Minishell/ft_prompt.c\
 			Minishell/minishell.c\
 			Parsing/expand.c\
+			Parsing/ft_check_redir.c\
 			Parsing/ft_cleanfile.c\
 			Parsing/ft_echap.c\
 			Parsing/ft_joindollar.c\
 			Parsing/ft_quotes_else.c\
 			Parsing/ft_quotes.c\
 			Parsing/ft_splitargs.c\
+			Parsing/ft_wrong_syntax_newline_check.c\
+			Parsing/ft_wrong_syntax_redir_check.c\
 			Parsing/parse.c\
 			Redirect/ft_heredoc.c\
 			Redirect/ft_open_create.c\
 			Redirect/ft_pipes.c\
 			Redirect/ft_redirections.c\
+			Utils/ft_error_msg.c\
+			Utils/ft_error_token.c\
 			Utils/ft_error.c\
-			Utils/ft_exit.c\
 			Utils/ft_free.c\
 			Utils/ft_if_malloc_issue.c\
 			Utils/ft_init.c\
+			Utils/ft_is_inside_quote.c\
 			Utils/ft_libft.c\
 			Utils/ft_lst_spe.c\
 			Utils/ft_lst.c\

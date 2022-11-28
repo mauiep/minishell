@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:10:27 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 14:13:25 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:17:04 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*ft_get_env_var(char *env_var, t_mini *data)
 	char	*found_env_var;
 
 	i = 0;
+	if (!env_var)
+		return (NULL);
 	while (data->env_tab[i])
 	{
 		if (!ft_strncmp(env_var, data->env_tab[i], ft_strlen(env_var)))

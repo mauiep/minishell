@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:25 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 15:19:40 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 10:51:40 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ int	minishell(t_mini *data)
 		add_history(data->line);
 		if (data->line[0] == '\0')
 			continue ;
-		if (ft_strncmp("exit", data->line, 4))
-			parse(data->line, data);
-		else
-			ft_exit(data);
+		parse(data->line, data);
 	}
 }

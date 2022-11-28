@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:25 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/25 15:05:51 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 13:25:35 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 **	- Le nombre de pipe restant
 **	- Le nombre de pipe total
 **	- [a toi d'ecrire]
+**	
 **	========================================
 **	
 **	Cette fonction s'occupe de la gestion des pipe,

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:29:06 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 15:40:37 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:22:14 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	push_word(t_lst *lst, char *buffer)
 		return (-1);
 	ret = get_word(buffer, new);
 	if (ret < 0)
-		return (ret);
+		return (free_lst(new), ret);
 	push_lst(new, lst);
 	return (ft_strlen(new->str));
 }
@@ -110,7 +110,7 @@ int	push_sep(t_lst *lst, char *buffer)
 		return (-1);
 	token = which_redirect(new->str);
 	if (token == -1)
-		return (-3);
+		return (free_lst(new), -3);
 	new->token = token;
 	push_lst(new, lst);
 	if (new->token % 2 == 0)

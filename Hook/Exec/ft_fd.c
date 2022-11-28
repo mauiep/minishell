@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:39 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/25 14:45:40 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:30:14 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	**create_pipe_arr(int nb_pipes)
 	i = -1;
 	while (++i < nb_pipes)
 	{
-		pipefd[i] = malloc(8);
+		pipefd[i] = malloc(sizeof(long));
 		if (pipefd[i] == NULL)
 			return (free_pipe_array(pipefd, i), NULL);
 	}
