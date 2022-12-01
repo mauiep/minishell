@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	ft_tab_to_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i] != 0)
+	{
+		if (str[i] == '\t')
+			str[i] = ' ';
+		i++;
+	}
+}
+
 int	ft_negstrcpy(char *str, char *str2)
 {
 	int	i;
@@ -21,7 +34,10 @@ int	ft_negstrcpy(char *str, char *str2)
 		return (1);
 	while (str[i])
 	{
-		str2[i] = -str[i];
+		if (str[i] != ' ')
+			str2[i] = -str[i];
+		else
+			str2[i] = ' ';
 		i++;
 	}
 	str2[i] = '\0';

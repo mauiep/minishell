@@ -6,20 +6,22 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:44 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/22 15:30:06 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:52:46 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-
-	La fonction open_create retourne le fd du fichier demande par la redirection
-	en utilisant access(). Dans le cas ou il n'existe pas il sera cree.
-	
-	apnd_or_not permet d'ecrire par dessus le contenu du fichier (redir '>') ou
-	bien en mode 'Append' c'est a dire a la suite du contenu. (redir '>>')
-
+**
+**	La fonction open_create retourne le fd du fichier demande
+**	par la redirection
+**	en utilisant access(). Dans le cas ou il n'existe pas il sera cree.
+**	
+**	apnd_or_not permet d'ecrire par dessus le contenu du fichier (redir '>')
+** ou
+**	bien en mode 'Append' c'est a dire a la suite du contenu. (redir '>>')
+**
 */
 
 static int	ft_open_create_else(int token, char *pathname2, bool apnd_or_not)
@@ -46,15 +48,15 @@ int	ft_open_create(char *filename, bool apnd_or_not, int token)
 	{
 		fd = ft_open_create_else(token, pathname2, apnd_or_not);
 		if (fd == -1)
-			return (free(pathname2), dprintf(2, "Cannot create file\n"), -1);
+			return (free(pathname2), ft_error("Cannot create file\n", RED, -1));
 	}
-	else if (!access(pathname2, R_OK | W_OK)) /*ask if we can r/w on file*/
+	else if (!access(pathname2, R_OK | W_OK))
 	{
 		fd = open(pathname2, O_CREAT | O_WRONLY | O_TRUNC);
 		if (fd == -1)
-			return (free(pathname2), dprintf(2, "Cannot Open File\n"), -1);
+			return (free(pathname2), ft_error("Cannot Open File\n", RED, -1));
 	}
 	else
-		return (free(pathname2), dprintf(2, "File permission denied\n"), -1);
+		return (free(pathname2), ft_error("File permission denied\n", RED, -1));
 	return (free(pathname2), fd);
 }

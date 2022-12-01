@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:27:17 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/23 12:26:16 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 14:07:11 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,66 @@
 /*
 **	Cette fonction prend en parametre :
 **	
-**	- Le path actuell
-**	- La variable d'environement que l'on veut modif
 **	- Un pointeur sur structure data
-**	
+**	- L'index de la variable d'environement que l'on veut modifier
+**	- Le path
+**	- La variable d'environement que l'on veut modifier
+**
 **	========================================
 **	
-**	Cette fonction sert a modifier les variables d'environement dans env
+**	Cette fonction existe uniquement pour la norme des 25 lignes
+*/
+
+static void	ft_change_env_else(t_mini *data, int i, char *pwd,
+		char *env_var)
+{
+	char	*buffer;
+
+	free(data->env_tab[i]);
+	data->env_tab[i] = ft_strjoin(env_var, "=");
+	if (!data->env_tab[i])
+		return ;
+	buffer = ft_strdup(data->env_tab[i]);
+	if (!buffer)
+		return ;
+	free(data->env_tab[i]);
+	data->env_tab[i] = ft_strjoin(buffer, pwd);
+	if (!data->env_tab[i])
+		return ;
+	free(buffer);
+}
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le path
+**	- La variable d'environement que l'on veut modifier
+**	- Le pointeur sur structure data
+**
+**	========================================
+**	
+**	Cette fonction sert a modifier une variable d'environement
 */
 
 void	ft_change_env(char *pwd, char *env_var, t_mini *data)
 {
-	int		i;																						 // On creer une variale i qui servira a parcourir env																					
-	char	*buffer;																				// On creer un buffer pour contenir un backup de notre env entre chaque strjoin
-	char	*backup_env;																		   // On creer une variale backup_env qui servira a contenir l'ancienne version de la variable d'environement si le strjoin ne fonctionne pas
+	int		i;
+	char	*backup_env;
 
-	i = 0;																					  	 // On l'initialise a 0 car env commence a l'index 0
-	if (!data->env_tab)																		 	// Si env n'existe pas alors on quitte la fonction
-		return ;																			   // Alors on quitte la fonction
-	while (data->env_tab[i])															   	  // Tant que env existe
-	{
-		if (!ft_strncmp(env_var, data->env_tab[i], ft_strlen(env_var)))					  	// Si on trouve la variable d'envrionement 
-			break;																		   // On quitte la boucle
-		i++;																			  // Sinon on passe a la variable suivante
-	}
-	backup_env = ft_strdup(data->env_tab[i]);											// On creer une backup de notre variable d'environement au cas ou strjoin ne fonctionne pas
+	i = 0;
+	i = ft_find_env(env_var, data);
+	backup_env = ft_strdup(data->env_tab[i]);
 	if (!backup_env)
 		return ;
-	free(data->env_tab[i]);														  	   // On free l'ancienne version de la variable d'environement
-	data->env_tab[i] = ft_strjoin(env_var, "=");									  // On ecris join env_var et = par exemple PWD=
+	ft_change_env_else(data, i, pwd, env_var);
 	if (!data->env_tab[i])
-		return ;
-	buffer = ft_strdup(data->env_tab[i]);											 // On contient la bakcup dans un buffer pour le prochain strjoin
-	if (!buffer)
-		return ;
-	free(data->env_tab[i]);															// On free pour contenir le prochain strjoin
-	data->env_tab[i] = ft_strjoin(buffer, pwd);									   // On strjoin le contenant de la variable
-	if (!data->env_tab[i])
-		return ;
-	free(buffer);																  // On free le buffer
-	if (!data->env_tab[i])														 // Si le strjoin ne marche pas
 	{
-		ft_free(data->env_tab);												   // On free tout le tableau
-		data->env_tab[i] = ft_strdup(backup_env);						      // On recupere l'ancienne version de la variable d'environement
+		ft_free(data->env_tab);
+		data->env_tab[i] = ft_strdup(backup_env);
 		if (!data->env_tab[i])
 			return ;
-		free(backup_env);													 // On free la backup
-		return ;															// On quitte la fonction
+		free(backup_env);
+		return ;
 	}
-	free(backup_env);													  // On free la backup si tout s'est bien passer
-} 
+	free(backup_env);
+}

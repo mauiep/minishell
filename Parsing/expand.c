@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:54:56 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 15:32:29 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:30:44 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	get_word(char *buffer, t_lst *new)
 	return (1);
 }
 
-static int	expand_else(t_lst *ptr, int c, int i) // A verifier si ca fonctionne
+static int	expand_else(t_lst *ptr, int c, int i)
 {
 	if (c == 0 && (ptr->str[i] == 39 || ptr->str[i] == 34))
 		c = ptr->str[i];
@@ -56,9 +56,7 @@ static int	dollard_manager(t_lst *ptr, int c, int i, t_mini *data)
 	j = 0;
 	if (ptr->str[i] == '$' && c != 39
 		&& ptr->str[i + 1] && ptr->str[i + 1] != ' ')
-	{
 		j = ft_joindollar(ptr, i, data);
-	}
 	return (j);
 }
 
@@ -80,7 +78,7 @@ int	expand(t_lst *lst, t_mini *data)
 			{
 				c = expand_else(ptr, c, i);
 				j = dollard_manager(ptr, c, i, data);
-				if (j == -42)
+				if (j == -42 || j == -1)
 					return (-1);
 				i = i + j + 1;
 			}

@@ -6,18 +6,36 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:02:30 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 15:40:46 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:59:27 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_verif(t_lst *lst)
+static int	ft_is_spaces_before_pipe(char *linebuffer)
+{
+	int	i;
+
+	i = 0;
+	while (linebuffer && linebuffer[i] && linebuffer[i] != '|')
+	{
+		if (linebuffer[i] == ' ' || linebuffer[i] == '\t')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+int	ft_verif(t_lst *lst, char *linebuffer)
 {
 	t_lst	*tmp;
 	int		i;
 
 	i = 0;
+	if (ft_is_spaces_before_pipe(linebuffer) == 1)
+		return (ft_error("minishell: syntax error near unexpected token `|'\n",
+				RED, -1));
 	tmp = lst->next;
 	while (tmp)
 	{
@@ -43,7 +61,7 @@ int	edit_maillon(char *buffer, int i, t_lst *tmp)
 	int		ret;
 
 	to_free = tmp->str;
-	str =ft_strndup2(buffer + i, spe_lenword(buffer + i));
+	str = ft_strndup2(buffer + i, spe_lenword(buffer + i));
 	if (!str)
 		return (-1);
 	ret = strlen(str);

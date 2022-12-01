@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:11:19 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 15:04:03 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:32:25 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	ft_printlst(t_lst *a)
 		tmp = tmp->next;
 		i++;
 	}
-//	printf("%d\n", i);
 }
 
 int	lst_len(t_lst *lst)

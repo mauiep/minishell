@@ -1,41 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_is_inside_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 14:25:25 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/28 10:51:40 by ceatgie          ###   ########.fr       */
+/*   Created: 2022/11/29 13:31:01 by ceatgie           #+#    #+#             */
+/*   Updated: 2022/11/30 10:36:08 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-**	Cette fonction prend en parametre :
+**	Cette fonction prend en parametre
 **	
-**	- Le pointeur sur structure data
-** 
+**	-La ligne donnee par GNL
+**	-L'index dans line
+**	
 **	========================================
 **	
-**	Cette fonction sert a faire fonctionner minishell 
+**	Avance l'index de la ligne donnee par GNL tant que l'on est entre quote
 */
 
-int	minishell(t_mini *data)
+int	ft_is_inside_quote(char	*line, int i)
 {
-	char	*buffer;
+	char	quote;
 
-	while (42)
+	while (line[i] && ((line[i] == '\'') || line[i] == '"'))
 	{
-		define_signals();
-		buffer = ft_prompt(data);
-		if (!buffer)
-			return (ft_error("Error: fail getcwd", RED, -1));
-		data->line = readline(buffer);
-		add_history(data->line);
-		if (data->line[0] == '\0')
-			continue ;
-		parse(data->line, data);
+		quote = line[i];
+		i++;
+		while (line[i] && line[i] != quote)
+		{
+			if (line[i] && line[i] == '\\')
+				i++;
+			i++;
+		}
+		if (i == (ft_strlen(line)))
+			break ;
+		else
+			i++;
 	}
+	return (i);
 }

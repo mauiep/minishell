@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:38:05 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:02:34 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 14:08:10 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@
 **	
 **	========================================
 **	
-**	Cette fonction sert a modifier les variables d'environement dans env
+**	Cette fonction sert creer env pour minishell
 */
 
 void	ft_create_env(t_mini *data)
 {
-	int	i;																// On creer un index pour parcourir tout env
+	int	i;
 
-	i = 0;															  // On l'initialise a 0 car env demarre a l'index 0
-	while (data->envp[i])											 // Tant que env existe
-		i++;														// On passe a la string suivante (On recupere ainsi la taille de env)
-	data->env_tab = malloc(sizeof(char *) * (i + 1));			   // On creer un tableau qui va contenir env
-	if (!data->env_tab)											  // Si le malloc se passe mal
-		return ;												 // On quitte la fonction 
-	i = 0;														// On remet i a 0 pour l'utiliser comme index pour le tableau que je viens de creer
-	while (data->envp[i])									   // Tant que env existe
+	i = 0;
+	while (data->envp[i])
+		i++;
+	data->env_tab = malloc(sizeof(char *) * (i + 1));
+	if (!data->env_tab)
+		return ;
+	i = 0;
+	while (data->envp[i])
 	{
-		data->env_tab[i] = ft_strdup(data->envp[i]);		 // On copie chaque string dans le nouveau tableau
-		i++;												// On passe a la string suivante
+		data->env_tab[i] = ft_strdup(data->envp[i]);
+		i++;
 	}
-	data->env_tab[i] = NULL;							  // On initialise la derniere case a NULL
+	data->env_tab[i] = NULL;
 }

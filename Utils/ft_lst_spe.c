@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst_spe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:31:58 by admaupie          #+#    #+#             */
-/*   Updated: 2022/10/26 18:36:18 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:32:14 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_lst	*pick_the_lst(t_lst *last)
 	tmp = last;
 	if (!tmp)
 		return (NULL);
-	while (tmp->str != NULL && tmp->prev->str != NULL && tmp->prev->token % 2 == 0)
+	while (tmp->str != NULL && tmp->prev->str != NULL
+		&& tmp->prev->token % 2 == 0)
 		tmp = tmp->prev->prev;
 	if (tmp->str != NULL)
 		return (tmp);

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:27:22 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/28 14:35:36 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:30:06 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_error_token(char	*msg, char *line, char character, int i)
 	else
 	{
 		ft_putchar_fd(character, 2);
-		ft_putstr_fd("\'", 2); 
+		ft_putstr_fd("\'", 2);
 	}
 	ft_putendl_fd(RESET, 2);
 	return (-1);

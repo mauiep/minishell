@@ -6,12 +6,22 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 23:40:16 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/23 14:12:03 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 14:10:01 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Un pointeur sur structure data
+**	- La taille pour le malloc
+**	
+**	========================================
+**	
+**	Cette fonction sert a creer une copie de env avec une taille de 1 en plus
+*/
 
 char	**ft_create_temp_env(t_mini *data, int size)
 {

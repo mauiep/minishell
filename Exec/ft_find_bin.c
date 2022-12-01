@@ -6,11 +6,22 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/21 15:56:00 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/29 10:02:55 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le nom du binaire
+**	- Le path vers ce dernier
+**	
+**	========================================
+**	
+**	Cette fonction sert a [a toi d'ecrire]
+*/
 
 char	*ft_check_bin_path(char *bin, char *paths)
 {
@@ -38,6 +49,17 @@ char	*ft_check_bin_path(char *bin, char *paths)
 	return (init_path);
 }
 
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le nom du binaire
+**	- Le path vers ce dernier
+**	
+**	========================================
+**	
+**	Cette fonction sert a renvoyer la len du path avant de tomber sur un ":"
+*/
+
 int	ft_len_bef_col(char *paths)
 {
 	int	i;
@@ -52,32 +74,87 @@ int	ft_len_bef_col(char *paths)
 	return (i - 1);
 }
 
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le paths
+**
+**	========================================
+**	
+**	Cette fonction existe uniquement pour la norme des 25 lignes
+*/
+
+static char	*ft_find_bin_else(char *paths)
+{
+	paths += ft_len_bef_col(paths) + 1;
+	if (*paths)
+		paths += 1;
+	return (paths);
+}
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le path vers le binaire
+**	- argv
+**	- envp
+
+**	========================================
+**	
+**	Cette fonction sert a executer une commande grace au path
+*/
+
+static int	ft_exec(char *bin_path, char **argv, char **envp)
+{
+	if (access(bin_path, F_OK & X_OK) == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		execve(bin_path, argv, envp);
+		perror("execve");
+		free(bin_path);
+		return (1);
+	}
+	return (0);
+}
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le nom du binaire
+**	- Le path vers ce dernier
+**	- L'input utilisateur
+**	- Env
+**
+**	========================================
+**	
+**	Cette fonction sert a renvoyer la len du path avant de tomber sur un ":"
+*/
+
 char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 {
 	char	*bin_path;
 	int		i;
+	char	*to_free;
 
+	if (!paths)
+		return (NULL);
+	if (bin[0] == '/')
+		if (ft_exec(bin, argv, envp) == 1)
+			return ((char *)1);
 	i = 0;
-	if (!paths) //DANGEROUS??
-		return (NULL); //	if (access(bin, F_OK & X_OK) == 0) execve(bin, argv, envp);
+	to_free = paths;
 	while (*paths)
 	{
 		bin_path = ft_check_bin_path(bin, paths);
 		if (bin_path == NULL)
 			return (NULL);
-		if (access(bin_path, F_OK & X_OK) == 0)
-		{
-			execve(bin_path, argv, envp);
-			perror("execve");
-			free(bin_path);
+		if (ft_exec(bin_path, argv, envp) == 1)
 			return ((char *)1);
-		}
 		else
 			free(bin_path);
-		paths += ft_len_bef_col(paths) + 1;
-		if (*paths)
-			paths += 1;
+		paths = ft_find_bin_else(paths);
 		i++;
 	}
-	return ((char *)0);
+	return (free(to_free), NULL);
 }

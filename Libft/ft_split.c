@@ -6,13 +6,13 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:58:22 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:06:22 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 15:14:14 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		ft_is_separator(char *str, char *charset)
+static int	ft_is_separator(char *str, char *charset)
 {
 	while (*charset)
 		if (*str == *charset++)
@@ -20,9 +20,9 @@ static int		ft_is_separator(char *str, char *charset)
 	return (0);
 }
 
-static int		ft_wordlen(char *str, char *charset)
+static int	ft_wordlen(char *str, char *charset)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && !ft_is_separator(str + i, charset))
@@ -30,10 +30,10 @@ static int		ft_wordlen(char *str, char *charset)
 	return (i);
 }
 
-static int		ft_wordcount(char *str, char *charset)
+static int	ft_wordcount(char *str, char *charset)
 {
-	int i;
-	int w;
+	int	i;
+	int	w;
 
 	w = 0;
 	while (*str)
@@ -69,7 +69,7 @@ char	**ft_split(char *str, char *charset)
 	int		n;
 
 	size = ft_wordcount(str, charset);
-	t = malloc((size + 1) * sizeof(char*));
+	t = malloc((size + 1) * sizeof(char *));
 	if (!t)
 		return (NULL);
 	i = -1;

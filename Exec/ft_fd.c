@@ -6,11 +6,21 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:39 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/21 09:21:13 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:30:14 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le nombre de pipe
+**	
+**	========================================
+**	
+**	Cette fonction sert a [a toi d'ecrire]
+*/
 
 int	**create_pipe_arr(int nb_pipes)
 {
@@ -24,7 +34,7 @@ int	**create_pipe_arr(int nb_pipes)
 	i = -1;
 	while (++i < nb_pipes)
 	{
-		pipefd[i] = malloc(8);
+		pipefd[i] = malloc(sizeof(long));
 		if (pipefd[i] == NULL)
 			return (free_pipe_array(pipefd, i), NULL);
 	}
@@ -37,6 +47,16 @@ int	**create_pipe_arr(int nb_pipes)
 	}
 	return (pipefd);
 }
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- [a toi d'ecrire]
+**	
+**	========================================
+**	
+**	Cette fonction sert a free les tableau de pipe
+*/
 
 void	free_pipe_array(int **pipefd, int nb_pipes)
 {
@@ -53,6 +73,16 @@ void	free_pipe_array(int **pipefd, int nb_pipes)
 	}
 	free(pipefd);
 }
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- [a toi d'ecrire]
+**	- Le nombre de pipe
+**	========================================
+**	
+**	Cette fonction sert a close tout les pipefd
+*/
 
 int	ft_close_pipes(int **pipefd, int nb_pipes)
 {

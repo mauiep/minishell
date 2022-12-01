@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:25:52 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 15:40:14 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 16:09:12 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*ft_strpos(char *src)
 		if (src[i] > 0)
 			new[i] = src[i];
 		else
-			new[i] = -src[i]; // - src[i] ?
+			new[i] = -src[i];
 		i++;
 	}
 	new[i] = 0;

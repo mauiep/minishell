@@ -6,16 +6,14 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 07:52:14 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:46:10 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/30 12:55:41 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
-	char	*str;
-	char	**cmd;
 	t_mini	data;
 
 	ft_print_minishell();

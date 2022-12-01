@@ -6,11 +6,38 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:11:42 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/23 14:16:50 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 12:23:23 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Les arguments de export
+**	- Le pointeur sur structure data
+**
+**	========================================
+**	
+**	Cette fonction sert a faire fonctionner export
+**	Et fonctionne ainsi :
+
+**	- Si il n'y a pas d'argument
+**	- On affiche les variables d'environement dans l'ordre ascii
+**	 Precedees de "declare -x"
+**	
+**	========================================
+**	
+**	- Pour tout les arguments,
+**	- Si le parsing de l'argument renvoie 0
+**	- On return un message d'erreur
+**	
+**	========================================
+**	
+**	- Si le parsing de l'argument renvoie 1
+**	- On ajoute l'argument dans env
+*/
 
 int	ft_export(char **args, t_mini *data)
 {
@@ -34,4 +61,5 @@ int	ft_export(char **args, t_mini *data)
 			ft_add_env_var(args[i], data);
 		i++;
 	}
+	return (1);
 }

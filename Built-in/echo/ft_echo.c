@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 12:26:41 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/24 17:37:46 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/24 18:33:46 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,12 @@ int	ft_for_no_n_option(char **args)
 **	
 **	- Si le 1er argument est "-n"
 **	- Tant que il existe des arguments
-**	- On ecris les arguments suivi d'un saut a la ligne
+**	- On ecrit les arguments suivi d'un saut a la ligne
 **	- On return (1)
 */
 
 int	ft_echo(char **args)
 {
-	int		i;
-
 	if (!args[1])
 	{
 		ft_putchar_fd('\n', 1);

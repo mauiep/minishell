@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 08:54:39 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:13:40 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/29 11:56:54 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static int	lst_remove_quotes_else(t_lst *l, int j, int i, char *to_free)
 	return (i);
 }
 
-int	lst_remove_quotes(t_lst *l) // A verifier si ca fonctionne
+int	lst_remove_quotes(t_lst *l)
 {
 	char	*to_free;
 	int		i;
 	int		j;
-	char	c;
 
 	i = 0;
+	j = 0;
 	to_free = l->str;
 	while (l->str[i] != 0)
 	{
@@ -71,15 +71,15 @@ static int	remove_quotes_else(char **tmp, int i, int j, char *to_free)
 	return (i);
 }
 
-int	remove_quotes(char **tab) // A verifier si ca fonctionne
+int	remove_quotes(char **tab)
 {
 	int		i;
 	int		j;
-	char	c;
 	char	**tmp;
 	char	*to_free;
 
 	i = 0;
+	j = 0;
 	tmp = tab;
 	while ((*tmp) != NULL)
 	{

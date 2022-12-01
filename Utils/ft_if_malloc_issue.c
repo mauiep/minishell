@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 23:51:15 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:03:38 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/29 11:58:18 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 
 char	**ft_if_malloc_issue(char **tab, int i)
 {
-	if (!tab[i])					// Si le malloc de la nouvelle a rater
+	if (!tab[i])
 	{
-		ft_free(tab);			  // On free tout le tableau
-		return (NULL);				 // On return (NULL);
+		ft_free(tab);
+		return (NULL);
 	}
-	return (tab);			   // Sinon on return new env
+	return (tab);
 }

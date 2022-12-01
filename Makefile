@@ -6,23 +6,29 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/11/23 15:35:16 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/11/30 11:03:28 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
 SRCS	=	main.c\
+			Built-in/cd/ft_add_home_path.c\
+			Built-in/cd/ft_cd_check_if_arg_is_dash.c\
 			Built-in/cd/ft_cd_error_manager.c\
 			Built-in/cd/ft_cd.c\
 			Built-in/cd/ft_change_directory.c\
 			Built-in/cd/ft_convert_arg_to_path.c\
+			Built-in/echo/ft_echo.c\
 			Built-in/env/ft_env.c\
+			Built-in/exit/ft_exit.c\
 			Built-in/export/ft_add_env_var.c\
 			Built-in/export/ft_check_export_arg.c\
 			Built-in/export/ft_export.c\
 			Built-in/export/ft_sort_and_print_env.c\
 			Built-in/pwd/ft_pwd.c\
+			Built-in/unset/ft_check_unset_arg.c\
+			Built-in/unset/ft_realloc_env.c\
 			Built-in/unset/ft_unset.c\
 			Built-in/ft_is_built_in.c\
 			Env/ft_change_env.c\
@@ -38,6 +44,7 @@ SRCS	=	main.c\
 			Exec/ft_signals.c\
 			Libft/ft_isalpha.c\
 			Libft/ft_isdigit.c\
+			Libft/ft_itoa.c\
 			Libft/ft_putchar_fd.c\
 			Libft/ft_putendl_fd.c\
 			Libft/ft_putstr_fd.c\
@@ -50,22 +57,29 @@ SRCS	=	main.c\
 			Minishell/ft_prompt.c\
 			Minishell/minishell.c\
 			Parsing/expand.c\
+			Parsing/ft_check_redir.c\
 			Parsing/ft_cleanfile.c\
 			Parsing/ft_echap.c\
 			Parsing/ft_joindollar.c\
 			Parsing/ft_quotes_else.c\
 			Parsing/ft_quotes.c\
 			Parsing/ft_splitargs.c\
+			Parsing/ft_wrong_syntax_newline_check.c\
+			Parsing/ft_wrong_syntax_redir_check.c\
 			Parsing/parse.c\
+			Redirect/ft_for_token.c\
 			Redirect/ft_heredoc.c\
 			Redirect/ft_open_create.c\
+			Redirect/ft_pipes_utils.c\
 			Redirect/ft_pipes.c\
 			Redirect/ft_redirections.c\
+			Utils/ft_error_msg.c\
+			Utils/ft_error_token.c\
 			Utils/ft_error.c\
-			Utils/ft_exit.c\
 			Utils/ft_free.c\
 			Utils/ft_if_malloc_issue.c\
 			Utils/ft_init.c\
+			Utils/ft_is_inside_quote.c\
 			Utils/ft_libft.c\
 			Utils/ft_lst_spe.c\
 			Utils/ft_lst.c\
@@ -81,7 +95,8 @@ OBJS= $(SRCS:.c=.o)
 
 CC		=	gcc
 
-CFLAGS	= -g3 -Iincludes
+CFLAGS	= -g3 -Iincludes -Wall -Wextra -Werror
+
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 

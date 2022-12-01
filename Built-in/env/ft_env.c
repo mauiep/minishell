@@ -6,12 +6,32 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:49:42 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/23 14:28:30 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 12:26:10 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+**	Cette fonction prend en parametre :
+**	
+**	- Le pointeur sur structure data
+**	- L'index de la variable d'environement que l'on veut check
+**	========================================
+**	
+**	Cette fonction sert a verifier si le nom de la variable d'envrionement est
+** Succede par un "="
+** Et fonctionne ainsi :
+**	
+**	- Si il y a un "=" dans la ligne de declaration de la variable d'environement
+**	- On return (1);
+**	
+**	========================================
+**	
+**	- Si il n'y a pas de "=" dans la ligne
+**	 De declaration de la variable d'environement
+**	- On return (0);
+*/
 
 static int	ft_is_equal_in_var(t_mini *data, int i)
 {
@@ -31,24 +51,35 @@ static int	ft_is_equal_in_var(t_mini *data, int i)
 **	Cette fonction prend en parametre :
 **	
 **	- Le pointeur sur structure data
+**
+**	========================================
+**	
+**	Cette fonction sert a afficher les variables d'environements qui ont ete
+** Set par une valeur
+** Et fonctionne ainsi :
+**	
+**	- Si il y a un "=" dans la ligne de declaration de la variable d'environement
+**	- On affiche la variable d'environement;
 **	
 **	========================================
 **	
-**	Cette fonction sert a afficher env
+**	- Si il n'y a pas de "=" dans la ligne
+**	 De declaration de la variable d'environement
+**	- On n'affiche pas la variable d'environement;
 */
 
 void	ft_env(t_mini *data)
 {
-	int	i;											  // On initialise une variable qui compte les strings de env
+	int	i;
 
-	i = 0;											// On l'initialise a -1;
-	while (data->env_tab[i])					   // Tant que le tableau env existe
+	i = 0;
+	while (data->env_tab[i])
 	{
 		if (ft_is_equal_in_var(data, i))
 		{
-			ft_putstr_fd(data->env_tab[i], 1);		 // On ecrit la string
-			ft_putchar_fd('\n', 1);				 	// On ecrit un \n
+			ft_putstr_fd(data->env_tab[i], 1);
+			ft_putchar_fd('\n', 1);
 		}
-		i++;								   // On passe a la string suivante
+		i++;
 	}
 }

@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_check_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 07:52:14 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/28 10:07:23 by ceatgie          ###   ########.fr       */
+/*   Created: 2022/11/28 13:51:23 by ceatgie           #+#    #+#             */
+/*   Updated: 2022/11/29 10:07:33 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char *envp[])
+int	ft_check_redir(char *line)
 {
-	char	*str;
-	char	**cmd;
-	t_mini	data;
-
-	ft_print_minishell();
-	ft_init(&data, argc, argv, envp);
-	ft_create_env(&data);
-	define_signals();
-	minishell(&data);
+	if (ft_wrong_syntax_newline_check(line) == 0
+		&& ft_wrong_syntax_redir_check(line, '>') == 0)
+		return (1);
 	return (0);
 }

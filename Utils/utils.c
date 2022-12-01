@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+int	command_ok(char *str)
+{
+	int	i;
+	int	cpt;
+
+	i = 0;
+	cpt = 0;
+	while (str && str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+			cpt++;
+		i++;
+	}
+	if (cpt == ft_strlen(str))
+		return (0);
+	return (1);
+}
+
 int	is_sep(char c)
 {
 	if (c == ';' || c == '>' || c == '<' || c == '|')
@@ -22,13 +40,13 @@ int	is_sep(char c)
 int	print_err(int err)
 {
 	if (err == -1)
-		write(2, "Error malloc\n", 13);
+		return (ft_error("minishell: Malloc error\n", RED, -1));
 	else if (err == -2)
-		write(2, "Missing quotes\n", 15);
+		return (ft_error("minishell: Missing quotes\n", RED, -2));
 	else if (err == -3)
-		write(2, "Syntax error\n", 13);
+		return (ft_error("minishell: Syntax error\n", RED, -3));
 	else if (err == -4)
-		write(2, "Parse error\n", 12);
+		return (ft_error("minishell: Parse error\n", RED, -4));
 	return (err);
 }
 

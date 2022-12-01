@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:27:24 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/21 15:16:55 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/25 12:28:39 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,31 @@
 **	========================================
 **	
 **	Cette fonction sert a indiquer le path ou l'on se situe actuellement
+**	Et fonctionne ainsi :
+**	
+**	- On recupere le pwd grace a getcwd()
+**	- On l'affiche
+**	
+**	========================================
+**	
+**	- Si l'appel de getcwd ne marche pas
+**	- On return un message d'erreur
 */
 
 void	ft_pwd(void)
 {
-	char	*buffer;										// On creer un buffer qui contiendra le path actuel donner par getcwd()
+	char	*buffer;
 
-	buffer = NULL;										  // On l'initialise a NULL
-	buffer = getcwd(NULL, 0);							 // On l'associe a resultat de getcwd()
-	if (buffer)											// Si il n'y a aucune erreur de malloc
-		ft_putendl_fd(buffer, 1);					   // On affiche le path actuel contenu dans le buffer 
-	else											  // Sinon
+	buffer = NULL;
+	buffer = getcwd(NULL, 0);
+	if (buffer)
+		ft_putendl_fd(buffer, 1);
+	else
 	{
-		write(2, RED, ft_strlen(RED));				// On ecrit en rouge sur la sortie erreur
-		write(2, "minishell: pwd: ", 16);		   // minishell: pwd:
-		ft_putendl_fd(strerror(errno), 2);		  // Suivi du retour de l'erreur gerer par errno
-		ft_putstr_fd(RESET, 2);					 // On reset la couleur sur la sortie erreur
+		write(2, RED, ft_strlen(RED));
+		write(2, "minishell: pwd: ", 16);
+		ft_putendl_fd(strerror(errno), 2);
+		ft_putstr_fd(RESET, 2);
 	}
-	free(buffer);							   // On free le buffer pour eviter les fuites de memoires
+	free(buffer);
 }

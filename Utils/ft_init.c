@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:30:36 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:03:42 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:28:39 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	ft_init(t_mini *data, int argc, char **argv, char **envp)
 	data->cmd = NULL;
 	data->home = NULL;
 	data->prompt_var = 0;
+	data->dup = 1;
 	data->converted_path = NULL;
 	data->prompt = NULL;
+	data->g_error = 0;
+	data->command_ok = 0;
 }
