@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:54:56 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/30 14:30:44 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 13:36:48 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	expand(t_lst *lst, t_mini *data)
 			{
 				c = expand_else(ptr, c, i);
 				j = dollard_manager(ptr, c, i, data);
-				if (j == -42 || j == -1)
+				if (j == -42)
 					return (-1);
 				i = i + j + 1;
 			}

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:39 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/28 15:30:14 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 14:17:43 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,26 @@ int	**create_pipe_arr(int nb_pipes)
 	int	**pipefd;
 	int	ret;
 
-	pipefd = malloc(nb_pipes * sizeof(int *));
-	if (pipefd == NULL)
-		return (NULL);
-	i = -1;
-	while (++i < nb_pipes)
+	pipefd = NULL;
+	if (nb_pipes > 0)
 	{
-		pipefd[i] = malloc(sizeof(long));
-		if (pipefd[i] == NULL)
-			return (free_pipe_array(pipefd, i), NULL);
-	}
-	i = -1;
-	while (++i < nb_pipes)
-	{
-		ret = pipe(pipefd[i]);
-		if (ret == -1)
-			return (ft_close_pipes(pipefd, i), NULL);
+		pipefd = malloc(nb_pipes * sizeof(int *));
+		if (pipefd == NULL)
+			return (NULL);
+		i = -1;
+		while (++i < nb_pipes)
+		{
+			pipefd[i] = malloc(sizeof(long));
+			if (pipefd[i] == NULL)
+				return (free_pipe_array(pipefd, i), NULL);
+		}
+		i = -1;
+		while (++i < nb_pipes)
+		{
+			ret = pipe(pipefd[i]);
+			if (ret == -1)
+				return (ft_close_pipes(pipefd, i), NULL);
+		}
 	}
 	return (pipefd);
 }

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:06:47 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/29 13:18:26 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 15:05:20 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ft_init_pipe_var(t_mini *data, int nb_pipes, t_lst *lst)
 	data->pipes_left = nb_pipes;
 	data->pipefd = create_pipe_arr(nb_pipes);
 	if (!data->pipefd)
-		return (0);
 	data->i = 0;
 	data->start_lst = lst;
 	data->fd_in = 0;

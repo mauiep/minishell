@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:02:24 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/30 13:49:56 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 19:09:02 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_mini
 	char			**argv;
 	char			**envp;
 	char			**env_tab;
-	char			**cmd;
 	char			*line;
 	char			*prompt;
 	int				prompt_var;
@@ -79,9 +78,13 @@ typedef struct s_mini
 	int				i;
 	pid_t			*list;
 	int				pipes_left;
+	int				nb_pipes;
 	int				fd_in;
 	int				dup;
 	int				command_ok;
+	char			*envval;
+	char			**splitargs;
+	struct s_lst	*lst;
 	struct s_lst	*start_lst;
 }			t_mini;
 
@@ -100,7 +103,7 @@ typedef struct s_joindollard
 //										Built-in
 //-----------------------------------------------------------------------------
 
-int		ft_is_built_in(char **args, t_mini *data, t_lst *lst);
+int		ft_is_built_in(char **args, t_mini *data);
 
 //------------------------
 //			cd
@@ -129,7 +132,8 @@ void	ft_env(t_mini *data);
 //			exit
 //------------------------
 
-void	ft_exit(t_mini *data, t_lst *lst);
+int		ft_exit(char **args, t_mini *data);
+void	ft_free_all(t_mini *data);
 
 //------------------------
 //			env
@@ -294,5 +298,6 @@ void	push_lst(t_lst *new, t_lst *lst);
 void	ft_tab_to_spaces(char *str);
 int		command_ok(char *str);
 void	ft_printlst(t_lst *lst);
+void	ft_quadrafree(void *s1, void *s2, void *s3, void *s4);
 
 #endif

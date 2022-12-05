@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:34:36 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/18 15:40:25 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 16:16:42 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ char	*spe_get_word(char *str, int n)
 			i++;
 	j = spe_lenword(str + i);
 	new = ft_strndup2(str + i, j);
-	if (!new)
-		return (NULL);
 	return (new);
 }
 

@@ -6,11 +6,29 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:01 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/30 14:39:22 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 19:59:19 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+static void	ft_free_handle_exec(t_mini *data)
+{
+	ft_error("ca passe ici\n", RED, 0);
+	if (data->line)
+		free(data->line);
+	if (data->env_tab)
+		ft_free(data->env_tab);
+	if (data->prompt)
+		free(data->prompt);
+	if (data->splitargs)
+		ft_free(data->splitargs);
+	if (data->lst)
+		free_lst(data->lst);
+	if (data->list)
+		free(data->list);
+}
 
 /*
 **	Cette fonction prend en parametre :
@@ -32,7 +50,7 @@ static int	program_exec(char **args, t_mini *data)
 		ft_putstr_fd(RED, 2);
 		perror("execve");
 		ft_putstr_fd(RESET, 2);
-		ft_free(args);
+		ft_free_handle_exec(data);
 	}
 	else
 	{
@@ -40,6 +58,7 @@ static int	program_exec(char **args, t_mini *data)
 		ft_error(args[0], RED, 42);
 		ft_error(": No such file or directory", RED, 42);
 		ft_error("\n", RED, 42);
+		ft_free_handle_exec(data);
 	}
 	return (-1);
 }
@@ -54,12 +73,15 @@ static int	program_exec(char **args, t_mini *data)
 **	Cette fonction sert a bloquer les built-in qui sont gerer par execve
 */
 
-static void	ft_block_built_in(char **args)
+static void	ft_block_built_in(char **args, t_mini *data)
 {
 	if (!ft_strcmp(args[0], "env") || !ft_strcmp(args[0], "pwd")
 		|| !ft_strcmp(args[0], "unset") || !ft_strcmp(args[0], "echo")
 		|| !ft_strcmp(args[0], "exit"))
+	{
+		ft_free_handle_exec(data);
 		exit (-1);
+	}
 }
 
 /*
@@ -111,26 +133,36 @@ static void	ft_handle_exec_error(char **args)
 
 int	ft_handle_exec(t_lst *lst, t_mini *data)
 {
-	char	**args;
 	char	*tmp;
 
 	if (lst->token != 0)
+	{
+		ft_free_handle_exec(data);
 		exit(0);
-	args = ft_splitargs(lst);
-	if (!args)
+	}
+	if (data->splitargs)
+		ft_free(data->splitargs);
+	data->splitargs = ft_splitargs(lst);
+	fprintf(stderr, "%sargv[0]=%s\n%s", RED, data->splitargs[0], RESET);
+	if (!data->splitargs)
 		return (-1);
-	while (args && lst && lst->token != 1)
+	while (data->splitargs && lst && lst->token != 1)
 	{
 		if (lst->token == 0 && lst->str != NULL)
 		{
-			if (ft_is_built_in(args, data, lst))
-				exit (0);
-			ft_check_if_executable(args, data);
-			ft_block_built_in(args);
-			tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data),
-					args, data->env_tab);
+			if (ft_is_built_in(data->splitargs, data))
+			{
+				//free_pipe_array(data->pipefd, data->nb_pipes);
+				ft_free_handle_exec(data);
+				exit (data->g_error);
+			}
+			ft_error("ON PASSE ICI \n", RED, 0);
+			ft_check_if_executable(data->splitargs, data);
+			//ft_block_built_in(data->splitargs, data);
+			tmp = ft_find_bin(data->splitargs[0], ft_get_env_var("PATH", data),
+					data->splitargs, data->env_tab);
 			if (!tmp)
-				ft_handle_exec_error(args);
+				ft_handle_exec_error(data->splitargs);
 		}
 		lst = lst->next;
 	}

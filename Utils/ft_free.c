@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 18:31:32 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/18 15:03:34 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 17:16:09 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	ft_free(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (tab && tab[i])
 	{
 		free(tab[i]);
 		i++;
 	}
 	free(tab);
+	tab = NULL;
 }

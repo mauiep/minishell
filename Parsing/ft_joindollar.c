@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:21:18 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/25 16:08:04 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 15:56:59 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,25 @@ int	return_dollar(char *str, char *tmp, char *envval, t_lst *ptr)
 	return (ret);
 }
 
+static int	ft_joindollar_else(char *tmp, t_mini *data, int i, int j)
+{
+	if (tmp[i + j] == '?' && j++)
+		data->envval = ft_itoa(data->g_error);
+	else
+	{
+		while (char_is_a_valid_dollar(tmp[i + j]) == 1)
+			j++;
+		data->envval = dollarval(tmp, i, j, data);
+		if (!data->envval)
+			return (-42);
+	}
+	return (j);
+}
+
 int	ft_joindollar(t_lst *ptr, int i, t_mini *data)
 {
 	char	*tmp;
 	char	*to_free;
-	char	*envval;
 	int		j;
 
 	j = 1;
@@ -61,37 +75,15 @@ int	ft_joindollar(t_lst *ptr, int i, t_mini *data)
 	if (!ptr->str)
 		return (-42);
 	to_free = ptr->str;
-	if (tmp[i + j] == '?')
-	{
-		envval = ft_itoa(data->g_error);
-		j++;
-	}
-	else
-	{
-		while (char_is_a_valid_dollar(tmp[i + j]) == 1)
-			j++;
-		envval = dollarval(tmp, i, j, data);
-		if (!envval)
-			return (-42);
-	}
-	ptr->str = ft_strjoinneg(to_free, envval);
+	j = ft_joindollar_else(tmp, data, i, j);
+	if (j == -42)
+		return (-42);
+	ptr->str = ft_strjoinneg(to_free, data->envval);
 	if (!ptr->str)
 		return (-42);
 	free(to_free);
 	to_free = ft_strndup2(tmp + i + j, ft_strlen(tmp + i + j));
 	if (!ptr->str)
 		return (-42);
-	return (return_dollar(to_free, tmp, envval, ptr));
-}
-
-void	ft_quadrafree(void *s1, void *s2, void *s3, void *s4)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	if (s3)
-		free(s3);
-	if (s4)
-		free(s4);
+	return (return_dollar(to_free, tmp, data->envval, ptr));
 }

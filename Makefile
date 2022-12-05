@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/11/30 11:03:28 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/12/05 19:48:13 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ OBJS= $(SRCS:.c=.o)
 
 CC		=	gcc
 
-CFLAGS	= -g3 -Iincludes -Wall -Wextra -Werror
+CFLAGS	= -g3 -Iincludes 
 
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}

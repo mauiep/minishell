@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:37:42 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/29 12:51:48 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/05 17:05:13 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ static int	ft_heredoc_else(char *buff, int fd, t_mini *data)
 
 	tmp = ft_lstnew();
 	if (!tmp)
-		return (free(buff), free_lst(tmp), close(fd), -1);
+		return (fprintf(stderr, "1\n"), free(buff), free_lst(tmp), close(fd), -1);
 	tmp->str = buff;
 	if (mini_expand(tmp, data) < 0)
-		return (free(buff), free_lst(tmp), close(fd), -1);
+		return (fprintf(stderr, "2\n"), free(buff), free_lst(tmp), close(fd), -1);
 	tmp->str = ft_strpos(tmp->str);
 	if (!tmp->str)
-		return (free(buff), free_lst(tmp), close(fd), -1);
+		return (fprintf(stderr, "3\n"), free(buff), free_lst(tmp), close(fd), -1);
 	write(fd, tmp->str, ft_strlen(tmp->str));
 	write(fd, "\n", 1);
-	ft_quadrafree(tmp->str, NULL, tmp, NULL);
+	ft_quadrafree(tmp->str, tmp, NULL, NULL);
 	return (1);
 }
 
@@ -49,7 +49,7 @@ int	ft_heredoc(char	*end, t_mini *data)
 
 	fd = open("temp", O_WRONLY | O_TRUNC | O_CREAT, 0755);
 	if (fd == -1)
-		return (printf("open fail\n"), -1);
+		return (-1);
 	while (42)
 	{
 		buff = readline("heredoc>");
