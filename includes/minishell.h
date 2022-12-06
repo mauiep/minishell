@@ -54,6 +54,7 @@ typedef struct s_lst
 {
 	char			*str;
 	int				token;
+	int				num;
 	struct s_lst	*next;
 	struct s_lst	*prev;
 }					t_lst;
@@ -246,7 +247,8 @@ int		parse(char *line_buffer, t_mini *data);
 //										Redirect
 //-----------------------------------------------------------------------------
 
-int		ft_heredoc(char	*end, t_mini *data);
+int		ft_heredoc(t_lst *lst, t_mini *data, int fd);
+int		ft_handle_heredoc(t_lst *lst, t_mini *data);
 int		mini_expand(t_lst *tmp, t_mini *data);
 int		ft_open_create(char *filename, bool apnd_or_not, int token);
 t_lst	*ft_next_pipe(t_lst *lst);

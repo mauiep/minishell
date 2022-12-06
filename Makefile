@@ -70,6 +70,7 @@ SRCS	=	main.c\
 			Parsing/parse.c\
 			Redirect/ft_for_token.c\
 			Redirect/ft_heredoc.c\
+			Redirect/ft_create_heredoc.c\
 			Redirect/ft_open_create.c\
 			Redirect/ft_pipes_utils.c\
 			Redirect/ft_pipes.c\

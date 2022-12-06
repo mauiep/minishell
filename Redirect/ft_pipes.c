@@ -63,6 +63,8 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 		return (0);
 	else if (init == -1)
 		return (free_pipe_array(data->pipefd, nb_pipes), -1);
+	if (!ft_handle_heredoc(lst, data))
+		return (-1);
 	data->splitargs = ft_splitargs(lst);
 	if (!data->splitargs)
 		return (free_pipe_array(data->pipefd, nb_pipes), -1);

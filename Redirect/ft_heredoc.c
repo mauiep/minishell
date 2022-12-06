@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static void	ft_ctrl_d(t_mini *data)
 {
+	write(2, "\n", 1);
 	if (data->splitargs)
 		ft_free(data->splitargs);
 	if (data->env_tab)
@@ -27,7 +28,7 @@ static void	ft_ctrl_d(t_mini *data)
 	if (data->lst)
 		free_lst(data->lst);
 }
-
+*/
 static int	ft_heredoc_else(char *buff, int fd, t_mini *data)
 {
 	t_lst	*tmp;
@@ -58,21 +59,23 @@ static int	ft_heredoc_else(char *buff, int fd, t_mini *data)
 **	dans le fd tmp
 */
 
-int	ft_heredoc(char	*end, t_mini *data)
+int	ft_heredoc(t_lst *lst, t_mini *data, int fd)
 {
 	char	*buff;
-	int		fd;
+	char	*end;
 
-	fd = open("temp", O_WRONLY | O_TRUNC | O_CREAT, 0755);
-	if (fd == -1)
-		return (printf("open fail\n"), -1);
+	if (ft_cleanfile(lst) < 0)
+		return (-1);
+	end = lst->str;
 	while (42)
 	{
 		buff = readline("heredoc>");
 		if (!buff)
 		{
-			ft_ctrl_d(data);
-			exit (-1);
+			//ft_ctrl_d(data);
+			//exit (-1);
+			write(2, "\n", 1);
+			return (-1);
 		}
 		if (ft_strcmp(buff, end) == 0)
 			break ;

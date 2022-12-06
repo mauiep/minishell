@@ -91,6 +91,7 @@ t_lst	*ft_lstnew(void)
 	new->str = NULL;
 	new->next = NULL;
 	new->prev = NULL;
+	new->num = 0;
 	new->token = 0;
 	return (new);
 }

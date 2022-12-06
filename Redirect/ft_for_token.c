@@ -60,8 +60,29 @@ int	ft_for_token4(t_lst *lst, t_mini *data, int fd)
 	close(fd);
 	return (fd);
 }
-
 int	ft_for_token5(t_lst *lst, t_mini *data, int fd)
+{
+	char    *docname;
+	char	*to_free;
+
+    to_free = ft_itoa(lst->num);
+    if (!to_free)
+		return (-1);
+	docname = ft_strjoin2(".tmpfile", to_free);
+	if (!docname)
+		return (-1);
+	free(to_free);
+	fd = open(docname, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	unlink(docname);
+	free(docname);
+	if (data->dup && is_last_heredoc(lst) && dup2(fd, STDIN_FILENO) < 0)
+		return (printf("error : dup2\n"), close(fd), -1);
+	close(fd);
+	return (fd);
+}
+/*int	ft_for_token5(t_lst *lst, t_mini *data, int fd)
 {
 	fd = ft_heredoc(lst->next->str, data);
 	if (fd == -1)
@@ -75,4 +96,4 @@ int	ft_for_token5(t_lst *lst, t_mini *data, int fd)
 		return (printf("error : dup2\n"), close(fd), -1);
 	close(fd);
 	return (fd);
-}
+}*/
