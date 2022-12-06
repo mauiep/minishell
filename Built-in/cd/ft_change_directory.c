@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:13:17 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/24 15:24:13 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 14:22:31 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_change_directory(char *path, t_mini *data)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (free(path), -1);
+		pwd = ft_get_env_var("PWD", data);
 	if (!chdir(path))
 	{
 		if (pwd)
@@ -90,6 +90,5 @@ int	ft_change_directory(char *path, t_mini *data)
 		return (1);
 	}
 	free(pwd);
-	ft_free_data_and_set_null(data);
 	return (0);
 }
