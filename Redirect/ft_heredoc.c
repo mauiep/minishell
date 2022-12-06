@@ -6,11 +6,27 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:37:42 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/29 12:51:48 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:56:39 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	ft_ctrl_d(t_mini *data)
+{
+	if (data->splitargs)
+		ft_free(data->splitargs);
+	if (data->env_tab)
+		ft_free(data->env_tab);
+	if (data->list)
+		free(data->list);
+	if (data->pipefd)
+		free_pipe_array(data->pipefd, data->nb_pipes);
+	if (data->prompt)
+		free(data->prompt);
+	if (data->lst)
+		free_lst(data->lst);
+}
 
 static int	ft_heredoc_else(char *buff, int fd, t_mini *data)
 {
@@ -53,6 +69,11 @@ int	ft_heredoc(char	*end, t_mini *data)
 	while (42)
 	{
 		buff = readline("heredoc>");
+		if (!buff)
+		{
+			ft_ctrl_d(data);
+			exit (-1);
+		}
 		if (ft_strcmp(buff, end) == 0)
 			break ;
 		if (ft_heredoc_else(buff, fd, data) == -1)

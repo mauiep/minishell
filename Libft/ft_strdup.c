@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 09:09:27 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/23 12:25:36 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:28:19 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ char	*ft_strdup(const char *s)
 	i = 0;
 	if (!s)
 		return (NULL);
-	while (s[i])
+	while (s && s[i])
 		i++;
 	tab = malloc(sizeof(char) * (i + 1));
 	if (tab == NULL)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		tab[i] = s[i];
 		i++;

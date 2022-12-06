@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:30:36 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 07:35:09 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:42:21 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void	ft_init(t_mini *data, int argc, char **argv, char **envp)
 	data->lst = NULL;
 	data->list = NULL;
 	data->splitargs = NULL;
+	data->pipefd = NULL;
 }
