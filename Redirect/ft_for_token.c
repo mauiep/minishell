@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 11:00:05 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/05 18:36:26 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/30 11:02:20 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_for_token2(t_lst *lst, t_mini *data, int fd)
 	if (fd == -1)
 		return (-1);
 	if (data->dup && dup2(fd, STDOUT_FILENO) == -1)
-		return (close(fd), -1);
+		return (printf("error : dup2\n"), close(fd), -1);
 	close(fd);
 	return (fd);
 }
@@ -45,7 +45,7 @@ int	ft_for_token3(t_lst *lst, t_mini *data, int fd)
 	if (fd == -1)
 		return (-1);
 	if (data->dup && dup2(fd, STDIN_FILENO) == -1)
-		return (close(fd), -1);
+		return (printf("error : dup2\n"), close(fd), -1);
 	close(fd);
 	return (fd);
 }
@@ -56,7 +56,7 @@ int	ft_for_token4(t_lst *lst, t_mini *data, int fd)
 	if (fd == -1)
 		return (-1);
 	if (data->dup && dup2(fd, STDOUT_FILENO) < 0)
-		return (close(fd), -1);
+		return (printf("error : dup2\n"), close(fd), -1);
 	close(fd);
 	return (fd);
 }
@@ -65,14 +65,14 @@ int	ft_for_token5(t_lst *lst, t_mini *data, int fd)
 {
 	fd = ft_heredoc(lst->next->str, data);
 	if (fd == -1)
-		return (-1);
+		return (printf("no fd heredoc\n"), -1);
 	close(fd);
 	fd = open("temp", O_RDONLY);
 	if (fd == -1)
-		return (-1);
+		return (printf("no fd heredoc\n"), -1);
 	unlink("temp");
 	if (data->dup && is_last_heredoc(lst) && dup2(fd, STDIN_FILENO) < 0)
-		return (close(fd), -1);
+		return (printf("error : dup2\n"), close(fd), -1);
 	close(fd);
 	return (fd);
 }

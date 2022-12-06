@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:16:54 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/05 19:47:30 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:15:10 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ static int	ft_pipes_else_else(t_mini *data, int nb_pipes)
 	{
 		signal(SIGINT, sig_null);
 		signal(SIGINT, SIG_DFL);
-		if (nb_pipes > 0)
-		{
-			ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
-			ft_close_pipes(data->pipefd, nb_pipes);
-		}
+		ft_handle_pipe(data->pipefd, data->pipes_left, nb_pipes, &data->fd_in);
+		ft_close_pipes(data->pipefd, nb_pipes);
 		if (ft_handle_redirections(data->start_lst, data) == -1)
 			return (-1);
 		if (ft_handle_exec(data->start_lst, data) == -1)
@@ -36,11 +33,11 @@ static int	ft_pipes_else(t_lst *lst, int nb_pipes, t_mini *data, char **args)
 	while (lst && lst->str)
 	{
 		lst = data->start_lst;
-		printf("%i\n", nb_pipes);
 		if (nb_pipes == 0 && ft_is_built_in(args, data))
 			return (free_pipe_array(data->pipefd, nb_pipes),
 				ft_free(args), free(data->list), 1);
 		data->list[data->i] = fork();
+		signal(SIGINT, SIG_IGN);
 		if (ft_pipes_else_else(data, nb_pipes) == -1)
 			return (-1);
 		data->i++;
@@ -50,6 +47,7 @@ static int	ft_pipes_else(t_lst *lst, int nb_pipes, t_mini *data, char **args)
 			data->start_lst = lst->next;
 	}
 	ft_free(args);
+	//free_pipe_array(data->pipefd, nb_pipes);
 	return (0);
 }
 
@@ -58,7 +56,6 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 	int		init;
 	int		error;
 
-	error = 0;
 	data->dup = 1;
 	if (lst->token != 0)
 		data->dup = 0;
@@ -72,8 +69,8 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 		return (free_pipe_array(data->pipefd, nb_pipes), -1);
 	error = ft_pipes_else(lst, nb_pipes, data, data->splitargs);
 	if (error == 1 || error == -1)
-		return (free_pipe_array(data->pipefd, nb_pipes),
-			data->g_error);
+		return (error);
+	//ft_free(data->splitargs);
 	ft_close_pipes(data->pipefd, nb_pipes);
 	free_pipe_array(data->pipefd, nb_pipes);
 	ft_wait_procs(data->i, data->list, data);
@@ -113,6 +110,5 @@ int	ft_wait_procs(int ac, pid_t *list, t_mini *data)
 	if (data->g_error == 130)
 		ft_putchar_fd('\n', 2);
 	free(list);
-	list = NULL;
 	return (0);
 }

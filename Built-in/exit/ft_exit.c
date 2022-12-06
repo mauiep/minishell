@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:57:13 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/05 18:54:57 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:17:14 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,8 @@ void	ft_free_all(t_mini *data)
 		free(data->list);
 	if (data->lst)
 		free_lst(data->lst);
-	data->line = NULL;
-	data->env_tab = NULL;
-	data->prompt = NULL;
+	if (data->pipefd)
+		free_pipe_array(data->pipefd, data->nb_pipes);
 }
 
 int	ft_exit(char **args, t_mini *data)

@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:49:57 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/05 13:25:24 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/08 15:51:12 by admaupie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_quadrafree(void *s1, void *s2, void *s3, void *s4)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	if (s3)
-		free(s3);
-	if (s4)
-		free(s4);
-}
 
 void	ft_tab_to_spaces(char *str)
 {

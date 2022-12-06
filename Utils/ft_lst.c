@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:11:19 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/05 17:17:56 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:32:25 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ int	free_lst(t_lst *src)
 {
 	t_lst	*next;
 
-	if (!src)
-		return (0);
-	while (src && src->prev != NULL)
+	while (src->prev)
 		src = src->prev;
 	while (src)
 	{
 		next = src->next;
-		if (src && src->str)
+		if (src->str)
 			free(src->str);
 		src->str = NULL;
 		free(src);

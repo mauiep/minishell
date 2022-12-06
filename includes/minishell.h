@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:02:24 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/05 19:09:02 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 07:40:28 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,22 @@ typedef struct s_mini
 	char			**argv;
 	char			**envp;
 	char			**env_tab;
+	char			**cmd;
 	char			*line;
 	char			*prompt;
 	int				prompt_var;
 	pid_t			g_error;
+	char			**splitargs;
 	char			*converted_path;
 	int				**pipefd;
 	int				i;
+	int				nb_pipes;
+	char			*envval;
 	pid_t			*list;
 	int				pipes_left;
-	int				nb_pipes;
 	int				fd_in;
 	int				dup;
 	int				command_ok;
-	char			*envval;
-	char			**splitargs;
 	struct s_lst	*lst;
 	struct s_lst	*start_lst;
 }			t_mini;
@@ -133,7 +134,6 @@ void	ft_env(t_mini *data);
 //------------------------
 
 int		ft_exit(char **args, t_mini *data);
-void	ft_free_all(t_mini *data);
 
 //------------------------
 //			env

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:39 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/05 14:17:43 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:16:04 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,21 @@ int	**create_pipe_arr(int nb_pipes)
 	int	**pipefd;
 	int	ret;
 
-	pipefd = NULL;
-	if (nb_pipes > 0)
+	if (nb_pipes == 0)
+	{
+		pipefd = malloc(sizeof(int *));
+		if (pipefd == NULL)
+		return (NULL);
+		pipefd[0] = malloc(sizeof(long));
+		if (pipefd[0] == NULL)
+			return (free(pipefd[0]), free(pipefd), NULL);
+		if (pipe(pipefd[0]) == -1)
+			return (close(pipefd[0][0]), close(pipefd[0][1]), NULL);
+		return (pipefd);
+	}
+	else
 	{
 		pipefd = malloc(nb_pipes * sizeof(int *));
-		if (pipefd == NULL)
-			return (NULL);
 		i = -1;
 		while (++i < nb_pipes)
 		{
@@ -68,6 +77,8 @@ void	free_pipe_array(int **pipefd, int nb_pipes)
 
 	if (!pipefd)
 		return ;
+	if (nb_pipes == 0)
+		return (free(pipefd[0]), free(pipefd));
 	i = -1;
 	while (++i < nb_pipes)
 	{

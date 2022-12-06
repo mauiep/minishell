@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 12:23:26 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/05 19:10:36 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:18:51 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	parse_else_else(char *line_buffer, int i, t_lst *lst)
 	else if (line_buffer[i] != ' ')
 		len = push_sep(lst, line_buffer + i);
 	if (len < 0)
-		return (print_err(len), free_lst(lst));
+		return (print_err(len) + free_lst(lst));
 	return (i + len);
 }
 
@@ -51,9 +51,12 @@ static int	parse_else(char *line_buffer, t_mini *data, int i, t_lst *lst)
 			return (i);
 	}
 	if (ft_parse_error(line_buffer, lst) < 0)
-		return (free_lst(lst), -1);
+		return (-1);
 	if (expand(lst, data) == -1)
-		return (free_lst(lst), 0);
+	{
+		free_lst(lst);
+		return (printf("BUG EXPAND\n"));
+	}
 	if (data->command_ok == 1)
 	{
 		data->nb_pipes = ft_pipes_left(lst);

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 07:52:14 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/05 13:50:01 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/30 12:55:41 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_print_minishell();
 	ft_init(&data, argc, argv, envp);
 	ft_create_env(&data);
+	define_signals();
 	minishell(&data);
 	return (0);
 }

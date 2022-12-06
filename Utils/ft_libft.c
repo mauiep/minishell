@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:11 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/05 12:02:25 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:26:35 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ char	*ft_strndup2(const char *src, int n)
 		str[i] = src[i];
 		i++;
 	}
-	str[i] = '\0';
+	str[i] = 0;
 	return (str);
 }
