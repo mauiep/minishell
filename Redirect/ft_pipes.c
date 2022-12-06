@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:16:54 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/06 08:15:10 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:38:32 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	ft_pipes_else(t_lst *lst, int nb_pipes, t_mini *data, char **args)
 			data->start_lst = lst->next;
 	}
 	ft_free(args);
-	//free_pipe_array(data->pipefd, nb_pipes);
 	return (0);
 }
 
@@ -70,7 +69,6 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 	error = ft_pipes_else(lst, nb_pipes, data, data->splitargs);
 	if (error == 1 || error == -1)
 		return (error);
-	//ft_free(data->splitargs);
 	ft_close_pipes(data->pipefd, nb_pipes);
 	free_pipe_array(data->pipefd, nb_pipes);
 	ft_wait_procs(data->i, data->list, data);
@@ -99,10 +97,7 @@ int	ft_wait_procs(int ac, pid_t *list, t_mini *data)
 	{
 		w = waitpid(list[i], &status, 0);
 		if (w == -1)
-		{
-			//perror("waitpid");
 			exit(EXIT_FAILURE);
-		}
 		if (WIFEXITED(status))
 			data->g_error = WEXITSTATUS(status);
 		i += ft_wait_procs_else(data, status);

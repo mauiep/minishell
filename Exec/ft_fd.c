@@ -6,12 +6,26 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:39 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/06 08:16:04 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:02:31 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	**ft_create_pipe_arr_for_no_pipe(void)
+{
+	int	**pipefd;
+
+	pipefd = malloc(sizeof(int *));
+	if (pipefd == NULL)
+		return (NULL);
+	pipefd[0] = malloc(sizeof(long));
+	if (pipefd[0] == NULL)
+		return (free(pipefd[0]), free(pipefd), NULL);
+	if (pipe(pipefd[0]) == -1)
+		return (close(pipefd[0][0]), close(pipefd[0][1]), NULL);
+	return (pipefd);
+}
 /*
 **	Cette fonction prend en parametre :
 **	
@@ -29,17 +43,7 @@ int	**create_pipe_arr(int nb_pipes)
 	int	ret;
 
 	if (nb_pipes == 0)
-	{
-		pipefd = malloc(sizeof(int *));
-		if (pipefd == NULL)
-		return (NULL);
-		pipefd[0] = malloc(sizeof(long));
-		if (pipefd[0] == NULL)
-			return (free(pipefd[0]), free(pipefd), NULL);
-		if (pipe(pipefd[0]) == -1)
-			return (close(pipefd[0][0]), close(pipefd[0][1]), NULL);
-		return (pipefd);
-	}
+		pipefd = ft_create_pipe_arr_for_no_pipe();
 	else
 	{
 		pipefd = malloc(nb_pipes * sizeof(int *));

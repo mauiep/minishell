@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:57:13 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 08:46:13 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:40:16 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	ft_isspace(const char *str)
 	return (cpt);
 }
 
-static long long	ft_exit_atoi(const char *str)
+static long long	ft_exit_atoi(char *str)
 {
-	int				sign;
+	long long		sign;
 	int				cpt;
 	long long		atoi_var;
 
@@ -66,22 +66,15 @@ static int	ft_check_exit_args(char **args)
 	return (0);
 }
 
-void	ft_free_all(t_mini *data)
+static void	ft_exit_else(int ret, t_mini *data)
 {
-	if (data->line)
-		free(data->line);
-	if (data->env_tab)
-		ft_free(data->env_tab);
-	if (data->prompt)
-		free(data->prompt);
-	if (data->splitargs)
-		ft_free(data->splitargs);
-	if (data->list)
-		free(data->list);
-	if (data->lst)
-		free_lst(data->lst);
-	if (data->pipefd)
-		free_pipe_array(data->pipefd, data->nb_pipes);
+	if (ret == -3)
+	{
+		ft_putstr_fd("exit\n", 2);
+		ft_error("minishell: exit: numeric argument required\n", RED, 1);
+		ft_free_all(data);
+		exit(2);
+	}
 }
 
 int	ft_exit(char **args, t_mini *data)
@@ -94,21 +87,16 @@ int	ft_exit(char **args, t_mini *data)
 	if (ret == -2)
 		return (data->g_error = 1,
 			ft_error("minishell: exit: too many arguments\n", RED, 1));
-	else if (ret == -3)
+	ft_exit_else(ret, data);
+	if (ret == 0)
 	{
-		ft_putstr_fd("exit\n", 2);
-		ft_error("minishell: exit: numeric argument required\n", RED, 1);
+		error = (ft_exit_atoi(args[1]));
 		ft_free_all(data);
-		exit(2);
+		ft_putstr_fd("exit\n", 2);
+		exit(error);
 	}
 	ft_free_all(data);
 	ft_putstr_fd("exit\n", 2);
-	if (ret == 0)
-	{
-		error = (ft_exit_atoi(args[1]) % 256);
-		exit (error);
-	}
-	args = NULL;
 	(void)error;
 	exit(data->g_error);
 	return (1);

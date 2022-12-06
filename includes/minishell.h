@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:02:24 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 08:30:54 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:43:55 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ char	*ft_strndup(const char *s, int n);
 
 char	*ft_prompt(t_mini *data);
 int		minishell(t_mini *data);
+void	launch_minishell(int argc, char **argv, char **envp);
 
 //-----------------------------------------------------------------------------
 //										Parsing

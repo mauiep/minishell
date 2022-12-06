@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 12:26:41 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/24 18:33:46 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:02:52 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,24 @@
 
 static int	ft_check_if_n_option(char **args)
 {
-	if (!ft_strcmp("-n", args[1]))
+	int	i;
+
+	i = 0;
+	while (args[1] && args[1][i])
+	{
+		if (args[1][0] == '-')
+		{
+			i++;
+			while (args[1] && args[1][i])
+			{
+				if (args[1][i] != 'n')
+					return (0);
+				i++;
+			}
+		}
 		return (1);
-	return (0);
+	}
+	return (1);
 }
 
 /*

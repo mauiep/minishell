@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:22:02 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 14:21:10 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 14:28:16 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_cd_error_manager(char *path, t_mini *data)
 	struct stat	st;
 
 	if (ft_change_directory(path, data))
-		return (1);
+		return (data->g_error = 0, 1);
 	ft_putstr_fd(RED, 2);
 	ft_putstr_fd("minishell: cd: ", 2);
 	ft_putstr_fd(path, 2);
@@ -70,6 +70,7 @@ int	ft_cd_error_manager(char *path, t_mini *data)
 		ft_putendl_fd(": Not a directory", 2);
 	else if (!(st.st_mode & S_IXUSR))
 		ft_putendl_fd(": Permission denied", 2);
+	data->g_error = 1;
 	ft_free_data_and_set_null(data);
 	return (1);
 }

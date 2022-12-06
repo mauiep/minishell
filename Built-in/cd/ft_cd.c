@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:44:05 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 12:26:27 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 14:46:13 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	ft_cd(char **args, t_mini *data)
 		ft_putstr_fd(RED, 2);
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 		ft_putstr_fd(RESET, 2);
+		data->g_error = 1;
 		return (1);
 	}
 	else if (!args[1] || !ft_strcmp("~", args[1])
@@ -65,6 +66,7 @@ int	ft_cd(char **args, t_mini *data)
 			ft_putstr_fd(RED, 2);
 			ft_putendl_fd("minishell: cd: HOME not set", 2);
 			ft_putstr_fd(RESET, 2);
+			data->g_error = 1;
 			return (1);
 		}
 		return (ft_cd_error_manager(data->home, data));

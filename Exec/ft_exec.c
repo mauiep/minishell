@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:01 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/06 08:37:20 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 15:57:33 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	program_exec(char **args, t_mini *data)
 		ft_putstr_fd(RED, 2);
 		perror("execve");
 		ft_putstr_fd(RESET, 2);
+		data->g_error = 0;
 	}
 	else
 	{
@@ -41,8 +42,9 @@ static int	program_exec(char **args, t_mini *data)
 		ft_error("\n", RED, 42);
 		ft_free_all(data);
 		ft_free(args);
+		data->g_error = 127;
 	}
-	return (-1);
+	return (data->g_error);
 }
 
 /*
@@ -97,7 +99,29 @@ static void	ft_handle_exec_error(char **args, t_mini *data)
 	ft_error(" : command not found\n", RED, 42);
 	ft_free_all(data);
 	ft_free(args);
+	data->g_error = 127;
 	exit(127);
+}
+
+static void	ft_handle_exec_else(t_lst *lst, char **args, t_mini *data)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (lst->token == 0 && lst->str != NULL)
+	{
+		if (ft_is_built_in(args, data))
+		{
+			ft_free_all(data);
+			ft_free(args);
+			exit (0);
+		}
+		ft_check_if_executable(args, data);
+		tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data),
+				args, data->env_tab);
+		if (!tmp)
+			ft_handle_exec_error(args, data);
+	}
 }
 
 /*
@@ -114,7 +138,6 @@ static void	ft_handle_exec_error(char **args, t_mini *data)
 int	ft_handle_exec(t_lst *lst, t_mini *data)
 {
 	char	**args;
-	char	*tmp;
 
 	if (lst->token != 0)
 	{
@@ -126,21 +149,7 @@ int	ft_handle_exec(t_lst *lst, t_mini *data)
 		return (-1);
 	while (args && lst && lst->token != 1)
 	{
-		if (lst->token == 0 && lst->str != NULL)
-		{
-			if (ft_is_built_in(args, data))
-			{
-				ft_free_all(data);
-				ft_free(args);
-				exit (0);
-			}
-			ft_check_if_executable(args, data);
-			//ft_block_built_in(args);
-			tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data),
-					args, data->env_tab);
-			if (!tmp)
-				ft_handle_exec_error(args, data);
-		}
+		ft_handle_exec_else(lst, args, data);
 		lst = lst->next;
 	}
 	return (0);

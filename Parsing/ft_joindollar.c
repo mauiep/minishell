@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:21:18 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/06 07:38:33 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:09:23 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,3 @@ int	ft_joindollar(t_lst *ptr, int i, t_mini *data)
 		return (-42);
 	return (return_dollar(to_free, tmp, data->envval, ptr));
 }
-

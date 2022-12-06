@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:41:34 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 07:40:57 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:34:59 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_is_built_in(char **args, t_mini *data)
 	if (!args || !args[0])
 		return (-1);
 	if (!(ft_strcmp("pwd", args[0])))
-		return (ft_pwd(), 1);
+		return (data->g_error = 0, ft_pwd(), 1);
 	else if (!(ft_strcmp("env", args[0])))
 		return (ft_env(data), 1);
 	else if (!(ft_strcmp("cd", args[0])))
@@ -47,7 +47,7 @@ int	ft_is_built_in(char **args, t_mini *data)
 	else if (!(ft_strcmp("export", args[0])))
 		return (ft_export(args, data), 1);
 	else if (!(ft_strcmp("echo", args[0])))
-		return (ft_echo(args), 1);
+		return (data->g_error = 1, ft_echo(args), 1);
 	else if (!(ft_strcmp("exit", args[0])))
 		return (ft_exit(args, data), 1);
 	return (0);

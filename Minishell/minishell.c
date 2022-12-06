@@ -6,12 +6,11 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:25:25 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 08:47:54 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:10:04 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static void	ft_ctrl_d(t_mini *data)
 {

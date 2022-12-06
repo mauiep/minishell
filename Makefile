@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/11/30 11:03:28 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/12/06 16:12:32 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRCS	=	main.c\
 			Libft/ft_strndup.c\
 			Minishell/ft_prompt.c\
 			Minishell/minishell.c\
+			Minishell/launch_minishell.c\
 			Parsing/expand.c\
 			Parsing/ft_check_redir.c\
 			Parsing/ft_cleanfile.c\

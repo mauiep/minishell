@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:11:42 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 12:23:23 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:07:39 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_export(char **args, t_mini *data)
 {
 	int	i;
 
+	data->g_error = 0;
 	if (!args[1])
 	{
 		ft_sort_and_print_env(data);
@@ -55,6 +56,7 @@ int	ft_export(char **args, t_mini *data)
 		{
 			ft_error("minishell: export: `", RED, 0);
 			ft_error(args[i], RED, 0);
+			data->g_error = 1;
 			return (ft_error(": not a valid identifier\n", RED, 0));
 		}
 		else

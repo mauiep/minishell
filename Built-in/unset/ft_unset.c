@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 02:56:29 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 13:28:29 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:08:22 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int	ft_unset(char **args, t_mini *data)
 			ft_putstr_fd(args[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			ft_putstr_fd(RESET, 2);
-			return (0);
+			return (data->g_error = 1, 0);
 		}
 		env_index = ft_find_env(args[i], data);
 		if (env_index != -1)
 			if (data->env_tab[env_index])
 				data->env_tab = ft_realloc_env(env_index, data);
 	}
-	return (1);
+	return (data->g_error = 0, 1);
 }
