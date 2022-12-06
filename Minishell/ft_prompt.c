@@ -25,7 +25,10 @@
 static void	ft_check_free(t_mini *data)
 {
 	if (data->prompt)
+	{
 		free(data->prompt);
+		data->prompt = NULL;
+	}
 	if (data->line)
 		free(data->line);
 }
@@ -44,14 +47,28 @@ static void	ft_prompt_else(t_mini *data)
 {
 	char	*tmp;
 
-	data->prompt = ft_strjoin(GREEN, ft_get_env_var("PWD", data));
-	tmp = ft_strdup(data->prompt);
-	free(data->prompt);
-	data->prompt = ft_strjoin(tmp, "$> ");
+	tmp = ft_get_env_var("PWD", data);
+	if (!tmp)
+		return ;
+	data->prompt = ft_strjoin(GREEN, tmp);
+	if (!data->prompt)
+		return ;
 	free(tmp);
 	tmp = ft_strdup(data->prompt);
+	if (!tmp)
+		return ;
+	free(data->prompt);
+	data->prompt = ft_strjoin(tmp, "$> ");
+	if (!data->prompt)
+		return ;
+	free(tmp);
+	tmp = ft_strdup(data->prompt);
+	if (!tmp)
+		return ;
 	free(data->prompt);
 	data->prompt = ft_strjoin(tmp, RESET);
+	if (!data->prompt)
+		return ;
 	free(tmp);
 }
 

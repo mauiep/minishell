@@ -55,7 +55,7 @@ static int	parse_else(char *line_buffer, t_mini *data, int i, t_lst *lst)
 	if (expand(lst, data) == -1)
 	{
 		free_lst(lst);
-		return (printf("BUG EXPAND\n"));
+		return (printf("BUGA EXPAND\n"));
 	}
 	if (data->command_ok == 1)
 	{

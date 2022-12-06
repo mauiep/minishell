@@ -44,6 +44,8 @@ int	return_dollar(char *str, char *tmp, char *envval, t_lst *ptr)
 	if (!ptr->str)
 		return (-42);
 	ret = ft_strlen(envval) - 1;
+	if (ret == -1)
+		ret = 0;
 	ft_quadrafree(str, envval, tmp, to_free);
 	return (ret);
 }

@@ -70,7 +70,7 @@ int	ft_change_directory(char *path, t_mini *data)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (-1);
+		return (free(path), -1);
 	if (!chdir(path))
 	{
 		if (pwd)
@@ -90,5 +90,6 @@ int	ft_change_directory(char *path, t_mini *data)
 		return (1);
 	}
 	free(pwd);
+	ft_free_data_and_set_null(data);
 	return (0);
 }

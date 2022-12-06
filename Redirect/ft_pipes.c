@@ -100,7 +100,7 @@ int	ft_wait_procs(int ac, pid_t *list, t_mini *data)
 		w = waitpid(list[i], &status, 0);
 		if (w == -1)
 		{
-			perror("waitpid");
+			//perror("waitpid");
 			exit(EXIT_FAILURE);
 		}
 		if (WIFEXITED(status))
