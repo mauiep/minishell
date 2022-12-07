@@ -36,7 +36,7 @@ t_lst	*pick_the_lst(t_lst *last)
 	if (!tmp)
 		return (NULL);
 	while (tmp->str != NULL && tmp->prev->str != NULL
-		&& tmp->prev->token % 2 == 0)
+		&& tmp->prev->token != 1)
 		tmp = tmp->prev->prev;
 	if (tmp->str != NULL)
 		return (tmp);

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 12:23:26 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 08:18:51 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/07 15:24:25 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	parse_else(char *line_buffer, t_mini *data, int i, t_lst *lst)
 	if (expand(lst, data) == -1)
 	{
 		free_lst(lst);
-		return (printf("BUGA EXPAND\n"));
+		return (-1);
 	}
 	if (data->command_ok == 1)
 	{
@@ -73,10 +73,10 @@ int	parse(char *line_buffer, t_mini *data)
 	int		ret;
 	int		error;
 
+	ft_tab_to_spaces(line_buffer);
 	ret = ft_check_redir(line_buffer);
 	if (!ret)
 		return (-1);
-	ft_tab_to_spaces(line_buffer);
 	lst = ft_lstnew();
 	if (!lst)
 		return (print_err(-1));

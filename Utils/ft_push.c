@@ -93,6 +93,17 @@ int	push_word(t_lst *lst, char *buffer)
 	return (ft_strlen(new->str));
 }
 
+static int	push_cmd_lst(t_lst *lst)
+{
+	t_lst	*new;
+
+	new = ft_lstnew();
+	if (!new)
+		return (0);
+	push_lst(new, lst);
+	return (1);
+}
+
 int	push_sep(t_lst *lst, char *buffer)
 {
 	int		i;
@@ -100,6 +111,11 @@ int	push_sep(t_lst *lst, char *buffer)
 	int		token;
 
 	i = 0;
+	if (lst->prev && (lst->prev->str == NULL || lst->prev->token == 1))
+	{	
+		if (!push_cmd_lst(lst))
+			return (-1);
+	}
 	new = ft_lstnew();
 	if (!new)
 		return (-1);
@@ -113,7 +129,7 @@ int	push_sep(t_lst *lst, char *buffer)
 		return (free_lst(new), -3);
 	new->token = token;
 	push_lst(new, lst);
-	if (new->token % 2 == 0)
+	if (new->token % 2 == 0 || new->token == 5)
 		return (push_next_word(lst, buffer + i) + i);
 	return (i);
 }

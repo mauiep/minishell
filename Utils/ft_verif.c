@@ -6,42 +6,30 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:02:30 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/07 13:34:55 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/07 15:09:07 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_is_spaces_before_pipe(char *linebuffer)
+/*static int	ft_is_spaces_before_pipe(char *linebuffer)
 {
 	int	i;
 
 	i = 0;
-	while (linebuffer && linebuffer[i])
-	{
-		if (linebuffer[i] == ' ' || linebuffer[i] == '\t')
-		{
-			i++;
-			continue ;
-		}
-		else if (linebuffer[i] == '|')
-			break ;
-		i++;
-	}
-	if (linebuffer[i] == '|')
-		return (1);
-	return (0);
-}
+	while (line)
+}*/
 
 int	ft_verif(t_lst *lst, char *linebuffer)
 {
 	t_lst	*tmp;
 	int		i;
+	(void) linebuffer;
 
 	i = 0;
-	if (ft_is_spaces_before_pipe(linebuffer) == 1)
+	/*if (ft_is_spaces_before_pipe(linebuffer) == 1)
 		return (ft_error("minishell: syntax error near unexpected token `|'\n",
-				RED, -1));
+				RED, -1));*/
 	tmp = lst->next;
 	while (tmp)
 	{
@@ -70,7 +58,7 @@ int	edit_maillon(char *buffer, int i, t_lst *tmp)
 	str = ft_strndup2(buffer + i, spe_lenword(buffer + i));
 	if (!str)
 		return (-1);
-	ret = strlen(str);
+	ret = ft_strlen(str);
 	tmp->str = ft_strjoin(tmp->str, str);
 	if (!(tmp->str))
 		return (-1);

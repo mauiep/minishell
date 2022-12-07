@@ -32,6 +32,8 @@ char	*ft_get_env_var(char *env_var, t_mini *data)
 	i = 0;
 	if (!env_var)
 		return (NULL);
+	else if (env_var[0] == '\0')
+		return (ft_strdup("$"));
 	while (data->env_tab[i])
 	{
 		if (!ft_strncmp(env_var, data->env_tab[i], ft_strlen(env_var)))

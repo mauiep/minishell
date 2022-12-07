@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 12:26:41 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/06 16:02:52 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/07 15:42:33 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	ft_check_if_n_option(char **args)
 				i++;
 			}
 		}
-		return (1);
+		else
+			return (0);
 	}
 	return (1);
 }

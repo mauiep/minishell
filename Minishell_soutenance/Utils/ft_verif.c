@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:02:30 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/07 13:34:55 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/07 15:21:39 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,7 @@ static int	ft_is_spaces_before_pipe(char *linebuffer)
 	int	i;
 
 	i = 0;
-	while (linebuffer && linebuffer[i])
-	{
-		if (linebuffer[i] == ' ' || linebuffer[i] == '\t')
-		{
-			i++;
-			continue ;
-		}
-		else if (linebuffer[i] == '|')
-			break ;
-		i++;
-	}
-	if (linebuffer[i] == '|')
-		return (1);
-	return (0);
+	while (linebuffer && linebuffer)
 }
 
 int	ft_verif(t_lst *lst, char *linebuffer)

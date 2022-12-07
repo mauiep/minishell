@@ -28,11 +28,11 @@ void	sig_handler(int signal)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	if (signal == SIGSEGV)
+	/*if (signal == SIGSEGV)
 	{
-		fprintf(stderr, "\nexit\n");
+		fprintf(stderr, "\nexot\n");
 		exit(0);
-	}
+	}*/
 	return ;
 }
 

@@ -43,6 +43,7 @@ int	ft_open_dup(t_lst *lst, int token, t_mini *data)
 	int	fd;
 
 	fd = -1;
+	//fprintf(stderr, "%s NOUS ALLONS REDIR VERS %i %s\n", RED, token, RESET);
 	if (ft_cleanfile(lst->next) < 0)
 		return (-1);
 	if (token == 2)

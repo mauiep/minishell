@@ -14,7 +14,7 @@
 
 static void	ft_ctrl_d(t_mini *data)
 {
-	write(2, "\n", 1);
+	write(2, "exit\n", 6);
 	if (data->line)
 		free(data->line);
 	if (data->env_tab)

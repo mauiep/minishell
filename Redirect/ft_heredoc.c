@@ -59,23 +59,40 @@ static int	ft_heredoc_else(char *buff, int fd, t_mini *data)
 **	dans le fd tmp
 */
 
+void	ft_ctrl_c_heredoc(int signal, siginfo_t *info, void *s)
+{
+
+	(void)signal;
+	(void)info;
+	fprintf(stderr, "\nctrl_c\n");
+	fprintf(stderr, "%i\n", data->g_error);
+
+}
+
 int	ft_heredoc(t_lst *lst, t_mini *data, int fd)
 {
-	char	*buff;
-	char	*end;
-
+	char				*buff;
+	char				*end;
+	struct sigaction	ctrl_c;
+	
+	//data->g_error = 4;
+	//ctrl_c.sa_sigaction = &ft_ctrl_c_heredoc;
+	//sigaction(SIGINT, &ctrl_c, (void *)data);
 	if (ft_cleanfile(lst) < 0)
 		return (-1);
 	end = lst->str;
 	while (42)
 	{
 		buff = readline("heredoc>");
+	//	fprintf(stderr, "%s=====> RL VAUT %s\n%s", RED, buff, RESET);
 		if (!buff)
 		{
-			//ft_ctrl_d(data);
-			//exit (-1);
-			write(2, "\n", 1);
-			return (-1);
+			return (ft_error("minishell: warning: here-document", RED, -1),
+				ft_error(" delimited by end-of-file (wanted `", RED, -1),
+				ft_putstr_fd(RED, 2),
+				ft_putstr_fd(end, 2),
+				ft_putstr_fd("')\n", 2),
+				ft_putstr_fd(RESET, 2), -1);
 		}
 		if (ft_strcmp(buff, end) == 0)
 			break ;

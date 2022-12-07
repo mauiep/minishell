@@ -20,12 +20,12 @@ static int	is_last_heredoc(t_lst *lst)
 	while (tmp)
 	{
 		if (tmp->token == 5)
-			return (0);
+			return (fprintf(stderr, "PAS LAST\n"), 0);
 		else if (tmp->token == 1)
-			return (1);
+			return (fprintf(stderr, "LAST\n"), 1);
 		tmp = tmp->next;
 	}
-	return (1);
+	return (fprintf(stderr, "LAST\n"), 1);
 }
 
 int	ft_for_token2(t_lst *lst, t_mini *data, int fd)
@@ -79,7 +79,7 @@ int	ft_for_token5(t_lst *lst, t_mini *data, int fd)
 	unlink(docname);
 	free(docname);
 	if (data->dup && is_last_heredoc(lst) && dup2(fd, STDIN_FILENO) < 0)
-		return (printf("error : dup2\n"), close(fd), -1);
+		return (close(fd), -1);
 	close(fd);
 	return (fd);
 }

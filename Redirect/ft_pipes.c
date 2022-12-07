@@ -28,12 +28,28 @@ static int	ft_pipes_else_else(t_mini *data, int nb_pipes)
 	return (1);
 }
 
+static int	ft_no_redir(int nb_pipes, t_lst *lst)
+{
+	t_lst	*tmp;
+
+	if (nb_pipes > 0)
+		return (0);
+	tmp = lst;
+	while (tmp)
+	{
+		if (tmp->token != 0)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
 static int	ft_pipes_else(t_lst *lst, int nb_pipes, t_mini *data, char **args)
 {
 	while (lst && lst->str)
 	{
 		lst = data->start_lst;
-		if (nb_pipes == 0 && ft_is_built_in(args, data))
+		if (ft_no_redir(nb_pipes, lst) && ft_is_built_in(args, data))
 			return (free_pipe_array(data->pipefd, nb_pipes),
 				ft_free(args), free(data->list), 1);
 		data->list[data->i] = fork();
