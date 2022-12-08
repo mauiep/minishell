@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:02:24 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/08 03:53:40 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 05:15:04 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,5 +308,7 @@ void	ft_free_all_exec(t_mini *data);
 int		ft_isspace(const char *str);
 int		ft_error_for_executable(char **args, t_mini *data);
 int		program_exec(char **args, t_mini *data);
+int		ft_error_for_executable(char **args, t_mini *data);
+int		ft_for_error_directory(char *line);
 
 #endif

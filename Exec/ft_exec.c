@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:01 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/08 03:53:27 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 04:40:03 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ static void	ft_check_for_excutable(char **args, t_mini *data)
 static void	ft_handle_exec_else(t_lst *lst, char **args, t_mini *data)
 {
 	char	*tmp;
+	char	*path;
 
 	tmp = NULL;
+	path = NULL;
 	if (lst->token == 0 && lst->str != NULL)
 	{
 		if (ft_is_built_in(args, data))
@@ -72,7 +74,8 @@ static void	ft_handle_exec_else(t_lst *lst, char **args, t_mini *data)
 			data->g_error = 126;
 			exit (126);
 		}
-		tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data),
+		path = ft_get_env_var("PATH", data);
+		tmp = ft_find_bin(args[0], path,
 				args, data->env_tab);
 		if (!tmp)
 			ft_handle_exec_error(args, data);

@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:12 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/29 10:02:55 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 04:54:25 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ static int	ft_exec(char *bin_path, char **argv, char **envp)
 char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 {
 	char	*bin_path;
-	int		i;
 	char	*to_free;
 
 	if (!paths)
@@ -142,19 +141,17 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 	if (bin[0] == '/')
 		if (ft_exec(bin, argv, envp) == 1)
 			return ((char *)1);
-	i = 0;
 	to_free = paths;
 	while (*paths)
 	{
 		bin_path = ft_check_bin_path(bin, paths);
 		if (bin_path == NULL)
-			return (NULL);
+			return (free(to_free), NULL);
 		if (ft_exec(bin_path, argv, envp) == 1)
 			return ((char *)1);
 		else
 			free(bin_path);
 		paths = ft_find_bin_else(paths);
-		i++;
 	}
 	return (free(to_free), NULL);
 }

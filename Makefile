@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/12/08 01:28:32 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/12/08 05:15:24 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS	=	main.c\
 			Exec/ft_handle_pipe.c\
 			Exec/ft_signals.c\
 			Exec/ft_wait_procs.c\
+			Exec/ft_exec_error.c\
 			Libft/ft_isalpha.c\
 			Libft/ft_isdigit.c\
 			Libft/ft_itoa.c\

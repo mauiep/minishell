@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:51:23 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/12/08 01:33:23 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 04:56:28 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,13 @@ int	ft_check_redir(char *line)
 {
 	if (ft_check_space_before_pipe(line) < 0)
 		return (0);
+	if (line[0] == '\"' && line[1] == '\"')
+		return (ft_error("minishell: command not found\n", RED, 0));
 	if (line[0] == '.' && !line[1])
-		return (ft_error("minishell: .: filename argument required\n", RED, 1),
+		return (ft_error("minishell: .: filename argument required\n", RED, 0),
 			ft_error(".: usage: . filename [arguments]\n", RED, 0));
+	if (line[0] == '.' && line[1] == '.')
+		return (ft_error("minishell: ..: command not found\n", RED, 0));
 	if (line[0] == '/' && !line[1])
 		return (ft_error("minishell: /: Is a directory\n", RED, 0));
 	if (line[0] == '/' && line[1] == '/')
