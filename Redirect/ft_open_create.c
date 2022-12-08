@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:17:44 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/29 12:52:46 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 01:48:23 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_open_create_else(int token, char *pathname2, bool apnd_or_not)
 	int	fd;
 
 	if (token == 3)
-		return (dprintf(2, "File not found\n"), -1);
+		return (-1);
 	fd = open(pathname2, O_RDWR | O_CREAT | O_APPEND * apnd_or_not, S_IRWXU);
 	return (fd);
 }

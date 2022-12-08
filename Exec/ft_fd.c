@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	**ft_create_pipe_arr_for_no_pipe(void)
+static int	**ft_create_pipe_arr_for_no_pipe(int nb_pipes)
 {
 	int	**pipefd;
 
@@ -23,9 +23,10 @@ static int	**ft_create_pipe_arr_for_no_pipe(void)
 	if (pipefd[0] == NULL)
 		return (free(pipefd[0]), free(pipefd), NULL);
 	if (pipe(pipefd[0]) == -1)
-		return (close(pipefd[0][0]), close(pipefd[0][1]), NULL);
+		return (ft_close_pipes(pipefd, nb_pipes), NULL);
 	return (pipefd);
 }
+
 /*
 **	Cette fonction prend en parametre :
 **	
@@ -43,7 +44,7 @@ int	**create_pipe_arr(int nb_pipes)
 	int	ret;
 
 	if (nb_pipes == 0)
-		pipefd = ft_create_pipe_arr_for_no_pipe();
+		pipefd = ft_create_pipe_arr_for_no_pipe(nb_pipes);
 	else
 	{
 		pipefd = malloc(nb_pipes * sizeof(int *));
@@ -108,6 +109,8 @@ int	ft_close_pipes(int **pipefd, int nb_pipes)
 	int	i;
 
 	i = 0;
+	if (nb_pipes == 0)
+		return (close(pipefd[0][0]), close(pipefd[0][1]), 0);
 	while (i < nb_pipes)
 	{
 		close(pipefd[i][0]);

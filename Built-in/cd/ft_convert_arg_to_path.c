@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:56:42 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/24 15:46:22 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 02:53:57 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ char	*ft_convert_arg_to_path(char **args, t_mini *data)
 	if (converted_path)
 		return (converted_path);
 	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (NULL);
 	buffer = NULL;
 	if (args[1][0] == '/')
 	{
 		converted_path = ft_strdup(args[1]);
-		return (converted_path);
+		return (free(pwd), converted_path);
 	}
 	converted_path = ft_strjoin(pwd, "/");
 	free(pwd);
@@ -62,7 +64,6 @@ char	*ft_convert_arg_to_path(char **args, t_mini *data)
 	free(converted_path);
 	converted_path = ft_strjoin(buffer, args[1]);
 	if (!converted_path)
-		return (NULL);
-	free(buffer);
-	return (converted_path);
+		return (free(buffer), NULL);
+	return (free(buffer), converted_path);
 }

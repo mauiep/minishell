@@ -6,7 +6,7 @@
 #    By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 15:47:28 by ceatgie           #+#    #+#              #
-#    Updated: 2022/12/06 16:12:32 by ceatgie          ###   ########.fr        #
+#    Updated: 2022/12/08 01:28:32 by ceatgie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,13 @@ SRCS	=	main.c\
 			Env/ft_env_len.c\
 			Env/ft_find_env.c\
 			Env/ft_get_env_var.c\
+			Exec/ft_exec_else.c\
 			Exec/ft_exec.c\
 			Exec/ft_fd.c\
 			Exec/ft_find_bin.c\
 			Exec/ft_handle_pipe.c\
 			Exec/ft_signals.c\
+			Exec/ft_wait_procs.c\
 			Libft/ft_isalpha.c\
 			Libft/ft_isdigit.c\
 			Libft/ft_itoa.c\

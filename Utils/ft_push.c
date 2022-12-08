@@ -112,10 +112,8 @@ int	push_sep(t_lst *lst, char *buffer)
 
 	i = 0;
 	if (lst->prev && (lst->prev->str == NULL || lst->prev->token == 1))
-	{	
 		if (!push_cmd_lst(lst))
 			return (-1);
-	}
 	new = ft_lstnew();
 	if (!new)
 		return (-1);

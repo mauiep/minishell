@@ -6,29 +6,12 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:37:42 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/06 08:56:39 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 01:58:18 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-static void	ft_ctrl_d(t_mini *data)
-{
-	write(2, "\n", 1);
-	if (data->splitargs)
-		ft_free(data->splitargs);
-	if (data->env_tab)
-		ft_free(data->env_tab);
-	if (data->list)
-		free(data->list);
-	if (data->pipefd)
-		free_pipe_array(data->pipefd, data->nb_pipes);
-	if (data->prompt)
-		free(data->prompt);
-	if (data->lst)
-		free_lst(data->lst);
-}
-*/
+
 static int	ft_heredoc_else(char *buff, int fd, t_mini *data)
 {
 	t_lst	*tmp;
@@ -59,32 +42,17 @@ static int	ft_heredoc_else(char *buff, int fd, t_mini *data)
 **	dans le fd tmp
 */
 
-void	ft_ctrl_c_heredoc(int signal, siginfo_t *info, void *s)
-{
-
-	(void)signal;
-	(void)info;
-	fprintf(stderr, "\nctrl_c\n");
-	fprintf(stderr, "%i\n", data->g_error);
-
-}
-
 int	ft_heredoc(t_lst *lst, t_mini *data, int fd)
 {
 	char				*buff;
 	char				*end;
-	struct sigaction	ctrl_c;
-	
-	//data->g_error = 4;
-	//ctrl_c.sa_sigaction = &ft_ctrl_c_heredoc;
-	//sigaction(SIGINT, &ctrl_c, (void *)data);
+
 	if (ft_cleanfile(lst) < 0)
 		return (-1);
 	end = lst->str;
 	while (42)
 	{
 		buff = readline("heredoc>");
-	//	fprintf(stderr, "%s=====> RL VAUT %s\n%s", RED, buff, RESET);
 		if (!buff)
 		{
 			return (ft_error("minishell: warning: here-document", RED, -1),

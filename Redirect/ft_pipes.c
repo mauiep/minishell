@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:16:54 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/06 16:38:32 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 03:02:22 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	ft_pipes_else(t_lst *lst, int nb_pipes, t_mini *data, char **args)
 		data->list[data->i] = fork();
 		signal(SIGINT, SIG_IGN);
 		if (ft_pipes_else_else(data, nb_pipes) == -1)
-			return (-1);
+			return (ft_close_pipes(data->pipefd, nb_pipes),
+				ft_free_all(data), exit(1), -1);
 		data->i++;
 		data->pipes_left--;
 		lst = ft_next_pipe(data->start_lst);
@@ -86,42 +87,9 @@ int	ft_pipes(t_lst *lst, int nb_pipes, t_mini *data)
 		return (free_pipe_array(data->pipefd, nb_pipes), -1);
 	error = ft_pipes_else(lst, nb_pipes, data, data->splitargs);
 	if (error == 1 || error == -1)
-		return (error);
+		return (1);
 	ft_close_pipes(data->pipefd, nb_pipes);
 	free_pipe_array(data->pipefd, nb_pipes);
 	ft_wait_procs(data->i, data->list, data);
 	return (1);
-}
-
-static int	ft_wait_procs_else(t_mini *data, int status)
-{
-	if (WIFSIGNALED(status))
-	{
-		data->g_error = WTERMSIG(status);
-		if (data->g_error != 130)
-			data->g_error += 128;
-	}
-	return (1);
-}
-
-int	ft_wait_procs(int ac, pid_t *list, t_mini *data)
-{
-	int		i;
-	int		status;
-	pid_t	w;
-
-	i = 0;
-	while (i < ac)
-	{
-		w = waitpid(list[i], &status, 0);
-		if (w == -1)
-			exit(EXIT_FAILURE);
-		if (WIFEXITED(status))
-			data->g_error = WEXITSTATUS(status);
-		i += ft_wait_procs_else(data, status);
-	}
-	if (data->g_error == 130)
-		ft_putchar_fd('\n', 2);
-	free(list);
-	return (0);
 }

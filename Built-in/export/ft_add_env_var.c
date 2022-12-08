@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 23:35:57 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/25 12:23:08 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 01:54:50 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_does_export_name_already_exists(char *arg, t_mini *data)
 		i++;
 	while (data->env_tab[j])
 	{
-		if (!strncmp(arg, data->env_tab[j], i))
+		if (!ft_strncmp(arg, data->env_tab[j], i))
 			return (j);
 		j++;
 	}

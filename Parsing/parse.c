@@ -60,7 +60,8 @@ static int	parse_else(char *line_buffer, t_mini *data, int i, t_lst *lst)
 	if (data->command_ok == 1)
 	{
 		data->nb_pipes = ft_pipes_left(lst);
-		ft_pipes(lst->next, data->nb_pipes, data);
+		if (ft_pipes(lst->next, data->nb_pipes, data) == -1)
+			return (-1);
 	}
 	free_lst(lst);
 	return (1);

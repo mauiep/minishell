@@ -12,24 +12,13 @@
 
 #include "minishell.h"
 
-/*static int	ft_is_spaces_before_pipe(char *linebuffer)
-{
-	int	i;
-
-	i = 0;
-	while (line)
-}*/
-
 int	ft_verif(t_lst *lst, char *linebuffer)
 {
 	t_lst	*tmp;
 	int		i;
-	(void) linebuffer;
 
+	(void) linebuffer;
 	i = 0;
-	/*if (ft_is_spaces_before_pipe(linebuffer) == 1)
-		return (ft_error("minishell: syntax error near unexpected token `|'\n",
-				RED, -1));*/
 	tmp = lst->next;
 	while (tmp)
 	{

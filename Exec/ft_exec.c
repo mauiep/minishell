@@ -6,82 +6,11 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:09:01 by admaupie          #+#    #+#             */
-/*   Updated: 2022/12/06 15:57:33 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 03:53:27 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-**	Cette fonction prend en parametre :
-**	
-**	- Les arguments de l'input
-**	- Un pointeur sur structure data
-**	
-**	========================================
-**	
-**	Cette fonction sert executer un programme dans minishell et a verifier
-** Ses droits d'exec
-*/
-
-static int	program_exec(char **args, t_mini *data)
-{
-	if (access(args[0] + 2, F_OK & X_OK) == 0)
-	{
-		execve(args[0] + 2, args, data->env_tab);
-		ft_putstr_fd(RED, 2);
-		perror("execve");
-		ft_putstr_fd(RESET, 2);
-		data->g_error = 0;
-	}
-	else
-	{
-		ft_error("minishell: ", RED, 42);
-		ft_error(args[0], RED, 42);
-		ft_error(": No such file or directory", RED, 42);
-		ft_error("\n", RED, 42);
-		ft_free_all(data);
-		ft_free(args);
-		data->g_error = 127;
-	}
-	return (data->g_error);
-}
-
-/*
-**	Cette fonction prend en parametre :
-**	
-**	- Les arguments de l'input
-**	
-**	========================================
-**	
-**	Cette fonction sert a bloquer les built-in qui sont gerer par execve
-*/
-
-/*static void	ft_block_built_in(char **args)
-{
-	if (!ft_strcmp(args[0], "env") || !ft_strcmp(args[0], "pwd")
-		|| !ft_strcmp(args[0], "unset") || !ft_strcmp(args[0], "echo")
-		|| !ft_strcmp(args[0], "exit"))
-		exit (-1);
-}*/
-
-/*
-**	Cette fonction prend en parametre :
-**	
-**	- Les arguments de l'input
-**	- Le pointeur sur structure data
-** 
-**	========================================
-**	
-**	Cette fonction sert a verifier si on veut exec un executable
-** Au lieu d'une commande
-*/
-
-static void	ft_check_if_executable(char **args, t_mini *data)
-{
-	if (ft_strncmp(args[0], "./", 2) == 0)
-		exit (program_exec(args, data));
-}
 
 /*
 **	Cette fonction prend en parametre :
@@ -103,6 +32,29 @@ static void	ft_handle_exec_error(char **args, t_mini *data)
 	exit(127);
 }
 
+static void	ft_exit_builtin(char **args, t_mini *data)
+{
+	if (!(ft_strcmp("export", args[0])))
+	{
+		ft_free_all_exec(data);
+		ft_free(args);
+		exit (0);
+	}
+	ft_free_all(data);
+	ft_free(args);
+	exit (0);
+}
+
+static void	ft_check_for_excutable(char **args, t_mini *data)
+{
+	if ((ft_strncmp(args[0], "./", 2) == 0) && args[0][2] == '.')
+		exit(ft_error_for_executable(args, data));
+	else if ((ft_strncmp(args[0], "./", 2) == 0) && args[0][2] == '/')
+		exit(ft_error_for_executable(args, data));
+	else if ((ft_strncmp(args[0], "./", 2) == 0))
+		exit(program_exec(args, data));
+}
+
 static void	ft_handle_exec_else(t_lst *lst, char **args, t_mini *data)
 {
 	char	*tmp;
@@ -111,12 +63,15 @@ static void	ft_handle_exec_else(t_lst *lst, char **args, t_mini *data)
 	if (lst->token == 0 && lst->str != NULL)
 	{
 		if (ft_is_built_in(args, data))
+			ft_exit_builtin(args, data);
+		ft_check_for_excutable(args, data);
+		if (ft_for_error_directory(args[0]) == 0)
 		{
 			ft_free_all(data);
 			ft_free(args);
-			exit (0);
+			data->g_error = 126;
+			exit (126);
 		}
-		ft_check_if_executable(args, data);
 		tmp = ft_find_bin(args[0], ft_get_env_var("PATH", data),
 				args, data->env_tab);
 		if (!tmp)

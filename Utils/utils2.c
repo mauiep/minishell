@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admaupie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:49:57 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/08 15:51:12 by admaupie         ###   ########.fr       */
+/*   Updated: 2022/12/08 02:21:12 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,16 @@ char	*ft_strjoinneg(char *str, char *str2)
 	ft_negstrcpy(str2, str3 + ft_strlen(str));
 	str3[ft_strlen(str) + ft_strlen(str2)] = '\0';
 	return (str3);
+}
+
+int	ft_isspace(const char *str)
+{
+	int	cpt;
+
+	cpt = 0;
+	while (str[cpt] == ' ' || str[cpt] == '\f'
+		|| str[cpt] == '\t' || str[cpt] == '\n'
+		|| str[cpt] == '\r' || str[cpt] == '\v')
+		cpt++;
+	return (cpt);
 }

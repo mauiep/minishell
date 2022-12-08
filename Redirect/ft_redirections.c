@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:23:51 by ceatgie           #+#    #+#             */
-/*   Updated: 2022/11/30 11:02:04 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 01:48:53 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	ft_handle_redirections(t_lst *lst, t_mini *data)
 			|| lst->token == 4 || lst->token == 5)
 		{
 			if (ft_open_dup(lst, lst->token, data) == -1)
-				return (-1);
 			lst = lst->next;
 		}
 		lst = lst->next;
@@ -43,7 +42,6 @@ int	ft_open_dup(t_lst *lst, int token, t_mini *data)
 	int	fd;
 
 	fd = -1;
-	//fprintf(stderr, "%s NOUS ALLONS REDIR VERS %i %s\n", RED, token, RESET);
 	if (ft_cleanfile(lst->next) < 0)
 		return (-1);
 	if (token == 2)

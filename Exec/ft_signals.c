@@ -6,7 +6,7 @@
 /*   By: ceatgie <ceatgie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 13:59:19 by admaupie          #+#    #+#             */
-/*   Updated: 2022/11/25 15:07:58 by ceatgie          ###   ########.fr       */
+/*   Updated: 2022/12/08 02:00:11 by ceatgie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ void	sig_handler(int signal)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	/*if (signal == SIGSEGV)
-	{
-		fprintf(stderr, "\nexot\n");
-		exit(0);
-	}*/
 	return ;
 }
 
