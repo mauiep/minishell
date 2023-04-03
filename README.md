@@ -13,5 +13,6 @@ Ce projet de l'école **42** consiste à créer un shell qui soit capable d'exé
 - Historique des commandes
 - Gestion des signaux : ```ctrl + v```, ```ctrl + d``` et ```ctrl + \```
 - Gestion des redirections : ```>```, ```>>```, ```<``` et ```<<``` (heredoc)
+- Gestion des pipes
 
 
