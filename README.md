@@ -1,6 +1,6 @@
 # Minishell
 
-This school's project ask us to make our own shell (command-line interpreter), based on bash. The objective of the Minishell project was to implement various features, including redirections, pipes, env variables, and built-ins.
+This school's project asks us to make our own shell (command-line interpreter), based on bash. The objective of the Minishell project was to implement various features, including redirections, pipes, env variables, and built-ins.
 
 # Features
 
