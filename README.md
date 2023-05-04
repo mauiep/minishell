@@ -1,6 +1,7 @@
 # Minishell
 
-This school's project asks us to make our own shell (command-line interpreter), based on bash. The objective of the Minishell project was to implement various features, including redirections, pipes, env variables, and built-ins.
+This school's project asks us to make our own **shell** (command-line interpreter), based on *bash*.  
+The objective of the Minishell project was to implement various features, including *redirections*, *pipes*, *env variables*, and *built-ins*.
 
 # Features
 
@@ -14,7 +15,7 @@ This school's project asks us to make our own shell (command-line interpreter), 
     * '**<<**' receives a delimiter and reads input until encountering a line containing the delimiter (*heredoc*)
     * '**>>**' redirects output in append mode
 * Implement pipes using the '**|**' character
-* Handle environment variables (a '**$**' followed by a sequence of characters) by substituting their contents
+* Handle environment variables (a '**$**' followed by a sequence of characters)
 * Handle '**$?**' by substituting the exit status of the last foreground pipeline executed
 * Handle '**ctrl-C**', '**ctrl-D**', and '**ctrl-\\**' as they work in bash
 * In interactive mode:
